@@ -1,0 +1,51 @@
+import { useEffect, useCallback } from 'react';
+import { PaperProvider, MD3LightTheme } from 'react-native-paper';
+import * as SplashScreen from 'expo-splash-screen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { AuthProvider } from './src/contexts/AuthContext';
+import AppNavigator from './src/navigation/AppNavigator';
+
+SplashScreen.preventAutoHideAsync();
+
+const theme = {
+  ...MD3LightTheme,
+  colors: {
+    ...MD3LightTheme.colors,
+    primary: '#8B4513',
+    primaryContainer: '#6B340E',
+    secondary: '#C65D2E',
+    secondaryContainer: '#D4A017',
+    surface: '#FFFFFF',
+    surfaceVariant: '#FAF7F2',
+    background: '#FAF7F2',
+    error: '#d32f2f',
+    onPrimary: '#FFFFFF',
+    onSecondary: '#FFFFFF',
+    onSurface: '#2B2B2B',
+    onBackground: '#2B2B2B',
+    outline: '#E5E0D5',
+  },
+};
+
+export default function App() {
+  const onLayoutRootView = useCallback(async () => {
+    await SplashScreen.hideAsync();
+  }, []);
+
+  useEffect(() => {
+    onLayoutRootView();
+  }, [onLayoutRootView]);
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <PaperProvider theme={theme}>
+          <AuthProvider>
+            <AppNavigator />
+          </AuthProvider>
+        </PaperProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
+  );
+}

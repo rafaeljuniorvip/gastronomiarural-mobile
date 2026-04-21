@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "Festival Itapecerica",
+    "slug": "gastronomiarural-mobile",
+    "scheme": "gastronomiarural",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#8B4513"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gastronomiarural.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#8B4513"
+      },
+      "package": "com.gastronomiarural.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        { "photosPermission": "Permitir acesso às fotos para enviar avaliações." }
+      ],
+      "expo-asset",
+      "expo-font"
+    ],
+    "newArchEnabled": false,
+    "extra": {
+      "apiBaseUrl": "https://api.gastronomiarural.viptecnologia.com.br",
+      "googleClientId": "141913349498-opc4i232gj6sb7ckvr9f407clpcr5ino.apps.googleusercontent.com"
+    },
+    "owner": "rafaeljrssg"
+  }
+}
