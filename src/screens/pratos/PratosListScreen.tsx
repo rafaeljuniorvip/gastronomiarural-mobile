@@ -64,7 +64,7 @@ export default function PratosListScreen() {
       ) : error ? (
         <ErrorState message={error} onRetry={load} />
       ) : pratos.length === 0 ? (
-        <EmptyState icon="silverware-off" title="Nenhum prato encontrado" />
+        <EmptyState icon="silverware" title="Nenhum prato encontrado" />
       ) : (
         <FlatList
           contentContainerStyle={styles.list}

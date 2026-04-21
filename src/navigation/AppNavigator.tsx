@@ -9,7 +9,12 @@ import BarracaDetailScreen from '../screens/barracas/BarracaDetailScreen';
 import PratosListScreen from '../screens/pratos/PratosListScreen';
 import PratoDetailScreen from '../screens/pratos/PratoDetailScreen';
 import ProgramacaoScreen from '../screens/ProgramacaoScreen';
-import LoginScreen from '../screens/LoginScreen';
+import OficinasListScreen from '../screens/oficinas/OficinasListScreen';
+import OficinaDetailScreen from '../screens/oficinas/OficinaDetailScreen';
+import PatrocinadoresScreen from '../screens/PatrocinadoresScreen';
+import FavoritosScreen from '../screens/FavoritosScreen';
+import AccountGateScreen from '../screens/AccountGateScreen';
+import NovaAvaliacaoScreen from '../screens/avaliacoes/NovaAvaliacaoScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -26,6 +31,7 @@ function BarracasStack() {
       <Stack.Screen name="BarracasList" component={BarracasListScreen} options={{ title: 'Barracas' }} />
       <Stack.Screen name="BarracaDetail" component={BarracaDetailScreen} options={{ title: '' }} />
       <Stack.Screen name="PratoDetail" component={PratoDetailScreen} options={{ title: '' }} />
+      <Stack.Screen name="NovaAvaliacao" component={NovaAvaliacaoScreen} options={{ title: 'Nova avaliação' }} />
     </Stack.Navigator>
   );
 }
@@ -36,6 +42,7 @@ function PratosStack() {
       <Stack.Screen name="PratosList" component={PratosListScreen} options={{ title: 'Cardápio' }} />
       <Stack.Screen name="PratoDetail" component={PratoDetailScreen} options={{ title: '' }} />
       <Stack.Screen name="BarracaDetail" component={BarracaDetailScreen} options={{ title: '' }} />
+      <Stack.Screen name="NovaAvaliacao" component={NovaAvaliacaoScreen} options={{ title: 'Nova avaliação' }} />
     </Stack.Navigator>
   );
 }
@@ -47,11 +54,33 @@ function HomeStack() {
       <Stack.Screen name="Barracas" component={BarracasListScreen} options={{ title: 'Barracas' }} />
       <Stack.Screen name="Pratos" component={PratosListScreen} options={{ title: 'Cardápio' }} />
       <Stack.Screen name="Programacao" component={ProgramacaoScreen} options={{ title: 'Programação' }} />
+      <Stack.Screen name="Oficinas" component={OficinasListScreen} options={{ title: 'Oficinas' }} />
+      <Stack.Screen name="OficinaDetail" component={OficinaDetailScreen} options={{ title: '' }} />
+      <Stack.Screen name="Patrocinadores" component={PatrocinadoresScreen} options={{ title: 'Patrocinadores' }} />
       <Stack.Screen name="BarracaDetail" component={BarracaDetailScreen} options={{ title: '' }} />
       <Stack.Screen name="PratoDetail" component={PratoDetailScreen} options={{ title: '' }} />
+      <Stack.Screen name="NovaAvaliacao" component={NovaAvaliacaoScreen} options={{ title: 'Nova avaliação' }} />
     </Stack.Navigator>
   );
 }
+
+function AccountStack() {
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen name="AccountHome" component={AccountGateScreen} options={{ title: 'Conta' }} />
+      <Stack.Screen name="Favoritos" component={FavoritosScreen} options={{ title: 'Meus favoritos' }} />
+    </Stack.Navigator>
+  );
+}
+
+const ICON_MAP: Record<string, string> = {
+  HomeTab: 'home',
+  BarracasTab: 'storefront',
+  PratosTab: 'silverware-fork-knife',
+  ProgramacaoTab: 'calendar-music',
+  OficinasTab: 'school',
+  AccountTab: 'account',
+};
 
 export default function AppNavigator() {
   return (
@@ -62,23 +91,16 @@ export default function AppNavigator() {
           tabBarActiveTintColor: '#8B4513',
           tabBarInactiveTintColor: '#6B6B6B',
           tabBarStyle: { backgroundColor: '#FFF', borderTopColor: '#E5E0D5' },
-          tabBarIcon: ({ color, size }) => {
-            const iconMap: Record<string, string> = {
-              HomeTab: 'home',
-              BarracasTab: 'storefront',
-              PratosTab: 'silverware-fork-knife',
-              ProgramacaoTab: 'calendar-music',
-              AccountTab: 'account',
-            };
-            return <Icon name={(iconMap[route.name] || 'circle') as any} size={size} color={color} />;
-          },
+          tabBarIcon: ({ color, size }) => (
+            <Icon name={(ICON_MAP[route.name] || 'circle') as any} size={size} color={color} />
+          ),
         })}
       >
         <Tab.Screen name="HomeTab" component={HomeStack} options={{ title: 'Início' }} />
         <Tab.Screen name="BarracasTab" component={BarracasStack} options={{ title: 'Barracas' }} />
         <Tab.Screen name="PratosTab" component={PratosStack} options={{ title: 'Cardápio' }} />
-        <Tab.Screen name="ProgramacaoTab" component={ProgramacaoScreen} options={{ title: 'Agenda' }} />
-        <Tab.Screen name="AccountTab" component={LoginScreen} options={{ title: 'Conta' }} />
+        <Tab.Screen name="OficinasTab" component={OficinasListScreen} options={{ title: 'Oficinas' }} />
+        <Tab.Screen name="AccountTab" component={AccountStack} options={{ title: 'Conta' }} />
       </Tab.Navigator>
     </NavigationContainer>
   );
