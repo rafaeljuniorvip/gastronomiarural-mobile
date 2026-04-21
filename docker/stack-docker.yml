@@ -1,7 +1,7 @@
 version: "3.8"
 
 # Stack: gastronomiarural-expo-proxy
-# Proxy HTTPS na frente do Expo dev server rodando no host (porta 8083).
+# Proxy HTTPS na frente do Expo dev server rodando no host (porta 8084).
 # Necessário pra iOS Expo Go que bloqueia HTTP de IPs/domínios públicos (ATS).
 
 services:
