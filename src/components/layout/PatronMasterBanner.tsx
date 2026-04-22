@@ -15,6 +15,12 @@ import { fonts } from '../../theme/fonts';
 const ROTATE_INTERVAL_MS = 6000;
 const FADE_DURATION_MS = 400;
 const TIERS = ['diamante', 'ouro'];
+const BANNER_HEIGHT = 110;
+
+function buildPlaceholderUrl(name: string): string {
+  const text = encodeURIComponent((name || 'Patrocinador Oficial').toUpperCase());
+  return `https://dummyimage.com/1200x220/6B1E1E/D4A842.png&text=${text}`;
+}
 
 export default function PatronMasterBanner() {
   const [patrocinadores, setPatrocinadores] = useState<Patrocinador[]>([]);
@@ -40,7 +46,6 @@ export default function PatronMasterBanner() {
   useEffect(() => {
     if (patrocinadores.length <= 1) return;
     const id = setInterval(() => {
-      // fade out
       Animated.timing(opacity, {
         toValue: 0,
         duration: FADE_DURATION_MS,
@@ -78,6 +83,7 @@ export default function PatronMasterBanner() {
   }
 
   const hasLink = !!current.website_url;
+  const imageUri = buildPlaceholderUrl(current.name);
 
   return (
     <TouchableOpacity
@@ -87,81 +93,43 @@ export default function PatronMasterBanner() {
       style={styles.container}
     >
       <Animated.View style={[styles.inner, { opacity }]}>
-        <View style={styles.leftColumn}>
-          <Text style={styles.label}>Patrocinador oficial</Text>
-          <Text style={styles.tier}>{formatTier(current.tier)}</Text>
-        </View>
-        <View style={styles.rightColumn}>
-          {current.logo_url ? (
-            <Image
-              source={{ uri: current.logo_url }}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-          ) : (
-            <Text style={styles.fallbackName} numberOfLines={2}>
-              {current.name}
-            </Text>
-          )}
+        <Image source={{ uri: imageUri }} style={styles.image} resizeMode="cover" />
+        <View style={styles.badge}>
+          <Text style={styles.badgeText}>PATROCINADOR OFICIAL</Text>
         </View>
       </Animated.View>
     </TouchableOpacity>
   );
 }
 
-function formatTier(tier: string): string {
-  const t = (tier || '').toLowerCase();
-  if (t === 'diamante') return 'Diamante';
-  if (t === 'ouro') return 'Ouro';
-  return tier;
-}
-
 const styles = StyleSheet.create({
   container: {
-    height: 72,
+    height: BANNER_HEIGHT,
     backgroundColor: '#6B1E1E',
-    paddingHorizontal: 16,
-    justifyContent: 'center',
+    width: '100%',
   },
   inner: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  leftColumn: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  label: {
-    color: '#F5E6C8',
-    fontSize: 10,
-    fontWeight: '600',
-    letterSpacing: 0.8,
-    textTransform: 'uppercase',
-    fontFamily: fonts.bodyMedium,
-  },
-  tier: {
-    color: '#FFFFFF',
-    fontSize: 13,
-    fontWeight: '700',
-    marginTop: 2,
-    fontFamily: fonts.bodyBold,
-  },
-  rightColumn: {
-    flex: 2,
-    height: '100%',
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-  },
-  logo: {
     width: '100%',
-    height: 56,
   },
-  fallbackName: {
-    color: '#FFFFFF',
-    fontSize: 15,
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  badge: {
+    position: 'absolute',
+    top: 8,
+    left: 10,
+    backgroundColor: 'rgba(43, 26, 16, 0.75)',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 4,
+  },
+  badgeText: {
+    color: '#F5E6C8',
+    fontSize: 9,
     fontWeight: '700',
-    textAlign: 'right',
-    fontFamily: fonts.heading,
+    letterSpacing: 0.8,
+    fontFamily: fonts.bodyMedium,
   },
 });
