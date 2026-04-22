@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { Card } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
+import SearchBar from '../components/ui/SearchBar';
 
 interface CardAction {
   key: string;
@@ -93,6 +95,16 @@ const CARDS: CardAction[] = [
 
 export default function HomeScreen() {
   const nav = useNavigation<any>();
+  const [query, setQuery] = useState('');
+
+  function handleSearch(text: string) {
+    const term = text.trim();
+    setQuery(text);
+    if (term.length >= 2) {
+      nav.navigate('Search', { initialQuery: term });
+    }
+  }
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.hero}>
@@ -100,6 +112,14 @@ export default function HomeScreen() {
         <Text style={styles.heroTitle}>Festival de{'\n'}Gastronomia Rural</Text>
         <Text style={styles.heroSubtitle}>de Itapecerica · MG</Text>
       </View>
+
+      <SearchBar
+        value={query}
+        onChange={handleSearch}
+        placeholder="Buscar barracas, pratos, receitas…"
+        debounceMs={400}
+        containerStyle={styles.searchBar}
+      />
 
       {CARDS.map((c) => (
         <Card key={c.key} style={styles.card} onPress={() => nav.navigate(c.route)}>
@@ -135,6 +155,7 @@ const styles = StyleSheet.create({
   },
   heroTitle: { color: '#FFF', fontSize: 28, fontWeight: '900', lineHeight: 32 },
   heroSubtitle: { color: 'rgba(255,255,255,0.9)', fontSize: 16, marginTop: 8 },
+  searchBar: { marginHorizontal: 0, marginBottom: 12, marginTop: 0 },
   card: { marginBottom: 12, backgroundColor: '#FFF' },
   cardContent: { flexDirection: 'row', alignItems: 'center', gap: 16 },
   cardText: { flex: 1 },

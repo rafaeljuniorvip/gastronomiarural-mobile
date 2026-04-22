@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -8,12 +8,14 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { listReceitas, type Receita, type Dificuldade } from '../../services/receita.service';
 import Loading from '../../components/ui/Loading';
 import ErrorState from '../../components/ui/ErrorState';
 import EmptyState from '../../components/ui/EmptyState';
+import SearchBar from '../../components/ui/SearchBar';
 
 const DIFICULDADE_LABEL: Record<Dificuldade, string> = {
   facil: 'Fácil',
@@ -27,6 +29,13 @@ export default function ReceitasListScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [search, setSearch] = useState('');
+
+  const filtered = useMemo(() => {
+    const term = search.trim().toLowerCase();
+    if (!term) return receitas;
+    return receitas.filter((r) => (r.title || '').toLowerCase().includes(term));
+  }, [receitas, search]);
 
   const load = useCallback(async () => {
     setError(null);
@@ -57,10 +66,22 @@ export default function ReceitasListScreen() {
   }
 
   return (
+    <View style={styles.container}>
+      <SearchBar
+        value={search}
+        onChange={setSearch}
+        placeholder="Buscar receita…"
+      />
+      {filtered.length === 0 ? (
+        <EmptyState
+          icon="magnify-close"
+          title="Nada encontrado"
+          message={`Nenhuma receita bate com \"${search.trim()}\".`}
+        />
+      ) : (
     <FlatList
-      style={styles.container}
       contentContainerStyle={styles.content}
-      data={receitas}
+      data={filtered}
       keyExtractor={(item) => String(item.id)}
       refreshControl={
         <RefreshControl
@@ -71,56 +92,60 @@ export default function ReceitasListScreen() {
           }}
         />
       }
-      renderItem={({ item }) => (
-        <TouchableOpacity
-          style={styles.card}
-          onPress={() => nav.navigate('ReceitaDetail', { receitaId: item.id })}
-          activeOpacity={0.8}
-        >
-          {item.cover_url ? (
-            <Image source={{ uri: item.cover_url }} style={styles.cover} />
-          ) : (
-            <View style={[styles.cover, styles.coverPlaceholder]}>
-              <Icon name="chef-hat" size={40} color="#C65D2E" />
-            </View>
-          )}
-          <View style={styles.cardBody}>
-            <Text style={styles.title} numberOfLines={2}>
-              {item.title}
-            </Text>
-            {item.description ? (
-              <Text style={styles.description} numberOfLines={2}>
-                {item.description}
+      renderItem={({ item, index }) => (
+        <Animated.View entering={FadeInDown.duration(400).delay(index * 40)}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => nav.navigate('ReceitaDetail', { receitaId: item.id })}
+            activeOpacity={0.8}
+          >
+            {item.cover_url ? (
+              <Image source={{ uri: item.cover_url }} style={styles.cover} />
+            ) : (
+              <View style={[styles.cover, styles.coverPlaceholder]}>
+                <Icon name="chef-hat" size={40} color="#C65D2E" />
+              </View>
+            )}
+            <View style={styles.cardBody}>
+              <Text style={styles.title} numberOfLines={2}>
+                {item.title}
               </Text>
-            ) : null}
-            <View style={styles.meta}>
-              {item.tempo_preparo_min !== null ? (
-                <View style={styles.metaItem}>
-                  <Icon name="clock-outline" size={13} color="#6B6B6B" />
-                  <Text style={styles.metaText}>{item.tempo_preparo_min} min</Text>
-                </View>
+              {item.description ? (
+                <Text style={styles.description} numberOfLines={2}>
+                  {item.description}
+                </Text>
               ) : null}
-              {item.dificuldade ? (
-                <View style={styles.metaItem}>
-                  <Icon name="chart-line-variant" size={13} color="#6B6B6B" />
-                  <Text style={styles.metaText}>
-                    {DIFICULDADE_LABEL[item.dificuldade]}
-                  </Text>
-                </View>
-              ) : null}
-              {item.rendimento ? (
-                <View style={styles.metaItem}>
-                  <Icon name="account-group" size={13} color="#6B6B6B" />
-                  <Text style={styles.metaText} numberOfLines={1}>
-                    {item.rendimento}
-                  </Text>
-                </View>
-              ) : null}
+              <View style={styles.meta}>
+                {item.tempo_preparo_min !== null ? (
+                  <View style={styles.metaItem}>
+                    <Icon name="clock-outline" size={13} color="#6B6B6B" />
+                    <Text style={styles.metaText}>{item.tempo_preparo_min} min</Text>
+                  </View>
+                ) : null}
+                {item.dificuldade ? (
+                  <View style={styles.metaItem}>
+                    <Icon name="chart-line-variant" size={13} color="#6B6B6B" />
+                    <Text style={styles.metaText}>
+                      {DIFICULDADE_LABEL[item.dificuldade]}
+                    </Text>
+                  </View>
+                ) : null}
+                {item.rendimento ? (
+                  <View style={styles.metaItem}>
+                    <Icon name="account-group" size={13} color="#6B6B6B" />
+                    <Text style={styles.metaText} numberOfLines={1}>
+                      {item.rendimento}
+                    </Text>
+                  </View>
+                ) : null}
+              </View>
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </Animated.View>
       )}
     />
+      )}
+    </View>
   );
 }
 

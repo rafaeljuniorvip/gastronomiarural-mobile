@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { listPessoas, type Pessoa, type PessoaRole } from '../../services/pessoa.service';
@@ -97,28 +98,30 @@ export default function PessoasListScreen() {
               }}
             />
           }
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() => nav.navigate('PessoaDetail', { pessoaId: item.id })}
-            >
-              {item.photo_url ? (
-                <Image source={{ uri: item.photo_url }} style={styles.avatar} />
-              ) : (
-                <View style={[styles.avatar, styles.avatarPlaceholder]}>
-                  <Icon name="account" size={38} color="#C65D2E" />
+          renderItem={({ item, index }) => (
+            <Animated.View entering={FadeInDown.duration(400).delay(index * 40)}>
+              <TouchableOpacity
+                style={styles.card}
+                onPress={() => nav.navigate('PessoaDetail', { pessoaId: item.id })}
+              >
+                {item.photo_url ? (
+                  <Image source={{ uri: item.photo_url }} style={styles.avatar} />
+                ) : (
+                  <View style={[styles.avatar, styles.avatarPlaceholder]}>
+                    <Icon name="account" size={38} color="#C65D2E" />
+                  </View>
+                )}
+                <View style={styles.cardBody}>
+                  <Text style={styles.name}>{item.name}</Text>
+                  {item.bio ? (
+                    <Text style={styles.bio} numberOfLines={2}>
+                      {item.bio}
+                    </Text>
+                  ) : null}
                 </View>
-              )}
-              <View style={styles.cardBody}>
-                <Text style={styles.name}>{item.name}</Text>
-                {item.bio ? (
-                  <Text style={styles.bio} numberOfLines={2}>
-                    {item.bio}
-                  </Text>
-                ) : null}
-              </View>
-              <Icon name="chevron-right" size={22} color="#6B6B6B" />
-            </TouchableOpacity>
+                <Icon name="chevron-right" size={22} color="#6B6B6B" />
+              </TouchableOpacity>
+            </Animated.View>
           )}
         />
       )}

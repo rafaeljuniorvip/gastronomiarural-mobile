@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SectionList, StyleSheet, RefreshControl, Image, View, Text, TouchableOpacity } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { listPratos, type Prato } from '../../services/prato.service';
@@ -8,6 +9,7 @@ import ErrorState from '../../components/ui/ErrorState';
 import EmptyState from '../../components/ui/EmptyState';
 import CategoryChips from '../../components/ui/CategoryChips';
 import GroupModeSelector, { type GroupMode } from '../../components/ui/GroupModeSelector';
+import SearchBar from '../../components/ui/SearchBar';
 
 const CATEGORIES = [
   { value: '', label: 'Todos' },
@@ -46,6 +48,7 @@ export default function PratosListScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [search, setSearch] = useState('');
 
   const load = useCallback(async () => {
     setError(null);
@@ -61,9 +64,19 @@ export default function PratosListScreen() {
 
   useEffect(() => { load(); }, [load]);
 
+  const filtered = useMemo(() => {
+    const term = search.trim().toLowerCase();
+    if (!term) return pratos;
+    return pratos.filter((p) => {
+      const name = (p.name || '').toLowerCase();
+      const desc = (p.description || '').toLowerCase();
+      return name.includes(term) || desc.includes(term);
+    });
+  }, [pratos, search]);
+
   const sections = useMemo(() => {
     const groups = new Map<string, Prato[]>();
-    for (const p of pratos) {
+    for (const p of filtered) {
       const key = groupMode === 'categoria' ? categoryLabel(p.category) : barracaLabel(p);
       const arr = groups.get(key);
       if (arr) arr.push(p);
@@ -73,10 +86,15 @@ export default function PratosListScreen() {
       .filter(([, data]) => data.length > 0)
       .sort(([a], [b]) => a.localeCompare(b, 'pt-BR'))
       .map(([title, data]) => ({ title, data }));
-  }, [pratos, groupMode]);
+  }, [filtered, groupMode]);
 
   return (
     <View style={styles.container}>
+      <SearchBar
+        value={search}
+        onChange={setSearch}
+        placeholder="Buscar prato ou ingrediente…"
+      />
       <GroupModeSelector value={groupMode} onChange={setGroupMode} />
       {groupMode === 'categoria' ? (
         <CategoryChips
@@ -92,6 +110,12 @@ export default function PratosListScreen() {
         <ErrorState message={error} onRetry={load} />
       ) : pratos.length === 0 ? (
         <EmptyState icon="silverware" title="Nenhum prato encontrado" />
+      ) : filtered.length === 0 ? (
+        <EmptyState
+          icon="magnify-close"
+          title="Nada encontrado"
+          message={`Nenhum prato bate com \"${search.trim()}\".`}
+        />
       ) : (
         <SectionList
           contentContainerStyle={styles.list}
@@ -105,24 +129,26 @@ export default function PratosListScreen() {
               <Text style={styles.sectionCount}>· {data.length} {data.length === 1 ? 'prato' : 'pratos'}</Text>
             </View>
           )}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.card} onPress={() => nav.navigate('PratoDetail', { pratoId: item.id })}>
-              {item.photo_url ? (
-                <Image source={{ uri: item.photo_url }} style={styles.image} />
-              ) : (
-                <View style={[styles.image, styles.imagePlaceholder]}>
-                  <Icon name="silverware-fork-knife" size={28} color="#C65D2E" />
+          renderItem={({ item, index }) => (
+            <Animated.View entering={FadeInDown.duration(400).delay(index * 40)}>
+              <TouchableOpacity style={styles.card} onPress={() => nav.navigate('PratoDetail', { pratoId: item.id })}>
+                {item.photo_url ? (
+                  <Image source={{ uri: item.photo_url }} style={styles.image} />
+                ) : (
+                  <View style={[styles.image, styles.imagePlaceholder]}>
+                    <Icon name="silverware-fork-knife" size={28} color="#C65D2E" />
+                  </View>
+                )}
+                <View style={styles.body}>
+                  <Text style={styles.category}>{item.category}</Text>
+                  <Text style={styles.name}>{item.name}</Text>
+                  {item.description ? (
+                    <Text style={styles.desc} numberOfLines={2}>{item.description}</Text>
+                  ) : null}
+                  <Text style={styles.price}>R$ {Number(item.price).toFixed(2).replace('.', ',')}</Text>
                 </View>
-              )}
-              <View style={styles.body}>
-                <Text style={styles.category}>{item.category}</Text>
-                <Text style={styles.name}>{item.name}</Text>
-                {item.description ? (
-                  <Text style={styles.desc} numberOfLines={2}>{item.description}</Text>
-                ) : null}
-                <Text style={styles.price}>R$ {Number(item.price).toFixed(2).replace('.', ',')}</Text>
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </Animated.View>
           )}
         />
       )}

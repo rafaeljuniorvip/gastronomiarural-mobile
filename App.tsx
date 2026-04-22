@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AuthProvider } from './src/contexts/AuthContext';
 import { FavoritesProvider } from './src/contexts/FavoritesContext';
 import AppNavigator from './src/navigation/AppNavigator';
+import AppShell from './src/components/layout/AppShell';
 import {
   appendLog,
   notificationToLog,
@@ -70,7 +71,9 @@ export default function App() {
         <PaperProvider theme={theme}>
           <AuthProvider>
             <FavoritesProvider>
-              <AppNavigator />
+              <AppShell>
+                <AppNavigator />
+              </AppShell>
             </FavoritesProvider>
           </AuthProvider>
         </PaperProvider>

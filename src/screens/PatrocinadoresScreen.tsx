@@ -10,11 +10,13 @@ import {
   Linking,
   Alert,
 } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { listPatrocinadores, type Patrocinador } from '../services/patrocinador.service';
 import Loading from '../components/ui/Loading';
 import ErrorState from '../components/ui/ErrorState';
 import EmptyState from '../components/ui/EmptyState';
+import SearchBar from '../components/ui/SearchBar';
 
 const TIER_ORDER = ['diamante', 'ouro', 'prata', 'bronze', 'apoio'];
 const TIER_LABELS: Record<string, string> = {
@@ -37,6 +39,13 @@ export default function PatrocinadoresScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [search, setSearch] = useState('');
+
+  const filteredPatrocinadores = useMemo(() => {
+    const term = search.trim().toLowerCase();
+    if (!term) return patrocinadores;
+    return patrocinadores.filter((p) => (p.name || '').toLowerCase().includes(term));
+  }, [patrocinadores, search]);
 
   const load = useCallback(async () => {
     setError(null);
@@ -54,7 +63,7 @@ export default function PatrocinadoresScreen() {
 
   const grouped = useMemo(() => {
     const map = new Map<string, Patrocinador[]>();
-    for (const p of patrocinadores) {
+    for (const p of filteredPatrocinadores) {
       const tier = (p.tier || 'apoio').toLowerCase();
       if (!map.has(tier)) map.set(tier, []);
       map.get(tier)!.push(p);
@@ -69,7 +78,7 @@ export default function PatrocinadoresScreen() {
       return ia - ib;
     });
     return sortedTiers.map((tier) => ({ tier, items: map.get(tier) || [] }));
-  }, [patrocinadores]);
+  }, [filteredPatrocinadores]);
 
   async function openLink(url: string | null) {
     if (!url) return;
@@ -94,8 +103,13 @@ export default function PatrocinadoresScreen() {
   }
 
   return (
+    <View style={styles.container}>
+      <SearchBar
+        value={search}
+        onChange={setSearch}
+        placeholder="Buscar patrocinador…"
+      />
     <ScrollView
-      style={styles.container}
       contentContainerStyle={styles.content}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); load(); }} />
@@ -108,6 +122,14 @@ export default function PatrocinadoresScreen() {
         </Text>
       </View>
 
+      {filteredPatrocinadores.length === 0 ? (
+        <EmptyState
+          icon="magnify-close"
+          title="Nada encontrado"
+          message={`Nenhum patrocinador bate com \"${search.trim()}\".`}
+        />
+      ) : null}
+
       {grouped.map(({ tier, items }) => (
         <View key={tier} style={styles.section}>
           <View style={styles.sectionHeader}>
@@ -117,34 +139,40 @@ export default function PatrocinadoresScreen() {
           </View>
 
           <View style={styles.grid}>
-            {items.map((p) => (
-              <TouchableOpacity
+            {items.map((p, index) => (
+              <Animated.View
                 key={p.id}
-                style={styles.card}
-                onPress={() => openLink(p.website_url)}
-                disabled={!p.website_url}
-                activeOpacity={p.website_url ? 0.7 : 1}
+                entering={FadeInDown.duration(400).delay(index * 40)}
+                style={styles.cardWrap}
               >
-                {p.logo_url ? (
-                  <Image source={{ uri: p.logo_url }} style={styles.logo} resizeMode="contain" />
-                ) : (
-                  <View style={styles.logoPlaceholder}>
-                    <Icon name="domain" size={32} color="#C65D2E" />
-                  </View>
-                )}
-                <Text style={styles.cardName} numberOfLines={2}>{p.name}</Text>
-                {p.website_url ? (
-                  <View style={styles.linkRow}>
-                    <Icon name="open-in-new" size={11} color="#6B6B6B" />
-                    <Text style={styles.linkText}>Site</Text>
-                  </View>
-                ) : null}
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.card}
+                  onPress={() => openLink(p.website_url)}
+                  disabled={!p.website_url}
+                  activeOpacity={p.website_url ? 0.7 : 1}
+                >
+                  {p.logo_url ? (
+                    <Image source={{ uri: p.logo_url }} style={styles.logo} resizeMode="contain" />
+                  ) : (
+                    <View style={styles.logoPlaceholder}>
+                      <Icon name="domain" size={32} color="#C65D2E" />
+                    </View>
+                  )}
+                  <Text style={styles.cardName} numberOfLines={2}>{p.name}</Text>
+                  {p.website_url ? (
+                    <View style={styles.linkRow}>
+                      <Icon name="open-in-new" size={11} color="#6B6B6B" />
+                      <Text style={styles.linkText}>Site</Text>
+                    </View>
+                  ) : null}
+                </TouchableOpacity>
+              </Animated.View>
             ))}
           </View>
         </View>
       ))}
     </ScrollView>
+    </View>
   );
 }
 
@@ -169,9 +197,8 @@ const styles = StyleSheet.create({
   sectionTitle: { fontSize: 17, fontWeight: '700', color: '#8B4513', textTransform: 'uppercase', letterSpacing: 0.5 },
   sectionCount: { fontSize: 12, color: '#6B6B6B' },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+  cardWrap: { flexBasis: '48%', flexGrow: 1 },
   card: {
-    flexBasis: '48%',
-    flexGrow: 1,
     backgroundColor: '#FFF',
     borderRadius: 10,
     padding: 12,

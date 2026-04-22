@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -188,63 +189,65 @@ export default function TurismoListScreen() {
           </ScrollView>
         </>
       }
-      renderItem={({ item }) => {
+      renderItem={({ item, index }) => {
         const meta = TYPE_META[item.type];
         const dist =
           item.distance_km !== null && item.distance_km !== undefined
             ? `${Number(item.distance_km).toFixed(1)} km`
             : null;
         return (
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => nav.navigate('LocalDetail', { localId: item.id })}
-          >
-            {item.cover_url ? (
-              <Image source={{ uri: item.cover_url }} style={styles.cover} />
-            ) : (
-              <View style={[styles.cover, styles.coverPlaceholder]}>
-                <Icon name={meta.icon as any} size={40} color="#C65D2E" />
-              </View>
-            )}
-            <View style={styles.body}>
-              <View style={[styles.typeChip, { backgroundColor: meta.color }]}>
-                <Text style={styles.typeChipText}>{meta.label}</Text>
-              </View>
-              <Text style={styles.title} numberOfLines={2}>
-                {item.name}
-              </Text>
-              {item.address ? (
-                <View style={styles.metaRow}>
-                  <Icon name="map-marker-outline" size={14} color="#6B6B6B" />
-                  <Text style={styles.metaText} numberOfLines={1}>
-                    {item.address}
-                  </Text>
+          <Animated.View entering={FadeInDown.duration(400).delay(index * 40)}>
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() => nav.navigate('LocalDetail', { localId: item.id })}
+            >
+              {item.cover_url ? (
+                <Image source={{ uri: item.cover_url }} style={styles.cover} />
+              ) : (
+                <View style={[styles.cover, styles.coverPlaceholder]}>
+                  <Icon name={meta.icon as any} size={40} color="#C65D2E" />
                 </View>
-              ) : null}
-              <View style={styles.metaFooter}>
-                {dist ? (
+              )}
+              <View style={styles.body}>
+                <View style={[styles.typeChip, { backgroundColor: meta.color }]}>
+                  <Text style={styles.typeChipText}>{meta.label}</Text>
+                </View>
+                <Text style={styles.title} numberOfLines={2}>
+                  {item.name}
+                </Text>
+                {item.address ? (
                   <View style={styles.metaRow}>
-                    <Icon name="walk" size={14} color="#6B6B6B" />
-                    <Text style={styles.metaText}>{dist}</Text>
+                    <Icon name="map-marker-outline" size={14} color="#6B6B6B" />
+                    <Text style={styles.metaText} numberOfLines={1}>
+                      {item.address}
+                    </Text>
                   </View>
-                ) : (
-                  <View />
-                )}
-                {item.price_range ? (
-                  <Text style={styles.price} numberOfLines={1}>
-                    {item.price_range}
-                  </Text>
                 ) : null}
+                <View style={styles.metaFooter}>
+                  {dist ? (
+                    <View style={styles.metaRow}>
+                      <Icon name="walk" size={14} color="#6B6B6B" />
+                      <Text style={styles.metaText}>{dist}</Text>
+                    </View>
+                  ) : (
+                    <View />
+                  )}
+                  {item.price_range ? (
+                    <Text style={styles.price} numberOfLines={1}>
+                      {item.price_range}
+                    </Text>
+                  ) : null}
+                </View>
+                <TouchableOpacity
+                  style={styles.openBtn}
+                  onPress={() => nav.navigate('LocalDetail', { localId: item.id })}
+                >
+                  <Text style={styles.openBtnText}>Abrir</Text>
+                  <Icon name="arrow-right" size={14} color="#FFF" />
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                style={styles.openBtn}
-                onPress={() => nav.navigate('LocalDetail', { localId: item.id })}
-              >
-                <Text style={styles.openBtnText}>Abrir</Text>
-                <Icon name="arrow-right" size={14} color="#FFF" />
-              </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </Animated.View>
         );
       }}
       ListEmptyComponent={

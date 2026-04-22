@@ -30,6 +30,7 @@ import EdicaoDetailScreen from '../screens/EdicaoDetailScreen';
 import FaqScreen from '../screens/FaqScreen';
 import NotificacoesScreen from '../screens/NotificacoesScreen';
 import MeusMarcadoresScreen from '../screens/MeusMarcadoresScreen';
+import SearchScreen from '../screens/SearchScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -87,6 +88,7 @@ function HomeStack() {
       <Stack.Screen name="NovaAvaliacao" component={NovaAvaliacaoScreen} options={{ title: 'Nova avaliação' }} />
       <Stack.Screen name="Receitas" component={ReceitasListScreen} options={{ title: 'Receitas' }} />
       <Stack.Screen name="ReceitaDetail" component={ReceitaDetailScreen} options={{ title: '' }} />
+      <Stack.Screen name="Search" component={SearchScreen} options={{ title: 'Buscar' }} />
     </Stack.Navigator>
   );
 }

@@ -11,7 +11,17 @@ export interface Patrocinador {
   display_order?: number;
 }
 
-export async function listPatrocinadores(): Promise<Patrocinador[]> {
-  const { data } = await api.get<{ data: Patrocinador[] }>('/patrocinadores');
+export interface ListPatrocinadoresOptions {
+  tiers?: string[];
+}
+
+export async function listPatrocinadores(
+  options: ListPatrocinadoresOptions = {}
+): Promise<Patrocinador[]> {
+  const params: Record<string, string> = {};
+  if (options.tiers && options.tiers.length > 0) {
+    params.tier = options.tiers.join(',');
+  }
+  const { data } = await api.get<{ data: Patrocinador[] }>('/patrocinadores', { params });
   return data.data;
 }
