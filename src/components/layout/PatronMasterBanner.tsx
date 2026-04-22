@@ -10,16 +10,19 @@ import {
   Alert,
   type LayoutChangeEvent,
 } from 'react-native';
+import { BlurView } from 'expo-blur';
 import { listPatrocinadores, type Patrocinador } from '../../services/patrocinador.service';
 import { fonts } from '../../theme/fonts';
 
 const ROTATE_INTERVAL_MS = 8000;
-const FADE_DURATION_MS = 400;
+const FADE_DURATION_MS = 500;
 const TIERS = ['diamante', 'ouro'];
-const BANNER_HEIGHT = 110;
+const BANNER_HEIGHT = 130;
 const MARQUEE_PIXELS_PER_SECOND = 45;
 const MARQUEE_GAP = 60;
-const LOGO_HEIGHT = 60;
+// Ken Burns lento no fundo + pulso discreto no logo
+const KEN_BURNS_MS = 12000;
+const PULSE_MS = 2400;
 
 export default function PatronMasterBanner() {
   const [patrocinadores, setPatrocinadores] = useState<Patrocinador[]>([]);
@@ -28,6 +31,11 @@ export default function PatronMasterBanner() {
   const [containerWidth, setContainerWidth] = useState(0);
   const opacity = useRef(new Animated.Value(1)).current;
   const translateX = useRef(new Animated.Value(0)).current;
+  // Fundo (Ken Burns)
+  const bgScale = useRef(new Animated.Value(1)).current;
+  const bgPan = useRef(new Animated.Value(0)).current;
+  // Foreground (pulso)
+  const pulse = useRef(new Animated.Value(1)).current;
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -45,6 +53,41 @@ export default function PatronMasterBanner() {
     };
   }, []);
 
+  // Animação: Ken Burns do fundo em loop contínuo
+  useEffect(() => {
+    const zoom = Animated.loop(
+      Animated.sequence([
+        Animated.timing(bgScale, { toValue: 1.35, duration: KEN_BURNS_MS, useNativeDriver: true }),
+        Animated.timing(bgScale, { toValue: 1.1, duration: KEN_BURNS_MS, useNativeDriver: true }),
+      ]),
+    );
+    const pan = Animated.loop(
+      Animated.sequence([
+        Animated.timing(bgPan, { toValue: 14, duration: KEN_BURNS_MS, useNativeDriver: true }),
+        Animated.timing(bgPan, { toValue: -14, duration: KEN_BURNS_MS, useNativeDriver: true }),
+      ]),
+    );
+    zoom.start();
+    pan.start();
+    return () => {
+      zoom.stop();
+      pan.stop();
+    };
+  }, [bgScale, bgPan]);
+
+  // Pulso discreto no logo de frente
+  useEffect(() => {
+    const anim = Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulse, { toValue: 1.05, duration: PULSE_MS, useNativeDriver: true }),
+        Animated.timing(pulse, { toValue: 1.0, duration: PULSE_MS, useNativeDriver: true }),
+      ]),
+    );
+    anim.start();
+    return () => anim.stop();
+  }, [pulse]);
+
+  // Rotação entre patrocinadores
   useEffect(() => {
     if (patrocinadores.length <= 1) return;
     const id = setInterval(() => {
@@ -64,8 +107,7 @@ export default function PatronMasterBanner() {
     return () => clearInterval(id);
   }, [patrocinadores.length, opacity]);
 
-  // marquee: anima translateX de 0 até -(textWidth+GAP) em loop,
-  // só quando o texto for maior que o container
+  // Marquee horizontal (fallback quando não há logo)
   useEffect(() => {
     translateX.stopAnimation();
     translateX.setValue(0);
@@ -113,6 +155,35 @@ export default function PatronMasterBanner() {
       onPress={handlePress}
       style={styles.container}
     >
+      {/* Camada 1 — logo estourada no cover com Ken Burns (fica atrás e borrada) */}
+      {hasLogo ? (
+        <Animated.View
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              transform: [{ scale: bgScale }, { translateX: bgPan }],
+            },
+          ]}
+          pointerEvents="none"
+        >
+          <Image
+            source={{ uri: current.logo_url! }}
+            style={StyleSheet.absoluteFill}
+            resizeMode="cover"
+            blurRadius={24}
+          />
+        </Animated.View>
+      ) : null}
+
+      {/* Camada 2 — blur mais forte (dá profundidade tipo vidro fosco) */}
+      {hasLogo ? (
+        <BlurView intensity={30} tint="light" style={StyleSheet.absoluteFill} pointerEvents="none" />
+      ) : null}
+
+      {/* Camada 3 — overlay dourado semi-transparente pra manter identidade */}
+      <View style={styles.tintOverlay} pointerEvents="none" />
+
+      {/* Camada 4 — conteúdo nítido (label + logo + caption) */}
       <Animated.View style={[styles.inner, { opacity }]}>
         <View style={styles.label}>
           <Text style={styles.labelText}>PATROCINADOR OFICIAL</Text>
@@ -123,9 +194,9 @@ export default function PatronMasterBanner() {
         >
           {hasLogo ? (
             <>
-              <Image
+              <Animated.Image
                 source={{ uri: current.logo_url! }}
-                style={styles.logo}
+                style={[styles.logo, { transform: [{ scale: pulse }] }]}
                 resizeMode="contain"
               />
               <Text style={styles.caption} numberOfLines={1}>
@@ -171,6 +242,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
     borderBottomColor: '#6B1E1E',
   },
+  tintOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(212, 168, 66, 0.45)',
+  },
   inner: {
     flex: 1,
     justifyContent: 'center',
@@ -198,7 +273,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     overflow: 'hidden',
     paddingHorizontal: 16,
-    paddingTop: 18,
+    paddingTop: 22,
   },
   marqueeRow: {
     flexDirection: 'row',
@@ -214,17 +289,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   logo: {
-    height: LOGO_HEIGHT,
-    width: '80%',
-    maxWidth: 320,
+    height: 72,
+    width: '82%',
+    maxWidth: 340,
   },
   caption: {
-    marginTop: 4,
+    marginTop: 6,
     color: '#6B1E1E',
     fontSize: 10,
     fontWeight: '700',
-    letterSpacing: 1,
+    letterSpacing: 1.2,
     fontFamily: fonts.bodyMedium,
-    opacity: 0.75,
+    opacity: 0.8,
   },
 });
