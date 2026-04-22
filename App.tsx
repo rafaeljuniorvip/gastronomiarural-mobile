@@ -1,13 +1,29 @@
 import { useEffect, useCallback } from 'react';
 import { PaperProvider, MD3LightTheme } from 'react-native-paper';
 import * as SplashScreen from 'expo-splash-screen';
+import * as Notifications from 'expo-notifications';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AuthProvider } from './src/contexts/AuthContext';
 import { FavoritesProvider } from './src/contexts/FavoritesContext';
 import AppNavigator from './src/navigation/AppNavigator';
+import {
+  appendLog,
+  notificationToLog,
+  registerForPushNotifications,
+} from './src/services/notificacoes.service';
 
 SplashScreen.preventAutoHideAsync();
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+    shouldShowBanner: true,
+    shouldShowList: true,
+  }),
+});
 
 const theme = {
   ...MD3LightTheme,
@@ -37,6 +53,14 @@ export default function App() {
   useEffect(() => {
     onLayoutRootView();
   }, [onLayoutRootView]);
+
+  useEffect(() => {
+    registerForPushNotifications().catch(() => {});
+    const sub = Notifications.addNotificationReceivedListener((notif) => {
+      appendLog(notificationToLog(notif)).catch(() => {});
+    });
+    return () => sub.remove();
+  }, []);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

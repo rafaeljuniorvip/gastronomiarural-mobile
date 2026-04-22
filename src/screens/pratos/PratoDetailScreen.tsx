@@ -11,10 +11,12 @@ import { Button, Divider } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 import { getPrato, type Prato } from '../../services/prato.service';
+import { listReceitas, type Receita } from '../../services/receita.service';
 import Loading from '../../components/ui/Loading';
 import ErrorState from '../../components/ui/ErrorState';
 import AvaliacoesList from '../../components/avaliacoes/AvaliacoesList';
 import FavoriteButton from '../../components/FavoriteButton';
+import PratoMarkerButtons from '../../components/pratos/PratoMarkerButtons';
 
 export default function PratoDetailScreen() {
   const route = useRoute<any>();
@@ -22,6 +24,7 @@ export default function PratoDetailScreen() {
   const pratoId = Number(route.params?.pratoId);
 
   const [prato, setPrato] = useState<Prato | null>(null);
+  const [receita, setReceita] = useState<Receita | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -31,6 +34,12 @@ export default function PratoDetailScreen() {
     setError(null);
     try {
       setPrato(await getPrato(pratoId));
+      try {
+        const receitas = await listReceitas({ prato_id: pratoId });
+        setReceita(receitas[0] ?? null);
+      } catch {
+        setReceita(null);
+      }
     } catch (err: any) {
       setError(err?.response?.data?.error || 'Erro ao carregar prato');
     } finally {
@@ -84,6 +93,21 @@ export default function PratoDetailScreen() {
         <Text style={styles.title}>{prato.name}</Text>
         <Text style={styles.price}>R$ {Number(prato.price).toFixed(2).replace('.', ',')}</Text>
         {prato.description ? <Text style={styles.description}>{prato.description}</Text> : null}
+
+        <PratoMarkerButtons pratoId={pratoId} />
+
+        {receita ? (
+          <Button
+            mode="contained"
+            icon="chef-hat"
+            buttonColor="#C65D2E"
+            style={styles.button}
+            contentStyle={styles.buttonContent}
+            onPress={() => nav.navigate('ReceitaDetail', { receitaId: receita.id })}
+          >
+            Ver receita completa
+          </Button>
+        ) : null}
 
         <Button
           mode="contained"

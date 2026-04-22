@@ -15,6 +15,20 @@ import PatrocinadoresScreen from '../screens/PatrocinadoresScreen';
 import FavoritosScreen from '../screens/FavoritosScreen';
 import AccountGateScreen from '../screens/AccountGateScreen';
 import NovaAvaliacaoScreen from '../screens/avaliacoes/NovaAvaliacaoScreen';
+import MapaScreen from '../screens/MapaScreen';
+import CuponsScreen from '../screens/cupons/CuponsScreen';
+import ScannerScreen from '../screens/cupons/ScannerScreen';
+import CupomSuccessScreen from '../screens/cupons/CupomSuccessScreen';
+import ReceitaDetailScreen from '../screens/receitas/ReceitaDetailScreen';
+import PessoasListScreen from '../screens/pessoas/PessoasListScreen';
+import PessoaDetailScreen from '../screens/pessoas/PessoaDetailScreen';
+import TurismoListScreen from '../screens/turismo/TurismoListScreen';
+import LocalDetailScreen from '../screens/turismo/LocalDetailScreen';
+import TimelineScreen from '../screens/TimelineScreen';
+import EdicaoDetailScreen from '../screens/EdicaoDetailScreen';
+import FaqScreen from '../screens/FaqScreen';
+import NotificacoesScreen from '../screens/NotificacoesScreen';
+import MeusMarcadoresScreen from '../screens/MeusMarcadoresScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -32,6 +46,7 @@ function BarracasStack() {
       <Stack.Screen name="BarracaDetail" component={BarracaDetailScreen} options={{ title: '' }} />
       <Stack.Screen name="PratoDetail" component={PratoDetailScreen} options={{ title: '' }} />
       <Stack.Screen name="NovaAvaliacao" component={NovaAvaliacaoScreen} options={{ title: 'Nova avaliação' }} />
+      <Stack.Screen name="ReceitaDetail" component={ReceitaDetailScreen} options={{ title: '' }} />
     </Stack.Navigator>
   );
 }
@@ -43,6 +58,7 @@ function PratosStack() {
       <Stack.Screen name="PratoDetail" component={PratoDetailScreen} options={{ title: '' }} />
       <Stack.Screen name="BarracaDetail" component={BarracaDetailScreen} options={{ title: '' }} />
       <Stack.Screen name="NovaAvaliacao" component={NovaAvaliacaoScreen} options={{ title: 'Nova avaliação' }} />
+      <Stack.Screen name="ReceitaDetail" component={ReceitaDetailScreen} options={{ title: '' }} />
     </Stack.Navigator>
   );
 }
@@ -57,9 +73,18 @@ function HomeStack() {
       <Stack.Screen name="Oficinas" component={OficinasListScreen} options={{ title: 'Oficinas' }} />
       <Stack.Screen name="OficinaDetail" component={OficinaDetailScreen} options={{ title: '' }} />
       <Stack.Screen name="Patrocinadores" component={PatrocinadoresScreen} options={{ title: 'Patrocinadores' }} />
+      <Stack.Screen name="Pessoas" component={PessoasListScreen} options={{ title: 'Pessoas do festival' }} />
+      <Stack.Screen name="PessoaDetail" component={PessoaDetailScreen} options={{ title: '' }} />
+      <Stack.Screen name="Turismo" component={TurismoListScreen} options={{ title: 'Hospedagem e turismo' }} />
+      <Stack.Screen name="LocalDetail" component={LocalDetailScreen} options={{ title: '' }} />
+      <Stack.Screen name="Timeline" component={TimelineScreen} options={{ title: 'História do festival' }} />
+      <Stack.Screen name="EdicaoDetail" component={EdicaoDetailScreen} options={{ title: '' }} />
+      <Stack.Screen name="Faq" component={FaqScreen} options={{ title: 'Dúvidas frequentes' }} />
+      <Stack.Screen name="Notificacoes" component={NotificacoesScreen} options={{ title: 'Notificações' }} />
       <Stack.Screen name="BarracaDetail" component={BarracaDetailScreen} options={{ title: '' }} />
       <Stack.Screen name="PratoDetail" component={PratoDetailScreen} options={{ title: '' }} />
       <Stack.Screen name="NovaAvaliacao" component={NovaAvaliacaoScreen} options={{ title: 'Nova avaliação' }} />
+      <Stack.Screen name="ReceitaDetail" component={ReceitaDetailScreen} options={{ title: '' }} />
     </Stack.Navigator>
   );
 }
@@ -69,6 +94,21 @@ function AccountStack() {
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="AccountHome" component={AccountGateScreen} options={{ title: 'Conta' }} />
       <Stack.Screen name="Favoritos" component={FavoritosScreen} options={{ title: 'Meus favoritos' }} />
+      <Stack.Screen name="MeusMarcadores" component={MeusMarcadoresScreen} options={{ title: 'Meus pratos' }} />
+    </Stack.Navigator>
+  );
+}
+
+function CuponsStack() {
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen name="Cupons" component={CuponsScreen} options={{ title: 'Cupons' }} />
+      <Stack.Screen
+        name="CupomScanner"
+        component={ScannerScreen}
+        options={{ title: 'Escanear QR', headerStyle: { backgroundColor: '#000' } }}
+      />
+      <Stack.Screen name="CupomSuccess" component={CupomSuccessScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
@@ -77,8 +117,8 @@ const ICON_MAP: Record<string, string> = {
   HomeTab: 'home',
   BarracasTab: 'storefront',
   PratosTab: 'silverware-fork-knife',
-  ProgramacaoTab: 'calendar-music',
-  OficinasTab: 'school',
+  MapaTab: 'map-marker-multiple',
+  CuponsTab: 'ticket-percent',
   AccountTab: 'account',
 };
 
@@ -99,7 +139,8 @@ export default function AppNavigator() {
         <Tab.Screen name="HomeTab" component={HomeStack} options={{ title: 'Início' }} />
         <Tab.Screen name="BarracasTab" component={BarracasStack} options={{ title: 'Barracas' }} />
         <Tab.Screen name="PratosTab" component={PratosStack} options={{ title: 'Cardápio' }} />
-        <Tab.Screen name="OficinasTab" component={OficinasListScreen} options={{ title: 'Oficinas' }} />
+        <Tab.Screen name="MapaTab" component={MapaScreen} options={{ title: 'Mapa' }} />
+        <Tab.Screen name="CuponsTab" component={CuponsStack} options={{ title: 'Cupons' }} />
         <Tab.Screen name="AccountTab" component={AccountStack} options={{ title: 'Conta' }} />
       </Tab.Navigator>
     </NavigationContainer>

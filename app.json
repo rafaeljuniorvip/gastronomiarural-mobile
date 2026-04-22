@@ -22,7 +22,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#8B4513"
       },
-      "package": "com.gastronomiarural.app"
+      "package": "com.gastronomiarural.app",
+      "permissions": ["android.permission.CAMERA"]
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -33,6 +34,12 @@
       [
         "expo-image-picker",
         { "photosPermission": "Permitir acesso às fotos para enviar avaliações." }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permitir acesso à câmera para escanear QR Codes dos cupons dos patrocinadores."
+        }
       ],
       "expo-asset",
       "expo-font"
