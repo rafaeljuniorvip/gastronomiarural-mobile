@@ -3,6 +3,7 @@ import api from '../config/api';
 export interface Prato {
   id: number;
   barraca_id: number;
+  barraca_name?: string | null;
   name: string;
   description: string | null;
   price: string;

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import api, { setToken } from '../config/api';
+import { registerForPushNotifications } from '../services/notificacoes.service';
 
 export interface User {
   id: number;
@@ -41,6 +42,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const res = await api.post<{ data: { token: string; user: User } }>('/auth/google', { credential });
     await setToken(res.data.data.token);
     setUser(res.data.data.user);
+    try {
+      await registerForPushNotifications();
+    } catch (e) {
+      console.warn('[push-register] erro após login:', e);
+    }
   }
 
   async function logout() {

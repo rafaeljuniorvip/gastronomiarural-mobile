@@ -20,6 +20,7 @@ import CuponsScreen from '../screens/cupons/CuponsScreen';
 import ScannerScreen from '../screens/cupons/ScannerScreen';
 import CupomSuccessScreen from '../screens/cupons/CupomSuccessScreen';
 import ReceitaDetailScreen from '../screens/receitas/ReceitaDetailScreen';
+import ReceitasListScreen from '../screens/receitas/ReceitasListScreen';
 import PessoasListScreen from '../screens/pessoas/PessoasListScreen';
 import PessoaDetailScreen from '../screens/pessoas/PessoaDetailScreen';
 import TurismoListScreen from '../screens/turismo/TurismoListScreen';
@@ -84,6 +85,16 @@ function HomeStack() {
       <Stack.Screen name="BarracaDetail" component={BarracaDetailScreen} options={{ title: '' }} />
       <Stack.Screen name="PratoDetail" component={PratoDetailScreen} options={{ title: '' }} />
       <Stack.Screen name="NovaAvaliacao" component={NovaAvaliacaoScreen} options={{ title: 'Nova avaliação' }} />
+      <Stack.Screen name="Receitas" component={ReceitasListScreen} options={{ title: 'Receitas' }} />
+      <Stack.Screen name="ReceitaDetail" component={ReceitaDetailScreen} options={{ title: '' }} />
+    </Stack.Navigator>
+  );
+}
+
+function ReceitasStack() {
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen name="ReceitasList" component={ReceitasListScreen} options={{ title: 'Receitas' }} />
       <Stack.Screen name="ReceitaDetail" component={ReceitaDetailScreen} options={{ title: '' }} />
     </Stack.Navigator>
   );
@@ -117,6 +128,7 @@ const ICON_MAP: Record<string, string> = {
   HomeTab: 'home',
   BarracasTab: 'storefront',
   PratosTab: 'silverware-fork-knife',
+  ReceitasTab: 'chef-hat',
   MapaTab: 'map-marker-multiple',
   CuponsTab: 'ticket-percent',
   AccountTab: 'account',
@@ -139,6 +151,7 @@ export default function AppNavigator() {
         <Tab.Screen name="HomeTab" component={HomeStack} options={{ title: 'Início' }} />
         <Tab.Screen name="BarracasTab" component={BarracasStack} options={{ title: 'Barracas' }} />
         <Tab.Screen name="PratosTab" component={PratosStack} options={{ title: 'Cardápio' }} />
+        <Tab.Screen name="ReceitasTab" component={ReceitasStack} options={{ title: 'Receitas' }} />
         <Tab.Screen name="MapaTab" component={MapaScreen} options={{ title: 'Mapa' }} />
         <Tab.Screen name="CuponsTab" component={CuponsStack} options={{ title: 'Cupons' }} />
         <Tab.Screen name="AccountTab" component={AccountStack} options={{ title: 'Conta' }} />

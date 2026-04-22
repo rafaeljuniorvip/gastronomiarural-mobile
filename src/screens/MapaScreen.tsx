@@ -1,90 +1,138 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  ScrollView,
-  RefreshControl,
-  Linking,
-  Alert,
-} from 'react-native';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { WebView } from 'react-native-webview';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import { listMapa, type MapaFeature } from '../services/mapa.service';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { listMapaAll, type MapaAllItem } from '../services/mapa.service';
 import Loading from '../components/ui/Loading';
 import ErrorState from '../components/ui/ErrorState';
-import EmptyState from '../components/ui/EmptyState';
+import CategoryChips, { type ChipOption } from '../components/ui/CategoryChips';
 
-type FilterKey = 'all' | 'barraca' | 'palco' | 'banheiro' | 'estacionamento' | 'posto_saude' | 'outros';
+type FilterKey = 'all' | 'festival' | 'turismo';
 
-const FILTERS: { key: FilterKey; label: string }[] = [
-  { key: 'all', label: 'Tudo' },
-  { key: 'barraca', label: 'Barracas' },
-  { key: 'palco', label: 'Palcos' },
-  { key: 'banheiro', label: 'Banheiros' },
-  { key: 'estacionamento', label: 'Estacionamento' },
-  { key: 'posto_saude', label: 'Saúde' },
-  { key: 'outros', label: 'Outros' },
+const FILTER_OPTIONS: ChipOption[] = [
+  { value: 'all', label: 'Todos' },
+  { value: 'festival', label: 'Pontos do festival' },
+  { value: 'turismo', label: 'Turismo' },
 ];
 
-// Ícone (MaterialCommunityIcons) por subtype
-const SUBTYPE_ICON: Record<string, keyof typeof Icon.glyphMap> = {
-  barraca: 'store',
-  palco: 'microphone-variant',
-  banheiro: 'toilet',
-  estacionamento: 'parking',
-  posto_saude: 'hospital-building',
-  caixa: 'cash',
-  agua: 'water',
-  entrada: 'gate',
-  kids: 'teddy-bear',
-};
+const CENTER_LAT = -20.4726;
+const CENTER_LNG = -45.1269;
+const DEFAULT_ZOOM = 15;
 
-// Rótulo legível por subtype
-const SUBTYPE_LABEL: Record<string, string> = {
-  barraca: 'Barraca',
-  palco: 'Palco',
-  banheiro: 'Banheiro',
-  estacionamento: 'Estacionamento',
-  posto_saude: 'Posto de saúde',
-  caixa: 'Caixa / ATM',
-  agua: 'Ponto de água',
-  entrada: 'Entrada',
-  kids: 'Área kids',
-};
+/**
+ * Monta o HTML do mapa Leaflet injetando os pontos filtrados como JSON.
+ * Renderizado dentro de uma WebView — funciona no Expo Go sem dev client.
+ */
+function buildHtml(points: MapaAllItem[]): string {
+  const safePoints = points
+    .filter((p) => p.lat != null && p.lng != null)
+    .map((p) => ({
+      name: p.name,
+      lat: p.lat,
+      lng: p.lng,
+      icon: p.icon,
+      kind: p.kind,
+      subtype: p.subtype,
+    }));
 
-// Cor do chip por subtype (paleta festival)
-const SUBTYPE_COLOR: Record<string, string> = {
-  barraca: '#8B4513',
-  palco: '#C65D2E',
-  banheiro: '#4A90E2',
-  estacionamento: '#6B6B6B',
-  posto_saude: '#D32F2F',
-  caixa: '#2E7D32',
-  agua: '#0288D1',
-  entrada: '#8B4513',
-  kids: '#D4A017',
-};
+  const pointsJson = JSON.stringify(safePoints).replace(/</g, '\\u003c');
 
-const OUTROS_KEYS = ['caixa', 'agua', 'entrada', 'kids'];
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html, body, #map { margin: 0; padding: 0; height: 100%; width: 100%; }
+    body { background: #FAF7F2; -webkit-tap-highlight-color: transparent; }
+    .gr-pin {
+      background: #8B4513;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      white-space: nowrap;
+      border: 2px solid #fff;
+      text-align: center;
+    }
+    .gr-pin.turismo { background: #2E7D32; }
+    .gr-pin.barraca { background: #C65D2E; }
+    .leaflet-popup-content-wrapper { border-radius: 8px; }
+    .leaflet-popup-content { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; margin: 10px 12px; }
+    .leaflet-popup-content b { color: #2B2B2B; }
+    .gr-popup-subtype { color: #6B6B6B; font-size: 11px; text-transform: uppercase; margin-top: 4px; display: block; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    (function () {
+      try {
+        var map = L.map('map', { zoomControl: true, attributionControl: false }).setView([${CENTER_LAT}, ${CENTER_LNG}], ${DEFAULT_ZOOM});
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19
+        }).addTo(map);
+
+        var points = ${pointsJson};
+        var bounds = [];
+        points.forEach(function (p) {
+          if (p.lat == null || p.lng == null) return;
+          var cls = 'gr-pin ' + (p.kind || '');
+          var icon = L.divIcon({
+            html: '<div class="' + cls + '">' + p.icon + '</div>',
+            className: '',
+            iconSize: [32, 32],
+            iconAnchor: [16, 16]
+          });
+          var marker = L.marker([p.lat, p.lng], { icon: icon }).addTo(map);
+          var popupHtml = '<b>' + (p.name || '') + '</b>' +
+            '<span class="gr-popup-subtype">' + (p.subtype || p.kind || '') + '</span>';
+          marker.bindPopup(popupHtml);
+          bounds.push([p.lat, p.lng]);
+        });
+
+        // Expose recenter function for React Native to call via injectedJavaScript
+        window.grRecenter = function () {
+          map.setView([${CENTER_LAT}, ${CENTER_LNG}], ${DEFAULT_ZOOM});
+        };
+
+        if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+          window.ReactNativeWebView.postMessage('ready');
+        }
+      } catch (err) {
+        if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+          window.ReactNativeWebView.postMessage('error:' + (err && err.message ? err.message : 'unknown'));
+        }
+      }
+    })();
+  </script>
+</body>
+</html>`;
+}
 
 export default function MapaScreen() {
-  const [features, setFeatures] = useState<MapaFeature[]>([]);
+  const insets = useSafeAreaInsets();
+  const [items, setItems] = useState<MapaAllItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mapReady, setMapReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [refreshing, setRefreshing] = useState(false);
   const [filter, setFilter] = useState<FilterKey>('all');
+  const webRef = useRef<WebView>(null);
 
   const load = useCallback(async () => {
     setError(null);
+    setLoading(true);
     try {
-      setFeatures(await listMapa());
+      setItems(await listMapaAll());
     } catch (err: any) {
       setError(err?.response?.data?.error || 'Erro ao carregar o mapa');
     } finally {
       setLoading(false);
-      setRefreshing(false);
     }
   }, []);
 
@@ -92,110 +140,79 @@ export default function MapaScreen() {
     load();
   }, [load]);
 
-  const filtered = useMemo(() => {
-    if (filter === 'all') return features;
-    if (filter === 'outros') return features.filter((f) => OUTROS_KEYS.includes(f.subtype));
-    return features.filter((f) => f.subtype === filter);
-  }, [features, filter]);
+  const filteredPoints = useMemo(() => {
+    if (filter === 'all') return items;
+    if (filter === 'festival') return items.filter((i) => i.kind === 'servico' || i.kind === 'barraca');
+    if (filter === 'turismo') return items.filter((i) => i.kind === 'turismo');
+    return items;
+  }, [items, filter]);
 
-  const handleRoute = useCallback(async (f: MapaFeature) => {
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${f.lat},${f.lng}`;
-    const canOpen = await Linking.canOpenURL(url);
-    if (!canOpen) {
-      Alert.alert('Erro', 'Não foi possível abrir o mapa.');
-      return;
-    }
-    Linking.openURL(url);
+  // Reconstrói o HTML toda vez que o filtro mudar.
+  // Um novo HTML no `source` faz a WebView recarregar por completo — estratégia mais
+  // simples e confiável do que injetar JS para atualizar markers individualmente.
+  const html = useMemo(() => buildHtml(filteredPoints), [filteredPoints]);
+
+  // Reset da flag mapReady quando recarrega o HTML
+  useEffect(() => {
+    setMapReady(false);
+  }, [html]);
+
+  const handleRecenter = useCallback(() => {
+    webRef.current?.injectJavaScript('window.grRecenter && window.grRecenter(); true;');
   }, []);
 
-  if (loading) return <Loading message="Carregando mapa..." />;
   if (error) return <ErrorState message={error} onRetry={load} />;
 
   return (
-    <View style={styles.container}>
-      {/* Barra de filtros horizontal */}
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.filterWrap}>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.filterRow}
-        >
-          {FILTERS.map((f) => {
-            const active = filter === f.key;
-            return (
-              <TouchableOpacity
-                key={f.key}
-                onPress={() => setFilter(f.key)}
-                style={[styles.chip, active && styles.chipActive]}
-                activeOpacity={0.7}
-              >
-                <Text style={[styles.chipText, active && styles.chipTextActive]}>{f.label}</Text>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
+        <CategoryChips
+          options={FILTER_OPTIONS}
+          value={filter}
+          onChange={(v) => setFilter(v as FilterKey)}
+        />
       </View>
 
-      {filtered.length === 0 ? (
-        <EmptyState
-          icon="map-marker-off-outline"
-          title="Nada aqui ainda"
-          message="Não há pontos cadastrados para este filtro."
-        />
-      ) : (
-        <FlatList
-          data={filtered}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.listContent}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={() => {
-                setRefreshing(true);
-                load();
-              }}
-            />
-          }
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-          renderItem={({ item }) => {
-            const iconName = SUBTYPE_ICON[item.subtype] || 'map-marker';
-            const label = SUBTYPE_LABEL[item.subtype] || item.subtype;
-            const color = SUBTYPE_COLOR[item.subtype] || '#8B4513';
-            const name = item.name || label;
-
-            return (
-              <View style={styles.card}>
-                <View style={[styles.iconCircle, { backgroundColor: color + '15' }]}>
-                  <Icon name={iconName as any} size={24} color={color} />
-                </View>
-
-                <View style={styles.cardBody}>
-                  <Text style={styles.cardName} numberOfLines={2}>
-                    {name}
-                  </Text>
-                  <View style={styles.metaRow}>
-                    <View style={[styles.typeChip, { backgroundColor: color }]}>
-                      <Text style={styles.typeChipText}>{label}</Text>
-                    </View>
-                    <Text style={styles.coords} numberOfLines={1}>
-                      {Number(item.lat).toFixed(5)}, {Number(item.lng).toFixed(5)}
-                    </Text>
-                  </View>
-                </View>
-
-                <TouchableOpacity
-                  style={styles.routeBtn}
-                  onPress={() => handleRoute(item)}
-                  activeOpacity={0.7}
-                >
-                  <Icon name="directions" size={16} color="#FFF" />
-                  <Text style={styles.routeBtnText}>Rota</Text>
-                </TouchableOpacity>
-              </View>
-            );
+      <View style={styles.mapWrap}>
+        <WebView
+          ref={webRef}
+          originWhitelist={['*']}
+          source={{ html }}
+          style={styles.webview}
+          onMessage={(event) => {
+            const msg = event.nativeEvent.data;
+            if (msg === 'ready') {
+              setMapReady(true);
+            } else if (msg.startsWith('error:')) {
+              setError('Erro ao carregar o mapa: ' + msg.slice(6));
+            }
           }}
+          javaScriptEnabled
+          domStorageEnabled
+          scrollEnabled={false}
+          startInLoadingState={false}
+          // performance on Android
+          mixedContentMode="always"
+          allowsInlineMediaPlayback
         />
-      )}
+
+        {(loading || !mapReady) && (
+          <View style={styles.loadingOverlay} pointerEvents="none">
+            <Loading message="Carregando mapa..." />
+          </View>
+        )}
+
+        {mapReady && (
+          <TouchableOpacity
+            style={styles.recenterBtn}
+            onPress={handleRecenter}
+            activeOpacity={0.8}
+          >
+            <Icon name="crosshairs-gps" size={18} color="#FFF" />
+            <Text style={styles.recenterText}>Centralizar no festival</Text>
+          </TouchableOpacity>
+        )}
+      </View>
     </View>
   );
 }
@@ -207,63 +224,34 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#E5E0D5',
   },
-  filterRow: {
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    gap: 8,
-  },
-  chip: {
-    paddingHorizontal: 14,
-    paddingVertical: 7,
-    borderRadius: 999,
-    borderWidth: 1,
-    borderColor: '#E5E0D5',
+  mapWrap: { flex: 1, position: 'relative' },
+  webview: { flex: 1, backgroundColor: '#FAF7F2' },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: '#FAF7F2',
-    marginRight: 8,
-  },
-  chipActive: {
-    backgroundColor: '#8B4513',
-    borderColor: '#8B4513',
-  },
-  chipText: { fontSize: 13, color: '#6B6B6B', fontWeight: '500' },
-  chipTextActive: { color: '#FFF', fontWeight: '700' },
-  listContent: { padding: 16, paddingBottom: 32 },
-  separator: { height: 10 },
-  card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FFF',
-    borderRadius: 12,
-    padding: 12,
-    borderWidth: 1,
-    borderColor: '#E5E0D5',
-    gap: 12,
-  },
-  iconCircle: {
-    width: 46,
-    height: 46,
-    borderRadius: 23,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  cardBody: { flex: 1, gap: 6 },
-  cardName: { fontSize: 15, fontWeight: '700', color: '#2B2B2B' },
-  metaRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  typeChip: {
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 10,
-  },
-  typeChipText: { fontSize: 10, fontWeight: '700', color: '#FFF', textTransform: 'uppercase' },
-  coords: { fontSize: 11, color: '#6B6B6B', flexShrink: 1 },
-  routeBtn: {
+  recenterBtn: {
+    position: 'absolute',
+    bottom: 20,
+    right: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: 6,
     backgroundColor: '#C65D2E',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 24,
+    shadowColor: '#000',
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 4,
   },
-  routeBtnText: { color: '#FFF', fontSize: 12, fontWeight: '700' },
+  recenterText: {
+    color: '#FFF',
+    fontSize: 13,
+    fontWeight: '700',
+  },
 });

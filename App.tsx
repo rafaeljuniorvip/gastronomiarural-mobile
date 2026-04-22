@@ -55,7 +55,9 @@ export default function App() {
   }, [onLayoutRootView]);
 
   useEffect(() => {
-    registerForPushNotifications().catch(() => {});
+    registerForPushNotifications().catch((e) => {
+      console.warn('[push-register] erro:', e);
+    });
     const sub = Notifications.addNotificationReceivedListener((notif) => {
       appendLog(notificationToLog(notif)).catch(() => {});
     });

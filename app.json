@@ -42,8 +42,15 @@
         }
       ],
       "expo-asset",
-      "expo-font"
+      "expo-font",
+      "expo-notifications"
     ],
+    "notification": {
+      "icon": "./assets/icon.png",
+      "color": "#8B4513",
+      "iosDisplayInForeground": true,
+      "androidMode": "default"
+    },
     "newArchEnabled": false,
     "extra": {
       "apiBaseUrl": "https://api.gastronomiarural.viptecnologia.com.br",

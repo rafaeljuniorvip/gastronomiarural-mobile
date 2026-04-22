@@ -1,11 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
-import { FlatList, StyleSheet, RefreshControl, Image, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { SectionList, StyleSheet, RefreshControl, Image, View, Text, TouchableOpacity } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { listPratos, type Prato } from '../../services/prato.service';
 import Loading from '../../components/ui/Loading';
 import ErrorState from '../../components/ui/ErrorState';
 import EmptyState from '../../components/ui/EmptyState';
+import CategoryChips from '../../components/ui/CategoryChips';
+import GroupModeSelector, { type GroupMode } from '../../components/ui/GroupModeSelector';
 
 const CATEGORIES = [
   { value: '', label: 'Todos' },
@@ -17,10 +19,30 @@ const CATEGORIES = [
   { value: 'bebidas', label: 'Bebidas' },
 ];
 
+const CATEGORY_LABELS: Record<string, string> = {
+  carnes: 'Carnes',
+  aves: 'Aves',
+  mineirices: 'Mineirices',
+  peixes: 'Peixes',
+  quitandas: 'Doces',
+  bebidas: 'Bebidas',
+};
+
+function categoryLabel(value: string): string {
+  if (!value) return 'Outros';
+  return CATEGORY_LABELS[value] || (value.charAt(0).toUpperCase() + value.slice(1).toLowerCase());
+}
+
+function barracaLabel(prato: Prato): string {
+  if (prato.barraca_name && prato.barraca_name.trim()) return prato.barraca_name.trim();
+  return `Barraca #${prato.barraca_id}`;
+}
+
 export default function PratosListScreen() {
   const nav = useNavigation<any>();
   const [pratos, setPratos] = useState<Prato[]>([]);
   const [category, setCategory] = useState('');
+  const [groupMode, setGroupMode] = useState<GroupMode>('categoria');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -39,25 +61,30 @@ export default function PratosListScreen() {
 
   useEffect(() => { load(); }, [load]);
 
+  const sections = useMemo(() => {
+    const groups = new Map<string, Prato[]>();
+    for (const p of pratos) {
+      const key = groupMode === 'categoria' ? categoryLabel(p.category) : barracaLabel(p);
+      const arr = groups.get(key);
+      if (arr) arr.push(p);
+      else groups.set(key, [p]);
+    }
+    return Array.from(groups.entries())
+      .filter(([, data]) => data.length > 0)
+      .sort(([a], [b]) => a.localeCompare(b, 'pt-BR'))
+      .map(([title, data]) => ({ title, data }));
+  }, [pratos, groupMode]);
+
   return (
     <View style={styles.container}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.filters}
-      >
-        {CATEGORIES.map((cat) => (
-          <TouchableOpacity
-            key={cat.value}
-            onPress={() => setCategory(cat.value)}
-            style={[styles.chip, category === cat.value && styles.chipActive]}
-          >
-            <Text style={[styles.chipText, category === cat.value && styles.chipTextActive]}>
-              {cat.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      <GroupModeSelector value={groupMode} onChange={setGroupMode} />
+      {groupMode === 'categoria' ? (
+        <CategoryChips
+          options={CATEGORIES}
+          value={category}
+          onChange={setCategory}
+        />
+      ) : null}
 
       {loading ? (
         <Loading message="Carregando pratos..." />
@@ -66,11 +93,18 @@ export default function PratosListScreen() {
       ) : pratos.length === 0 ? (
         <EmptyState icon="silverware" title="Nenhum prato encontrado" />
       ) : (
-        <FlatList
+        <SectionList
           contentContainerStyle={styles.list}
-          data={pratos}
+          sections={sections}
           keyExtractor={(item) => String(item.id)}
+          stickySectionHeadersEnabled={false}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); load(); }} />}
+          renderSectionHeader={({ section: { title, data } }) => (
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>{title.toUpperCase()}</Text>
+              <Text style={styles.sectionCount}>· {data.length} {data.length === 1 ? 'prato' : 'pratos'}</Text>
+            </View>
+          )}
           renderItem={({ item }) => (
             <TouchableOpacity style={styles.card} onPress={() => nav.navigate('PratoDetail', { pratoId: item.id })}>
               {item.photo_url ? (
@@ -98,12 +132,19 @@ export default function PratosListScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#FAF7F2' },
-  filters: { padding: 12, gap: 8 },
-  chip: { paddingHorizontal: 14, paddingVertical: 6, borderRadius: 16, backgroundColor: '#FFF', borderWidth: 1, borderColor: '#E5E0D5', marginRight: 6 },
-  chipActive: { backgroundColor: '#8B4513', borderColor: '#8B4513' },
-  chipText: { color: '#6B6B6B', fontSize: 13 },
-  chipTextActive: { color: '#FFF', fontWeight: '600' },
   list: { padding: 12, paddingTop: 0 },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F2EBE0',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 6,
+    marginTop: 12,
+    marginBottom: 8,
+  },
+  sectionTitle: { fontSize: 12, fontWeight: '800', color: '#8B4513', letterSpacing: 0.8 },
+  sectionCount: { fontSize: 12, color: '#8B4513', marginLeft: 6, fontWeight: '600' },
   card: { flexDirection: 'row', backgroundColor: '#FFF', borderRadius: 10, marginBottom: 10, overflow: 'hidden', borderWidth: 1, borderColor: '#E5E0D5' },
   image: { width: 100, height: 100 },
   imagePlaceholder: { backgroundColor: '#FAF7F2', justifyContent: 'center', alignItems: 'center' },

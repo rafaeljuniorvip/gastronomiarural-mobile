@@ -27,6 +27,13 @@ const CARDS: CardAction[] = [
     route: 'Pratos',
   },
   {
+    key: 'receitas',
+    icon: 'chef-hat',
+    title: 'Receitas',
+    desc: 'Receitas tradicionais da cozinha rural mineira',
+    route: 'Receitas',
+  },
+  {
     key: 'programacao',
     icon: 'calendar-music',
     title: 'Programação',

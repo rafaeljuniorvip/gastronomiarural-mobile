@@ -96,7 +96,8 @@ export async function registerForPushNotifications(): Promise<string | null> {
 
     await AsyncStorage.setItem(TOKEN_KEY, expoToken);
     return expoToken;
-  } catch {
+  } catch (e) {
+    console.warn('[push-register] erro:', e);
     return null;
   }
 }
