@@ -73,7 +73,7 @@ function PratosStack() {
 function HomeStack() {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Festival Itapecerica' }} />
+      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Barracas" component={BarracasListScreen} options={{ title: 'Barracas' }} />
       <Stack.Screen name="Pratos" component={PratosListScreen} options={{ title: 'Cardápio' }} />
       <Stack.Screen name="Programacao" component={ProgramacaoScreen} options={{ title: 'Programação' }} />

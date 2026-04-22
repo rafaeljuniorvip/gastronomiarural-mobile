@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { ScrollView, View, Text, StyleSheet, Animated, Easing } from 'react-native';
 import { Card } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -98,6 +98,24 @@ const CARDS: CardAction[] = [
 export default function HomeScreen() {
   const nav = useNavigation<any>();
   const [query, setQuery] = useState('');
+  // Brilho diagonal (shimmer) percorrendo o hero
+  const shimmer = useRef(new Animated.Value(-1)).current;
+
+  useEffect(() => {
+    const anim = Animated.loop(
+      Animated.sequence([
+        Animated.timing(shimmer, {
+          toValue: 1,
+          duration: 3800,
+          easing: Easing.inOut(Easing.cubic),
+          useNativeDriver: true,
+        }),
+        Animated.delay(1600),
+      ]),
+    );
+    anim.start();
+    return () => anim.stop();
+  }, [shimmer]);
 
   function handleSearch(text: string) {
     const term = text.trim();
@@ -107,12 +125,50 @@ export default function HomeScreen() {
     }
   }
 
+  const shimmerTranslate = shimmer.interpolate({
+    inputRange: [-1, 1],
+    outputRange: [-280, 600],
+  });
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.hero}>
-        <Text style={styles.heroLabel}>XVIII edição · 04–07 jun 2026</Text>
-        <Text style={styles.heroTitle}>Festival de{'\n'}Gastronomia Rural</Text>
-        <Text style={styles.heroSubtitle}>de Itapecerica · MG</Text>
+        {/* brilho diagonal animado sobre o fundo */}
+        <Animated.View
+          pointerEvents="none"
+          style={[styles.shimmer, { transform: [{ translateX: shimmerTranslate }, { rotate: '18deg' }] }]}
+        />
+
+        <View style={styles.heroBadges}>
+          <View style={styles.heroBadge}>
+            <Icon name="calendar-star" size={12} color="#F5E6C8" />
+            <Text style={styles.heroBadgeText}>XVIII EDIÇÃO</Text>
+          </View>
+          <View style={styles.heroBadgeAlt}>
+            <Text style={styles.heroBadgeAltText}>04–07 JUN 2026</Text>
+          </View>
+        </View>
+
+        <Text style={styles.heroTitle}>Gastronomia Rural</Text>
+        <View style={styles.heroDivider} />
+        <Text style={styles.heroSubtitle}>Itapecerica · Minas Gerais</Text>
+
+        <View style={styles.heroStats}>
+          <View style={styles.heroStat}>
+            <Text style={styles.heroStatNum}>70+</Text>
+            <Text style={styles.heroStatLabel}>pratos</Text>
+          </View>
+          <View style={styles.heroStatDivider} />
+          <View style={styles.heroStat}>
+            <Text style={styles.heroStatNum}>4</Text>
+            <Text style={styles.heroStatLabel}>dias</Text>
+          </View>
+          <View style={styles.heroStatDivider} />
+          <View style={styles.heroStat}>
+            <Text style={styles.heroStatNum}>18ª</Text>
+            <Text style={styles.heroStatLabel}>edição</Text>
+          </View>
+        </View>
       </View>
 
       <SearchBar
@@ -144,31 +200,116 @@ const styles = StyleSheet.create({
   content: { padding: 16 },
   hero: {
     backgroundColor: colors.primary,
-    borderRadius: 12,
-    padding: 24,
+    borderRadius: 16,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
     marginBottom: 16,
+    overflow: 'hidden',
+    position: 'relative',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(212, 168, 66, 0.55)',
   },
-  heroLabel: {
-    color: 'rgba(255,255,255,0.85)',
-    fontSize: 12,
+  // brilho diagonal animado que atravessa o card
+  shimmer: {
+    position: 'absolute',
+    top: -80,
+    left: 0,
+    width: 120,
+    height: 300,
+    backgroundColor: 'rgba(255, 255, 255, 0.09)',
+    transform: [{ rotate: '18deg' }],
+  },
+  heroBadges: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 12,
+  },
+  heroBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#D4A842',
+    paddingVertical: 4,
+    paddingHorizontal: 9,
+    borderRadius: 999,
+  },
+  heroBadgeText: {
+    color: '#F5E6C8',
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 1.2,
+    fontFamily: fonts.bodyBold,
+  },
+  heroBadgeAlt: {
+    paddingVertical: 4,
+    paddingHorizontal: 9,
+    borderRadius: 999,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(245, 230, 200, 0.6)',
+  },
+  heroBadgeAltText: {
+    color: 'rgba(245, 230, 200, 0.95)',
+    fontSize: 10,
+    fontWeight: '700',
     letterSpacing: 1,
-    textTransform: 'uppercase',
-    marginBottom: 8,
     fontFamily: fonts.bodyMedium,
   },
   heroTitle: {
     color: '#FFF',
-    fontSize: 32,
+    fontSize: 38,
     fontWeight: '700',
-    lineHeight: 38,
+    lineHeight: 42,
     fontFamily: fonts.heading,
+    letterSpacing: 0.3,
+  },
+  heroDivider: {
+    height: 2,
+    width: 48,
+    backgroundColor: '#D4A842',
+    marginTop: 10,
+    marginBottom: 8,
+    borderRadius: 2,
   },
   heroSubtitle: {
-    color: 'rgba(255,255,255,0.9)',
-    fontSize: 16,
-    marginTop: 8,
+    color: 'rgba(245, 230, 200, 0.95)',
+    fontSize: 14,
     fontFamily: fonts.headingRegular,
     fontStyle: 'italic',
+    letterSpacing: 0.3,
+  },
+  heroStats: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 16,
+    paddingTop: 14,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'rgba(245, 230, 200, 0.25)',
+  },
+  heroStat: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  heroStatNum: {
+    color: '#D4A842',
+    fontSize: 22,
+    fontWeight: '800',
+    fontFamily: fonts.heading,
+    letterSpacing: 0.5,
+  },
+  heroStatLabel: {
+    color: 'rgba(245, 230, 200, 0.8)',
+    fontSize: 10,
+    marginTop: 2,
+    letterSpacing: 1,
+    textTransform: 'uppercase',
+    fontFamily: fonts.bodyMedium,
+  },
+  heroStatDivider: {
+    width: StyleSheet.hairlineWidth,
+    height: 28,
+    backgroundColor: 'rgba(245, 230, 200, 0.3)',
   },
   searchBar: { marginHorizontal: 0, marginBottom: 12, marginTop: 0 },
   card: { marginBottom: 12, backgroundColor: colors.surface },
