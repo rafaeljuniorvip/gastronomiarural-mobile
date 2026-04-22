@@ -35,12 +35,12 @@ const KIND_ICON: Record<SearchKind, string> = {
 };
 
 const KIND_COLOR: Record<SearchKind, string> = {
-  barraca: '#8B4513',
-  prato: '#C65D2E',
+  barraca: '#6B1E1E',
+  prato: '#C84B1A',
   receita: '#1E8E3E',
   evento: '#4A90E2',
   pessoa: '#8A4FFF',
-  turismo: '#D4A017',
+  turismo: '#D4A842',
 };
 
 function routeFor(result: SearchResult): { name: string; params: Record<string, unknown> } | null {
@@ -136,7 +136,7 @@ export default function SearchScreen() {
 
       {loading ? (
         <View style={styles.center}>
-          <ActivityIndicator size="small" color="#8B4513" />
+          <ActivityIndicator size="small" color="#6B1E1E" />
         </View>
       ) : error ? (
         <EmptyState icon="alert-circle-outline" title="Erro ao buscar" message={error} />
@@ -177,7 +177,7 @@ export default function SearchScreen() {
                 <Image source={{ uri: item.image_url }} style={styles.thumb} />
               ) : (
                 <View style={[styles.thumb, styles.thumbPlaceholder]}>
-                  <Icon name={KIND_ICON[item.kind] as any} size={22} color="#C65D2E" />
+                  <Icon name={KIND_ICON[item.kind] as any} size={22} color="#C84B1A" />
                 </View>
               )}
               <View style={styles.body}>
@@ -207,7 +207,7 @@ export default function SearchScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   list: { padding: 12, paddingTop: 0, paddingBottom: 24 },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   sectionHeader: {
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   sectionTitle: { fontSize: 12, fontWeight: '800', letterSpacing: 0.8 },
-  sectionCount: { fontSize: 12, color: '#8B4513', fontWeight: '600' },
+  sectionCount: { fontSize: 12, color: '#6B1E1E', fontWeight: '600' },
   card: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -232,13 +232,13 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 8,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  thumb: { width: 52, height: 52, borderRadius: 8, backgroundColor: '#FAF7F2' },
+  thumb: { width: 52, height: 52, borderRadius: 8, backgroundColor: '#FAF2E0' },
   thumbPlaceholder: { justifyContent: 'center', alignItems: 'center' },
   body: { flex: 1 },
-  title: { fontSize: 15, fontWeight: '600', color: '#2B2B2B' },
-  subtitle: { fontSize: 12, color: '#6B6B6B', marginTop: 2 },
+  title: { fontSize: 15, fontWeight: '600', color: '#2B1A10' },
+  subtitle: { fontSize: 12, color: '#6B5B4A', marginTop: 2 },
   kindRow: { flexDirection: 'row', marginTop: 6 },
   kindChip: {
     borderWidth: 1,

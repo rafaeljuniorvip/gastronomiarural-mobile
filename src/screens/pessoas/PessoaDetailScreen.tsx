@@ -58,7 +58,7 @@ const SOCIAL_COLORS: Record<SocialKey, string> = {
   facebook: '#1877F2',
   youtube: '#FF0000',
   whatsapp: '#25D366',
-  website: '#8B4513',
+  website: '#6B1E1E',
 };
 
 function buildSocialUrl(key: SocialKey, raw: string): string | null {
@@ -148,7 +148,7 @@ export default function PessoaDetailScreen() {
           <Image source={{ uri: pessoa.photo_url }} style={styles.photo} />
         ) : (
           <View style={[styles.photo, styles.photoPlaceholder]}>
-            <Icon name="account" size={80} color="#C65D2E" />
+            <Icon name="account" size={80} color="#C84B1A" />
           </View>
         )}
         <Text style={styles.name}>{pessoa.name}</Text>
@@ -192,14 +192,14 @@ export default function PessoaDetailScreen() {
                 <Image source={{ uri: b.cover_url }} style={styles.relImage} />
               ) : (
                 <View style={[styles.relImage, styles.relImagePlaceholder]}>
-                  <Icon name="storefront" size={28} color="#C65D2E" />
+                  <Icon name="storefront" size={28} color="#C84B1A" />
                 </View>
               )}
               <View style={styles.relBody}>
                 <Text style={styles.relTitle}>{b.name}</Text>
                 {b.location ? <Text style={styles.relMeta}>{b.location}</Text> : null}
               </View>
-              <Icon name="chevron-right" size={22} color="#6B6B6B" />
+              <Icon name="chevron-right" size={22} color="#6B5B4A" />
             </TouchableOpacity>
           ))}
         </View>
@@ -214,7 +214,7 @@ export default function PessoaDetailScreen() {
                 <Image source={{ uri: e.cover_url }} style={styles.relImage} />
               ) : (
                 <View style={[styles.relImage, styles.relImagePlaceholder]}>
-                  <Icon name={'calendar-music' as any} size={28} color="#C65D2E" />
+                  <Icon name={'calendar-music' as any} size={28} color="#C84B1A" />
                 </View>
               )}
               <View style={styles.relBody}>
@@ -238,13 +238,13 @@ export default function PessoaDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   content: { paddingBottom: 32 },
   hero: {
     alignItems: 'center',
     paddingVertical: 32,
     paddingHorizontal: 16,
-    backgroundColor: '#8B4513',
+    backgroundColor: '#6B1E1E',
   },
   photo: {
     width: 160,
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     borderRadius: 80,
     borderWidth: 4,
     borderColor: '#FFF',
-    backgroundColor: '#FAF7F2',
+    backgroundColor: '#FAF2E0',
   },
   photoPlaceholder: { justifyContent: 'center', alignItems: 'center' },
   name: {
@@ -276,15 +276,15 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
   sectionTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#8B4513',
+    color: '#6B1E1E',
     marginBottom: 10,
   },
-  paragraph: { fontSize: 14, color: '#2B2B2B', lineHeight: 22 },
+  paragraph: { fontSize: 14, color: '#2B1A10', lineHeight: 22 },
   socialRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   socialBtn: {
     width: 52,
@@ -293,20 +293,20 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FAF7F2',
+    backgroundColor: '#FAF2E0',
   },
   relCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FAF7F2',
+    backgroundColor: '#FAF2E0',
     borderRadius: 10,
     padding: 10,
     marginBottom: 8,
     gap: 12,
   },
-  relImage: { width: 60, height: 60, borderRadius: 8, backgroundColor: '#E5E0D5' },
+  relImage: { width: 60, height: 60, borderRadius: 8, backgroundColor: '#E5DCC8' },
   relImagePlaceholder: { justifyContent: 'center', alignItems: 'center' },
   relBody: { flex: 1 },
-  relTitle: { fontSize: 14, fontWeight: '700', color: '#2B2B2B' },
-  relMeta: { fontSize: 12, color: '#6B6B6B', marginTop: 3 },
+  relTitle: { fontSize: 14, fontWeight: '700', color: '#2B1A10' },
+  relMeta: { fontSize: 12, color: '#6B5B4A', marginTop: 3 },
 });

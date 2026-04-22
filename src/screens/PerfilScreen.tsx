@@ -37,15 +37,15 @@ export default function PerfilScreen() {
         style={styles.row}
         onPress={() => nav.navigate('Favoritos')}
       >
-        <Icon name="heart-outline" size={24} color="#8B4513" />
+        <Icon name="heart-outline" size={24} color="#6B1E1E" />
         <Text style={styles.rowText}>Meus favoritos</Text>
-        <Icon name="chevron-right" size={22} color="#6B6B6B" />
+        <Icon name="chevron-right" size={22} color="#6B5B4A" />
       </TouchableOpacity>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Minhas oficinas</Text>
         <View style={styles.placeholderCard}>
-          <Icon name="school-outline" size={20} color="#6B6B6B" />
+          <Icon name="school-outline" size={20} color="#6B5B4A" />
           <Text style={styles.placeholderText}>
             As oficinas em que você se inscreveu aparecerão aqui em breve.
           </Text>
@@ -55,7 +55,7 @@ export default function PerfilScreen() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Minhas avaliações</Text>
         <View style={styles.placeholderCard}>
-          <Icon name="star-outline" size={20} color="#6B6B6B" />
+          <Icon name="star-outline" size={20} color="#6B5B4A" />
           <Text style={styles.placeholderText}>
             O histórico das suas avaliações aparecerá aqui em breve.
           </Text>
@@ -79,13 +79,13 @@ export default function PerfilScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   content: { padding: 16, paddingBottom: 32 },
   header: { alignItems: 'center', paddingVertical: 20 },
-  avatar: { width: 96, height: 96, borderRadius: 48, backgroundColor: '#8B4513' },
+  avatar: { width: 96, height: 96, borderRadius: 48, backgroundColor: '#6B1E1E' },
   avatarPlaceholder: { alignItems: 'center', justifyContent: 'center' },
-  name: { fontSize: 20, fontWeight: '700', color: '#2B2B2B', marginTop: 14 },
-  email: { fontSize: 13, color: '#6B6B6B', marginTop: 4 },
+  name: { fontSize: 20, fontWeight: '700', color: '#2B1A10', marginTop: 14, fontFamily: 'PlayfairDisplay_700Bold' },
+  email: { fontSize: 13, color: '#6B5B4A', marginTop: 4 },
   divider: { marginVertical: 8 },
   row: {
     flexDirection: 'row',
@@ -96,15 +96,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     marginBottom: 10,
   },
-  rowText: { flex: 1, fontSize: 15, color: '#2B2B2B', fontWeight: '500' },
+  rowText: { flex: 1, fontSize: 15, color: '#2B1A10', fontWeight: '500' },
   section: { marginTop: 16 },
   sectionTitle: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#6B6B6B',
+    color: '#6B5B4A',
     textTransform: 'uppercase',
     letterSpacing: 0.6,
     marginBottom: 8,
@@ -118,10 +118,10 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  placeholderText: { flex: 1, fontSize: 12, color: '#6B6B6B', lineHeight: 17 },
+  placeholderText: { flex: 1, fontSize: 12, color: '#6B5B4A', lineHeight: 17 },
   logout: { marginTop: 28, borderColor: '#C62828', borderRadius: 8 },
   logoutContent: { paddingVertical: 4 },
-  footer: { textAlign: 'center', fontSize: 11, color: '#6B6B6B', marginTop: 24 },
+  footer: { textAlign: 'center', fontSize: 11, color: '#6B5B4A', marginTop: 24 },
 });

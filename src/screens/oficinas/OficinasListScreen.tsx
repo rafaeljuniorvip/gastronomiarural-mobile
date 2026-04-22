@@ -71,14 +71,14 @@ export default function OficinasListScreen() {
               <Image source={{ uri: item.cover_url }} style={styles.cover} />
             ) : (
               <View style={[styles.cover, styles.coverPlaceholder]}>
-                <Icon name="school" size={36} color="#C65D2E" />
+                <Icon name="school" size={36} color="#C84B1A" />
               </View>
             )}
             <View style={styles.body}>
               <Text style={styles.title}>{item.title}</Text>
 
               <View style={styles.metaRow}>
-                <Icon name="calendar" size={14} color="#6B6B6B" />
+                <Icon name="calendar" size={14} color="#6B5B4A" />
                 <Text style={styles.metaText}>
                   {formatDate(item.starts_at)} · {formatTime(item.starts_at)}
                 </Text>
@@ -86,7 +86,7 @@ export default function OficinasListScreen() {
 
               {item.location ? (
                 <View style={styles.metaRow}>
-                  <Icon name="map-marker" size={14} color="#6B6B6B" />
+                  <Icon name="map-marker" size={14} color="#6B5B4A" />
                   <Text style={styles.metaText} numberOfLines={1}>{item.location}</Text>
                 </View>
               ) : null}
@@ -121,7 +121,7 @@ export default function OficinasListScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   content: { padding: 12 },
   card: {
     backgroundColor: '#FFF',
@@ -129,14 +129,14 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  cover: { width: '100%', height: 150, backgroundColor: '#FAF7F2' },
+  cover: { width: '100%', height: 150, backgroundColor: '#FAF2E0' },
   coverPlaceholder: { justifyContent: 'center', alignItems: 'center' },
   body: { padding: 14 },
-  title: { fontSize: 17, fontWeight: '700', color: '#2B2B2B', marginBottom: 8 },
+  title: { fontSize: 17, fontWeight: '700', color: '#2B1A10', marginBottom: 8, fontFamily: 'PlayfairDisplay_700Bold' },
   metaRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 3 },
-  metaText: { fontSize: 12, color: '#6B6B6B', flexShrink: 1 },
+  metaText: { fontSize: 12, color: '#6B5B4A', flexShrink: 1 },
   badges: { flexDirection: 'row', gap: 8, marginTop: 8 },
   badge: {
     flexDirection: 'row',
@@ -148,6 +148,6 @@ const styles = StyleSheet.create({
   },
   badgeGreen: { backgroundColor: '#2E7D32' },
   badgeRed: { backgroundColor: '#C62828' },
-  badgeNeutral: { backgroundColor: '#6B6B6B' },
+  badgeNeutral: { backgroundColor: '#6B5B4A' },
   badgeText: { color: '#FFF', fontSize: 11, fontWeight: '700' },
 });

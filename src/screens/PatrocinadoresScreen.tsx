@@ -28,10 +28,10 @@ const TIER_LABELS: Record<string, string> = {
 };
 const TIER_COLORS: Record<string, string> = {
   diamante: '#4A90E2',
-  ouro: '#D4A017',
+  ouro: '#D4A842',
   prata: '#8A8A8A',
-  bronze: '#C65D2E',
-  apoio: '#6B6B6B',
+  bronze: '#C84B1A',
+  apoio: '#6B5B4A',
 };
 
 export default function PatrocinadoresScreen() {
@@ -116,7 +116,7 @@ export default function PatrocinadoresScreen() {
       }
     >
       <View style={styles.intro}>
-        <Icon name="handshake" size={28} color="#8B4513" />
+        <Icon name="handshake" size={28} color="#6B1E1E" />
         <Text style={styles.introText}>
           O festival acontece graças ao apoio destas marcas que valorizam a cultura e a gastronomia rural de Minas.
         </Text>
@@ -133,7 +133,7 @@ export default function PatrocinadoresScreen() {
       {grouped.map(({ tier, items }) => (
         <View key={tier} style={styles.section}>
           <View style={styles.sectionHeader}>
-            <View style={[styles.tierDot, { backgroundColor: TIER_COLORS[tier] || '#8B4513' }]} />
+            <View style={[styles.tierDot, { backgroundColor: TIER_COLORS[tier] || '#6B1E1E' }]} />
             <Text style={styles.sectionTitle}>{TIER_LABELS[tier] || tier}</Text>
             <Text style={styles.sectionCount}>({items.length})</Text>
           </View>
@@ -155,13 +155,13 @@ export default function PatrocinadoresScreen() {
                     <Image source={{ uri: p.logo_url }} style={styles.logo} resizeMode="contain" />
                   ) : (
                     <View style={styles.logoPlaceholder}>
-                      <Icon name="domain" size={32} color="#C65D2E" />
+                      <Icon name="domain" size={32} color="#C84B1A" />
                     </View>
                   )}
                   <Text style={styles.cardName} numberOfLines={2}>{p.name}</Text>
                   {p.website_url ? (
                     <View style={styles.linkRow}>
-                      <Icon name="open-in-new" size={11} color="#6B6B6B" />
+                      <Icon name="open-in-new" size={11} color="#6B5B4A" />
                       <Text style={styles.linkText}>Site</Text>
                     </View>
                   ) : null}
@@ -177,7 +177,7 @@ export default function PatrocinadoresScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   content: { padding: 16, paddingBottom: 32 },
   intro: {
     flexDirection: 'row',
@@ -187,15 +187,15 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     marginBottom: 18,
   },
-  introText: { flex: 1, fontSize: 13, color: '#2B2B2B', lineHeight: 19 },
+  introText: { flex: 1, fontSize: 13, color: '#2B1A10', lineHeight: 19 },
   section: { marginBottom: 22 },
   sectionHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
   tierDot: { width: 10, height: 10, borderRadius: 5 },
-  sectionTitle: { fontSize: 17, fontWeight: '700', color: '#8B4513', textTransform: 'uppercase', letterSpacing: 0.5 },
-  sectionCount: { fontSize: 12, color: '#6B6B6B' },
+  sectionTitle: { fontSize: 17, fontWeight: '700', color: '#6B1E1E', textTransform: 'uppercase', letterSpacing: 0.5, fontFamily: 'PlayfairDisplay_700Bold' },
+  sectionCount: { fontSize: 12, color: '#6B5B4A' },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   cardWrap: { flexBasis: '48%', flexGrow: 1 },
   card: {
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 12,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     alignItems: 'center',
   },
   logo: { width: '100%', height: 70, backgroundColor: '#FFF' },
@@ -212,9 +212,9 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: 13,
     fontWeight: '600',
-    color: '#2B2B2B',
+    color: '#2B1A10',
     textAlign: 'center',
   },
   linkRow: { flexDirection: 'row', alignItems: 'center', gap: 3, marginTop: 4 },
-  linkText: { fontSize: 10, color: '#6B6B6B' },
+  linkText: { fontSize: 10, color: '#6B5B4A' },
 });

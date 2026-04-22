@@ -69,7 +69,7 @@ export default function TimelineScreen() {
       }
     >
       <View style={styles.intro}>
-        <Icon name="book-open-page-variant" size={26} color="#8B4513" />
+        <Icon name="book-open-page-variant" size={26} color="#6B1E1E" />
         <View style={{ flex: 1 }}>
           <Text style={styles.introTitle}>Nossa história</Text>
           <Text style={styles.introText}>
@@ -121,14 +121,14 @@ export default function TimelineScreen() {
 
               {e.visitors_count ? (
                 <View style={styles.visitorsRow}>
-                  <Icon name="account-group" size={14} color="#8B4513" />
+                  <Icon name="account-group" size={14} color="#6B1E1E" />
                   <Text style={styles.visitorsText}>{formatVisitors(e.visitors_count)}</Text>
                 </View>
               ) : null}
 
               <View style={styles.readMore}>
                 <Text style={styles.readMoreText}>Ler mais</Text>
-                <Icon name="chevron-right" size={16} color="#C65D2E" />
+                <Icon name="chevron-right" size={16} color="#C84B1A" />
               </View>
             </TouchableOpacity>
           </View>
@@ -139,7 +139,7 @@ export default function TimelineScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   content: { padding: 16, paddingBottom: 40 },
   intro: {
     flexDirection: 'row',
@@ -149,15 +149,15 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     marginBottom: 18,
   },
   introTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#8B4513',
+    color: '#6B1E1E',
   },
-  introText: { fontSize: 12, color: '#6B6B6B', marginTop: 2, lineHeight: 17 },
+  introText: { fontSize: 12, color: '#6B5B4A', marginTop: 2, lineHeight: 17 },
   timeline: { position: 'relative' },
   timelineRow: { flexDirection: 'row', gap: 12, marginBottom: 16 },
   timelineSpine: { width: 18, alignItems: 'center', paddingTop: 22 },
@@ -165,9 +165,9 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: '#8B4513',
+    backgroundColor: '#6B1E1E',
     borderWidth: 2,
-    borderColor: '#FAF7F2',
+    borderColor: '#FAF2E0',
   },
   line: {
     flex: 1,
@@ -192,12 +192,12 @@ const styles = StyleSheet.create({
   edition: {
     fontSize: 32,
     fontWeight: '900',
-    color: '#8B4513',
+    color: '#6B1E1E',
     fontFamily: 'serif',
     letterSpacing: -1,
   },
-  year: { fontSize: 14, color: '#6B6B6B', fontWeight: '600' },
-  theme: { fontSize: 17, fontWeight: '700', color: '#2B2B2B', marginTop: 2 },
+  year: { fontSize: 14, color: '#6B5B4A', fontWeight: '600' },
+  theme: { fontSize: 17, fontWeight: '700', color: '#2B1A10', marginTop: 2 },
   cover: {
     width: '100%',
     height: 140,
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 13,
-    color: '#2B2B2B',
+    color: '#2B1A10',
     lineHeight: 19,
     marginTop: 4,
   },
@@ -220,14 +220,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(139, 69, 19, 0.15)',
   },
-  chipText: { fontSize: 11, color: '#8B4513', fontWeight: '600' },
+  chipText: { fontSize: 11, color: '#6B1E1E', fontWeight: '600' },
   visitorsRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
     marginTop: 10,
   },
-  visitorsText: { fontSize: 12, color: '#6B6B6B', fontWeight: '600' },
+  visitorsText: { fontSize: 12, color: '#6B5B4A', fontWeight: '600' },
   readMore: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -235,5 +235,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignSelf: 'flex-end',
   },
-  readMoreText: { fontSize: 12, color: '#C65D2E', fontWeight: '700' },
+  readMoreText: { fontSize: 12, color: '#C84B1A', fontWeight: '700' },
 });

@@ -14,7 +14,7 @@ export default function StarRating({
   onChange,
   size = 36,
   readOnly = false,
-  color = '#D4A017',
+  color = '#D4A842',
 }: Props) {
   return (
     <View style={styles.row}>

@@ -27,10 +27,10 @@ const CATEGORY_META: Record<
   { label: string; icon: string; color: string }
 > = {
   shows: { label: 'Shows', icon: 'music', color: '#9B59B6' },
-  oficinas: { label: 'Oficinas', icon: 'school', color: '#D4A017' },
+  oficinas: { label: 'Oficinas', icon: 'school', color: '#D4A842' },
   patrocinios: { label: 'Ofertas', icon: 'tag', color: '#4A90E2' },
   emergencia: { label: 'Emergência', icon: 'alert', color: '#D32F2F' },
-  geral: { label: 'Geral', icon: 'bell', color: '#8B4513' },
+  geral: { label: 'Geral', icon: 'bell', color: '#6B1E1E' },
 };
 
 type PrefKey = keyof DevicePreferences;
@@ -190,7 +190,7 @@ export default function NotificacoesScreen() {
               value={prefs[t.key]}
               onValueChange={() => togglePref(t.key)}
               disabled={!user || savingPref === t.key}
-              trackColor={{ false: '#E5E0D5', true: '#8B4513' }}
+              trackColor={{ false: '#E5DCC8', true: '#6B1E1E' }}
               thumbColor="#FFF"
             />
           </View>
@@ -214,7 +214,7 @@ function formatTime(iso: string): string {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   content: { padding: 16, paddingBottom: 32 },
   header: {
     flexDirection: 'row',
@@ -222,8 +222,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 16,
   },
-  headerTitle: { fontSize: 20, fontWeight: '700', color: '#2B2B2B' },
-  clearBtn: { fontSize: 13, color: '#C65D2E', fontWeight: '600' },
+  headerTitle: { fontSize: 20, fontWeight: '700', color: '#2B1A10' },
+  clearBtn: { fontSize: 13, color: '#C84B1A', fontWeight: '600' },
 
   empty: {
     alignItems: 'center',
@@ -231,10 +231,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  emptyTitle: { fontSize: 16, fontWeight: '600', color: '#2B2B2B', marginTop: 12 },
-  emptyDesc: { fontSize: 13, color: '#6B6B6B', textAlign: 'center', marginTop: 6 },
+  emptyTitle: { fontSize: 16, fontWeight: '600', color: '#2B1A10', marginTop: 12 },
+  emptyDesc: { fontSize: 13, color: '#6B5B4A', textAlign: 'center', marginTop: 6 },
 
   list: { gap: 10 },
   item: {
@@ -243,11 +243,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     padding: 12,
     alignItems: 'flex-start',
   },
-  itemUnread: { borderColor: '#8B4513', backgroundColor: '#FFFBF4' },
+  itemUnread: { borderColor: '#6B1E1E', backgroundColor: '#FFFBF4' },
   iconCircle: {
     width: 34,
     height: 34,
@@ -265,18 +265,18 @@ const styles = StyleSheet.create({
   itemCategory: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#8B4513',
+    color: '#6B1E1E',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
-  itemTime: { fontSize: 11, color: '#6B6B6B' },
-  itemTitle: { fontSize: 14, fontWeight: '700', color: '#2B2B2B' },
+  itemTime: { fontSize: 11, color: '#6B5B4A' },
+  itemTitle: { fontSize: 14, fontWeight: '700', color: '#2B1A10' },
   itemText: { fontSize: 13, color: '#4B4B4B', marginTop: 2, lineHeight: 18 },
   dot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#C65D2E',
+    backgroundColor: '#C84B1A',
     marginTop: 8,
   },
 
@@ -285,11 +285,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     padding: 14,
   },
-  prefsTitle: { fontSize: 16, fontWeight: '700', color: '#2B2B2B' },
-  prefsSubtitle: { fontSize: 12, color: '#6B6B6B', marginTop: 4, marginBottom: 12 },
+  prefsTitle: { fontSize: 16, fontWeight: '700', color: '#2B1A10' },
+  prefsSubtitle: { fontSize: 12, color: '#6B5B4A', marginTop: 4, marginBottom: 12 },
   prefRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -299,6 +299,6 @@ const styles = StyleSheet.create({
     borderTopColor: '#F1ECE0',
   },
   prefInfo: { flex: 1, paddingRight: 12 },
-  prefLabel: { fontSize: 14, fontWeight: '600', color: '#2B2B2B' },
-  prefDesc: { fontSize: 12, color: '#6B6B6B', marginTop: 2 },
+  prefLabel: { fontSize: 14, fontWeight: '600', color: '#2B1A10' },
+  prefDesc: { fontSize: 12, color: '#6B5B4A', marginTop: 2 },
 });

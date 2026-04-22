@@ -54,20 +54,20 @@ export default function NovaAvaliacaoScreen() {
   if (!user) {
     return (
       <View style={styles.authGate}>
-        <Icon name="account-lock-outline" size={56} color="#8B4513" />
+        <Icon name="account-lock-outline" size={56} color="#6B1E1E" />
         <Text style={styles.gateTitle}>Faça login para avaliar</Text>
         <Text style={styles.gateMessage}>
           Sua avaliação ajuda outros visitantes a escolher melhor no festival.
         </Text>
         <Button
           mode="contained"
-          buttonColor="#8B4513"
+          buttonColor="#6B1E1E"
           style={styles.gateButton}
           onPress={() => nav.navigate('AccountTab')}
         >
           Entrar com Google
         </Button>
-        <Button mode="text" textColor="#6B6B6B" onPress={() => nav.goBack()}>
+        <Button mode="text" textColor="#6B5B4A" onPress={() => nav.goBack()}>
           Voltar
         </Button>
       </View>
@@ -153,7 +153,7 @@ export default function NovaAvaliacaoScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: '#FAF7F2' }}
+      style={{ flex: 1, backgroundColor: '#FAF2E0' }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       keyboardVerticalOffset={80}
     >
@@ -176,8 +176,8 @@ export default function NovaAvaliacaoScreen() {
             onChangeText={(t) => t.length <= MAX_COMMENT && setComment(t)}
             placeholder="Conte como foi sua experiência…"
             style={styles.input}
-            outlineColor="#E5E0D5"
-            activeOutlineColor="#8B4513"
+            outlineColor="#E5DCC8"
+            activeOutlineColor="#6B1E1E"
           />
           <Text style={styles.counter}>
             {comment.length}/{MAX_COMMENT}
@@ -212,7 +212,7 @@ export default function NovaAvaliacaoScreen() {
             ))}
             {photos.length < MAX_PHOTOS ? (
               <TouchableOpacity style={styles.addPhoto} onPress={pickImage}>
-                <Icon name="camera-plus-outline" size={24} color="#8B4513" />
+                <Icon name="camera-plus-outline" size={24} color="#6B1E1E" />
                 <Text style={styles.addPhotoText}>Adicionar</Text>
               </TouchableOpacity>
             ) : null}
@@ -221,7 +221,7 @@ export default function NovaAvaliacaoScreen() {
 
         <Button
           mode="contained"
-          buttonColor="#8B4513"
+          buttonColor="#6B1E1E"
           style={styles.submit}
           contentStyle={styles.submitContent}
           onPress={submit}
@@ -251,13 +251,13 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  label: { fontSize: 13, fontWeight: '700', color: '#2B2B2B', marginBottom: 10, letterSpacing: 0.3 },
+  label: { fontSize: 13, fontWeight: '700', color: '#2B1A10', marginBottom: 10, letterSpacing: 0.3 },
   stars: { alignItems: 'center', paddingVertical: 8 },
-  ratingLabel: { textAlign: 'center', color: '#C65D2E', fontWeight: '700', marginTop: 6 },
+  ratingLabel: { textAlign: 'center', color: '#C84B1A', fontWeight: '700', marginTop: 6 },
   input: { backgroundColor: '#FFF', minHeight: 110 },
-  counter: { textAlign: 'right', fontSize: 11, color: '#6B6B6B', marginTop: 4 },
+  counter: { textAlign: 'right', fontSize: 11, color: '#6B5B4A', marginTop: 4 },
   photosGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   photoWrap: { width: 88, height: 88, borderRadius: 8, overflow: 'hidden', position: 'relative' },
   photo: { width: 88, height: 88 },
@@ -283,13 +283,13 @@ const styles = StyleSheet.create({
     height: 88,
     borderRadius: 8,
     borderWidth: 1.5,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     borderStyle: 'dashed',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FAF7F2',
+    backgroundColor: '#FAF2E0',
   },
-  addPhotoText: { fontSize: 11, color: '#8B4513', marginTop: 4, fontWeight: '600' },
+  addPhotoText: { fontSize: 11, color: '#6B1E1E', marginTop: 4, fontWeight: '600' },
   submit: { marginTop: 8, borderRadius: 8 },
   submitContent: { paddingVertical: 8 },
   authGate: {
@@ -297,9 +297,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 32,
-    backgroundColor: '#FAF7F2',
+    backgroundColor: '#FAF2E0',
   },
-  gateTitle: { marginTop: 16, fontSize: 20, fontWeight: '700', color: '#2B2B2B', textAlign: 'center' },
-  gateMessage: { marginTop: 8, fontSize: 14, color: '#6B6B6B', textAlign: 'center', lineHeight: 20 },
+  gateTitle: { marginTop: 16, fontSize: 20, fontWeight: '700', color: '#2B1A10', textAlign: 'center' },
+  gateMessage: { marginTop: 8, fontSize: 14, color: '#6B5B4A', textAlign: 'center', lineHeight: 20 },
   gateButton: { marginTop: 20, width: '100%' },
 });

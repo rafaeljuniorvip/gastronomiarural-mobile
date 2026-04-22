@@ -91,7 +91,7 @@ export default function EdicaoDetailScreen() {
         <Image source={{ uri: edicao.cover_url }} style={styles.cover} />
       ) : (
         <View style={[styles.cover, styles.coverPlaceholder]}>
-          <Icon name="history" size={56} color="#C65D2E" />
+          <Icon name="history" size={56} color="#C84B1A" />
         </View>
       )}
 
@@ -103,7 +103,7 @@ export default function EdicaoDetailScreen() {
 
         {dateRange ? (
           <View style={styles.metaRow}>
-            <Icon name="calendar" size={16} color="#6B6B6B" />
+            <Icon name="calendar" size={16} color="#6B5B4A" />
             <Text style={styles.metaText}>{dateRange}</Text>
           </View>
         ) : null}
@@ -120,7 +120,7 @@ export default function EdicaoDetailScreen() {
             <Text style={styles.sectionTitle}>Destaques</Text>
             {edicao.highlights.map((h, i) => (
               <View key={i} style={styles.highlightRow}>
-                <Icon name="star" size={14} color="#C65D2E" />
+                <Icon name="star" size={14} color="#C84B1A" />
                 <Text style={styles.highlightText}>{h}</Text>
               </View>
             ))}
@@ -133,14 +133,14 @@ export default function EdicaoDetailScreen() {
             <View style={styles.numbersRow}>
               {edicao.visitors_count ? (
                 <View style={styles.numberCard}>
-                  <Icon name="account-group" size={22} color="#8B4513" />
+                  <Icon name="account-group" size={22} color="#6B1E1E" />
                   <Text style={styles.numberValue}>{formatVisitors(edicao.visitors_count)}</Text>
                   <Text style={styles.numberLabel}>visitantes</Text>
                 </View>
               ) : null}
               {impact ? (
                 <View style={styles.numberCard}>
-                  <Icon name="cash-multiple" size={22} color="#8B4513" />
+                  <Icon name="cash-multiple" size={22} color="#6B1E1E" />
                   <Text style={styles.numberValue}>{impact}</Text>
                   <Text style={styles.numberLabel}>economia</Text>
                 </View>
@@ -153,7 +153,7 @@ export default function EdicaoDetailScreen() {
           <>
             <Text style={styles.sectionTitle}>Curiosidades</Text>
             <View style={styles.curiosityBox}>
-              <Icon name="lightbulb-on" size={18} color="#8B4513" />
+              <Icon name="lightbulb-on" size={18} color="#6B1E1E" />
               <Text style={styles.curiosityText}>{edicao.curiosities}</Text>
             </View>
           </>
@@ -180,38 +180,38 @@ export default function EdicaoDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
-  cover: { width: '100%', height: 220, backgroundColor: '#E5E0D5' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
+  cover: { width: '100%', height: 220, backgroundColor: '#E5DCC8' },
   coverPlaceholder: { justifyContent: 'center', alignItems: 'center' },
   body: { padding: 18, paddingBottom: 32 },
   edition: {
     fontSize: 32,
     fontWeight: '900',
-    color: '#8B4513',
+    color: '#6B1E1E',
     fontFamily: 'serif',
     letterSpacing: -1,
   },
-  year: { fontSize: 16, color: '#6B6B6B', marginTop: -4, fontWeight: '600' },
-  theme: { fontSize: 22, fontWeight: '700', color: '#2B2B2B', marginTop: 10 },
+  year: { fontSize: 16, color: '#6B5B4A', marginTop: -4, fontWeight: '600' },
+  theme: { fontSize: 22, fontWeight: '700', color: '#2B1A10', marginTop: 10 },
   metaRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 10 },
-  metaText: { fontSize: 13, color: '#6B6B6B' },
+  metaText: { fontSize: 13, color: '#6B5B4A' },
   sectionTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#8B4513',
+    color: '#6B1E1E',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginTop: 22,
     marginBottom: 8,
   },
-  paragraph: { fontSize: 14, color: '#2B2B2B', lineHeight: 21 },
+  paragraph: { fontSize: 14, color: '#2B1A10', lineHeight: 21 },
   highlightRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     gap: 8,
     marginBottom: 6,
   },
-  highlightText: { flex: 1, fontSize: 13, color: '#2B2B2B', lineHeight: 19 },
+  highlightText: { flex: 1, fontSize: 13, color: '#2B1A10', lineHeight: 19 },
   numbersRow: { flexDirection: 'row', gap: 10, flexWrap: 'wrap' },
   numberCard: {
     flex: 1,
@@ -220,11 +220,11 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     alignItems: 'center',
   },
-  numberValue: { fontSize: 20, fontWeight: '900', color: '#8B4513', marginTop: 4 },
-  numberLabel: { fontSize: 11, color: '#6B6B6B', textTransform: 'uppercase', letterSpacing: 0.5 },
+  numberValue: { fontSize: 20, fontWeight: '900', color: '#6B1E1E', marginTop: 4 },
+  numberLabel: { fontSize: 11, color: '#6B5B4A', textTransform: 'uppercase', letterSpacing: 0.5 },
   curiosityBox: {
     flexDirection: 'row',
     gap: 10,
@@ -234,12 +234,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E5D9C3',
   },
-  curiosityText: { flex: 1, fontSize: 13, color: '#2B2B2B', lineHeight: 20, fontStyle: 'italic' },
+  curiosityText: { flex: 1, fontSize: 13, color: '#2B1A10', lineHeight: 20, fontStyle: 'italic' },
   galleryContent: { gap: 10, paddingRight: 10 },
   galleryItem: {
     width: 180,
     height: 130,
     borderRadius: 10,
-    backgroundColor: '#E5E0D5',
+    backgroundColor: '#E5DCC8',
   },
 });

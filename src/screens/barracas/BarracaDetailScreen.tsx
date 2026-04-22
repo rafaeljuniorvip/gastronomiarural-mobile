@@ -74,7 +74,7 @@ export default function BarracaDetailScreen() {
           <Image source={{ uri: barraca.cover_url }} style={styles.cover} />
         ) : (
           <View style={[styles.cover, styles.coverPlaceholder]}>
-            <Icon name="storefront" size={56} color="#C65D2E" />
+            <Icon name="storefront" size={56} color="#C84B1A" />
           </View>
         )}
         <View style={styles.favWrap}>
@@ -119,7 +119,7 @@ export default function BarracaDetailScreen() {
                 <Image source={{ uri: p.photo_url }} style={styles.pratoImage} />
               ) : (
                 <View style={[styles.pratoImage, styles.pratoImagePlaceholder]}>
-                  <Icon name="image-off-outline" size={24} color="#C65D2E" />
+                  <Icon name="image-off-outline" size={24} color="#C84B1A" />
                 </View>
               )}
               <View style={styles.pratoBody}>
@@ -143,7 +143,7 @@ export default function BarracaDetailScreen() {
             mode="contained"
             compact
             icon="star-plus-outline"
-            buttonColor="#C65D2E"
+            buttonColor="#C84B1A"
             textColor="#FFF"
             onPress={() =>
               nav.navigate('NovaAvaliacao', {
@@ -162,22 +162,22 @@ export default function BarracaDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   content: { paddingBottom: 32 },
   coverWrap: { position: 'relative' },
-  cover: { width: '100%', height: 220, backgroundColor: '#E5E0D5' },
+  cover: { width: '100%', height: 220, backgroundColor: '#E5DCC8' },
   coverPlaceholder: { alignItems: 'center', justifyContent: 'center' },
   favWrap: { position: 'absolute', top: 12, right: 12 },
   body: { padding: 16 },
-  title: { fontSize: 26, fontWeight: '900', color: '#8B4513', marginBottom: 8 },
+  title: { fontSize: 26, fontWeight: '900', color: '#6B1E1E', marginBottom: 8, fontFamily: 'PlayfairDisplay_700Bold' },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 12 },
   chip: { backgroundColor: '#FFF' },
-  chipText: { color: '#2B2B2B', fontSize: 12 },
-  description: { fontSize: 15, color: '#2B2B2B', lineHeight: 22 },
+  chipText: { color: '#2B1A10', fontSize: 12 },
+  description: { fontSize: 15, color: '#2B1A10', lineHeight: 22 },
   divider: { marginVertical: 16 },
-  sectionTitle: { fontSize: 20, fontWeight: '700', color: '#8B4513', marginBottom: 12 },
-  paragraph: { fontSize: 14, color: '#2B2B2B', lineHeight: 22 },
-  empty: { fontStyle: 'italic', color: '#6B6B6B' },
+  sectionTitle: { fontSize: 20, fontWeight: '700', color: '#6B1E1E', marginBottom: 12, fontFamily: 'PlayfairDisplay_700Bold' },
+  paragraph: { fontSize: 14, color: '#2B1A10', lineHeight: 22 },
+  empty: { fontStyle: 'italic', color: '#6B5B4A' },
   pratoCard: {
     flexDirection: 'row',
     backgroundColor: '#FFF',
@@ -185,21 +185,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
   pratoImage: { width: 90, height: 90 },
-  pratoImagePlaceholder: { backgroundColor: '#FAF7F2', justifyContent: 'center', alignItems: 'center' },
+  pratoImagePlaceholder: { backgroundColor: '#FAF2E0', justifyContent: 'center', alignItems: 'center' },
   pratoBody: { flex: 1, padding: 12 },
   pratoCategory: {
     fontSize: 10,
     textTransform: 'uppercase',
-    color: '#C65D2E',
+    color: '#C84B1A',
     fontWeight: '700',
     letterSpacing: 0.5,
   },
-  pratoName: { fontSize: 15, fontWeight: '600', color: '#2B2B2B', marginTop: 2 },
-  pratoDesc: { fontSize: 12, color: '#6B6B6B', marginTop: 2 },
-  pratoPrice: { fontSize: 15, fontWeight: '700', color: '#C65D2E', marginTop: 6 },
+  pratoName: { fontSize: 15, fontWeight: '600', color: '#2B1A10', marginTop: 2 },
+  pratoDesc: { fontSize: 12, color: '#6B5B4A', marginTop: 2 },
+  pratoPrice: { fontSize: 15, fontWeight: '700', color: '#C84B1A', marginTop: 6 },
   avaliacoesHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',

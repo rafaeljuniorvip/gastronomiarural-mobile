@@ -1,4 +1,5 @@
 import { ScrollView, TouchableOpacity, Text, StyleSheet, type ViewStyle } from 'react-native';
+import { fonts } from '../../theme/fonts';
 
 export interface ChipOption {
   value: string;
@@ -45,9 +46,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: '#FFF',
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  chipActive: { backgroundColor: '#C65D2E', borderColor: '#C65D2E' },
-  chipText: { fontSize: 13, color: '#6B6B6B', fontWeight: '500' },
-  chipTextActive: { color: '#FFF', fontWeight: '700' },
+  chipActive: { backgroundColor: '#C84B1A', borderColor: '#C84B1A' },
+  chipText: { fontSize: 13, color: '#6B5B4A', fontWeight: '500', fontFamily: fonts.bodyMedium },
+  chipTextActive: { color: '#FFF', fontWeight: '700', fontFamily: fonts.bodyBold },
 });

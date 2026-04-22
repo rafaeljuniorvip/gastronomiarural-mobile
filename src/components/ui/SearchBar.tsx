@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { View, TextInput, TouchableOpacity, StyleSheet, type ViewStyle } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import { fonts } from '../../theme/fonts';
 
 interface Props {
   value: string;
@@ -53,7 +54,7 @@ export default function SearchBar({
 
   return (
     <View style={[styles.container, containerStyle]}>
-      <Icon name="magnify" size={20} color="#6B6B6B" style={styles.leadingIcon} />
+      <Icon name="magnify" size={20} color="#6B5B4A" style={styles.leadingIcon} />
       <TextInput
         value={text}
         onChangeText={handleChange}
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     paddingHorizontal: 10,
     marginHorizontal: 12,
     marginVertical: 8,
@@ -96,8 +97,9 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 14,
-    color: '#2B2B2B',
+    color: '#2B1A10',
     paddingVertical: 0,
+    fontFamily: fonts.body,
   },
   clearBtn: { padding: 2, marginLeft: 4 },
 });

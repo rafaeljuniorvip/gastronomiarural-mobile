@@ -24,14 +24,14 @@ import ErrorState from '../../components/ui/ErrorState';
 
 const TYPE_META: Record<LocalTurismoType, { label: string; color: string; icon: string }> = {
   hotel: { label: 'Hotel', color: '#1976D2', icon: 'bed' },
-  pousada: { label: 'Pousada', color: '#8B4513', icon: 'home-variant' },
-  restaurante: { label: 'Restaurante', color: '#C65D2E', icon: 'silverware-fork-knife' },
+  pousada: { label: 'Pousada', color: '#6B1E1E', icon: 'home-variant' },
+  restaurante: { label: 'Restaurante', color: '#C84B1A', icon: 'silverware-fork-knife' },
   atracao: { label: 'Atração', color: '#6A1B9A', icon: 'star' },
   cachoeira: { label: 'Cachoeira', color: '#00838F', icon: 'waves' },
   igreja: { label: 'Igreja', color: '#455A64', icon: 'church' },
   trilha: { label: 'Trilha', color: '#2E7D32', icon: 'hiking' },
   mercado: { label: 'Mercado', color: '#EF6C00', icon: 'storefront-outline' },
-  servico: { label: 'Serviço', color: '#6B6B6B', icon: 'cog-outline' },
+  servico: { label: 'Serviço', color: '#6B5B4A', icon: 'cog-outline' },
 };
 
 function parseNumber(value: string | number | null | undefined): number | null {
@@ -148,7 +148,7 @@ export default function LocalDetailScreen() {
         <Image source={{ uri: local.cover_url }} style={styles.cover} />
       ) : (
         <View style={[styles.cover, styles.coverPlaceholder]}>
-          <Icon name={meta.icon as any} size={64} color="#C65D2E" />
+          <Icon name={meta.icon as any} size={64} color="#C84B1A" />
         </View>
       )}
 
@@ -174,7 +174,7 @@ export default function LocalDetailScreen() {
 
         {local.address ? (
           <View style={styles.metaRow}>
-            <Icon name="map-marker" size={16} color="#6B6B6B" />
+            <Icon name="map-marker" size={16} color="#6B5B4A" />
             <Text style={styles.metaText}>{local.address}</Text>
           </View>
         ) : null}
@@ -243,7 +243,7 @@ export default function LocalDetailScreen() {
           ) : null}
           {hasMaps ? (
             <TouchableOpacity
-              style={[styles.actionBtn, { backgroundColor: '#C65D2E' }]}
+              style={[styles.actionBtn, { backgroundColor: '#C84B1A' }]}
               onPress={handleMaps}
             >
               <Icon name="map-marker-radius" size={20} color="#FFF" />
@@ -266,16 +266,16 @@ export default function LocalDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   content: { paddingBottom: 40 },
-  cover: { width: '100%', height: 240, backgroundColor: '#E5E0D5' },
+  cover: { width: '100%', height: 240, backgroundColor: '#E5DCC8' },
   coverPlaceholder: { justifyContent: 'center', alignItems: 'center' },
   gallery: { gap: 8, padding: 10, paddingRight: 20 },
   galleryImg: {
     width: 120,
     height: 90,
     borderRadius: 8,
-    backgroundColor: '#E5E0D5',
+    backgroundColor: '#E5DCC8',
   },
   body: { padding: 16, gap: 10 },
   typeChip: {
@@ -293,15 +293,15 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textTransform: 'uppercase',
   },
-  title: { fontSize: 26, fontWeight: '900', color: '#8B4513' },
+  title: { fontSize: 26, fontWeight: '900', color: '#6B1E1E', fontFamily: 'PlayfairDisplay_700Bold' },
   metaRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  metaText: { fontSize: 13, color: '#6B6B6B', flexShrink: 1 },
+  metaText: { fontSize: 13, color: '#6B5B4A', flexShrink: 1 },
   chipsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 6 },
   chip: { backgroundColor: '#FFF' },
-  chipText: { color: '#2B2B2B', fontSize: 12 },
+  chipText: { color: '#2B1A10', fontSize: 12 },
   divider: { marginVertical: 16 },
-  sectionTitle: { fontSize: 18, fontWeight: '700', color: '#8B4513', marginBottom: 10 },
-  paragraph: { fontSize: 14, color: '#2B2B2B', lineHeight: 22 },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: '#6B1E1E', marginBottom: 10, fontFamily: 'PlayfairDisplay_700Bold' },
+  paragraph: { fontSize: 14, color: '#2B1A10', lineHeight: 22 },
   amenitiesRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   amenityChip: {
     flexDirection: 'row',
@@ -312,9 +312,9 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  amenityText: { color: '#2B2B2B', fontSize: 12 },
+  amenityText: { color: '#2B1A10', fontSize: 12 },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   actionBtn: {
     flexDirection: 'row',

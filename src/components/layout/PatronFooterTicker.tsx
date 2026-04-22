@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, Animated, Easing } from 'react-native';
 import { listPatrocinadores, type Patrocinador } from '../../services/patrocinador.service';
+import { fonts } from '../../theme/fonts';
 
 const TIERS = ['prata', 'bronze', 'apoio'];
 // velocidade em pixels por segundo (devagar)
@@ -111,16 +112,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   itemText: {
-    color: '#8B4513',
+    color: '#6B1E1E',
     fontSize: 12,
     fontWeight: '600',
     paddingHorizontal: 10,
+    fontFamily: fonts.bodyMedium,
   },
   separator: {
-    color: '#8B4513',
+    color: '#6B1E1E',
     fontSize: 14,
     fontWeight: '700',
     opacity: 0.5,
+    fontFamily: fonts.bodyBold,
   },
   spacer: {
     width: 20,

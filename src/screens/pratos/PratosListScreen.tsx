@@ -136,7 +136,7 @@ export default function PratosListScreen() {
                   <Image source={{ uri: item.photo_url }} style={styles.image} />
                 ) : (
                   <View style={[styles.image, styles.imagePlaceholder]}>
-                    <Icon name="silverware-fork-knife" size={28} color="#C65D2E" />
+                    <Icon name="silverware-fork-knife" size={28} color="#C84B1A" />
                   </View>
                 )}
                 <View style={styles.body}>
@@ -157,7 +157,7 @@ export default function PratosListScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   list: { padding: 12, paddingTop: 0 },
   sectionHeader: {
     flexDirection: 'row',
@@ -169,14 +169,14 @@ const styles = StyleSheet.create({
     marginTop: 12,
     marginBottom: 8,
   },
-  sectionTitle: { fontSize: 12, fontWeight: '800', color: '#8B4513', letterSpacing: 0.8 },
-  sectionCount: { fontSize: 12, color: '#8B4513', marginLeft: 6, fontWeight: '600' },
-  card: { flexDirection: 'row', backgroundColor: '#FFF', borderRadius: 10, marginBottom: 10, overflow: 'hidden', borderWidth: 1, borderColor: '#E5E0D5' },
+  sectionTitle: { fontSize: 12, fontWeight: '800', color: '#6B1E1E', letterSpacing: 0.8 },
+  sectionCount: { fontSize: 12, color: '#6B1E1E', marginLeft: 6, fontWeight: '600' },
+  card: { flexDirection: 'row', backgroundColor: '#FFF', borderRadius: 10, marginBottom: 10, overflow: 'hidden', borderWidth: 1, borderColor: '#E5DCC8' },
   image: { width: 100, height: 100 },
-  imagePlaceholder: { backgroundColor: '#FAF7F2', justifyContent: 'center', alignItems: 'center' },
+  imagePlaceholder: { backgroundColor: '#FAF2E0', justifyContent: 'center', alignItems: 'center' },
   body: { flex: 1, padding: 12 },
-  category: { fontSize: 10, textTransform: 'uppercase', color: '#C65D2E', fontWeight: '700', letterSpacing: 0.5 },
-  name: { fontSize: 15, fontWeight: '600', color: '#2B2B2B', marginTop: 2 },
-  desc: { fontSize: 12, color: '#6B6B6B', marginTop: 2 },
-  price: { fontSize: 15, fontWeight: '700', color: '#C65D2E', marginTop: 6 },
+  category: { fontSize: 10, textTransform: 'uppercase', color: '#C84B1A', fontWeight: '700', letterSpacing: 0.5 },
+  name: { fontSize: 15, fontWeight: '600', color: '#2B1A10', marginTop: 2 },
+  desc: { fontSize: 12, color: '#6B5B4A', marginTop: 2 },
+  price: { fontSize: 15, fontWeight: '700', color: '#C84B1A', marginTop: 6 },
 });

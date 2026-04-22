@@ -4,10 +4,21 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Notifications from 'expo-notifications';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import {
+  useFonts,
+  PlayfairDisplay_400Regular,
+  PlayfairDisplay_700Bold,
+} from '@expo-google-fonts/playfair-display';
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_700Bold,
+} from '@expo-google-fonts/inter';
 import { AuthProvider } from './src/contexts/AuthContext';
 import { FavoritesProvider } from './src/contexts/FavoritesContext';
 import AppNavigator from './src/navigation/AppNavigator';
 import AppShell from './src/components/layout/AppShell';
+import { colors } from './src/theme/colors';
 import {
   appendLog,
   notificationToLog,
@@ -30,26 +41,36 @@ const theme = {
   ...MD3LightTheme,
   colors: {
     ...MD3LightTheme.colors,
-    primary: '#8B4513',
-    primaryContainer: '#6B340E',
-    secondary: '#C65D2E',
-    secondaryContainer: '#D4A017',
-    surface: '#FFFFFF',
-    surfaceVariant: '#FAF7F2',
-    background: '#FAF7F2',
-    error: '#d32f2f',
+    primary: colors.primary,
+    primaryContainer: colors.primaryDark,
+    secondary: colors.secondary,
+    secondaryContainer: colors.accent,
+    surface: colors.surface,
+    surfaceVariant: colors.bg,
+    background: colors.bg,
+    error: colors.danger,
     onPrimary: '#FFFFFF',
     onSecondary: '#FFFFFF',
-    onSurface: '#2B2B2B',
-    onBackground: '#2B2B2B',
-    outline: '#E5E0D5',
+    onSurface: colors.text,
+    onBackground: colors.text,
+    outline: colors.border,
   },
 };
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    PlayfairDisplay_400Regular,
+    PlayfairDisplay_700Bold,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_700Bold,
+  });
+
   const onLayoutRootView = useCallback(async () => {
-    await SplashScreen.hideAsync();
-  }, []);
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
 
   useEffect(() => {
     onLayoutRootView();
@@ -64,6 +85,10 @@ export default function App() {
     });
     return () => sub.remove();
   }, []);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

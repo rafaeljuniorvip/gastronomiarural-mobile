@@ -10,6 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import { listPatrocinadores, type Patrocinador } from '../../services/patrocinador.service';
+import { fonts } from '../../theme/fonts';
 
 const ROTATE_INTERVAL_MS = 6000;
 const FADE_DURATION_MS = 400;
@@ -118,7 +119,7 @@ function formatTier(tier: string): string {
 const styles = StyleSheet.create({
   container: {
     height: 72,
-    backgroundColor: '#8B4513',
+    backgroundColor: '#6B1E1E',
     paddingHorizontal: 16,
     justifyContent: 'center',
   },
@@ -137,12 +138,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 0.8,
     textTransform: 'uppercase',
+    fontFamily: fonts.bodyMedium,
   },
   tier: {
     color: '#FFFFFF',
     fontSize: 13,
     fontWeight: '700',
     marginTop: 2,
+    fontFamily: fonts.bodyBold,
   },
   rightColumn: {
     flex: 2,
@@ -159,5 +162,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '700',
     textAlign: 'right',
+    fontFamily: fonts.heading,
   },
 });

@@ -138,7 +138,7 @@ export default function ScannerScreen() {
   if (!permission) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#8B4513" />
+        <ActivityIndicator size="large" color="#6B1E1E" />
       </View>
     );
   }
@@ -146,7 +146,7 @@ export default function ScannerScreen() {
   if (!permission.granted) {
     return (
       <View style={styles.permWrap}>
-        <Icon name="camera-off-outline" size={56} color="#C65D2E" />
+        <Icon name="camera-off-outline" size={56} color="#C84B1A" />
         <Text style={styles.permTitle}>Permissão da câmera necessária</Text>
         <Text style={styles.permMsg}>
           Para escanear o QR Code do cupom, precisamos de acesso à câmera.
@@ -206,7 +206,7 @@ export default function ScannerScreen() {
           <View style={styles.resultCard}>
             {validating ? (
               <View style={{ alignItems: 'center', paddingVertical: 24 }}>
-                <ActivityIndicator size="large" color="#8B4513" />
+                <ActivityIndicator size="large" color="#6B1E1E" />
                 <Text style={styles.validatingText}>Validando cupom…</Text>
               </View>
             ) : errorMsg ? (
@@ -228,7 +228,7 @@ export default function ScannerScreen() {
             ) : cupomInfo ? (
               <View style={{ alignItems: 'center' }}>
                 <View style={[styles.statusIcon, { backgroundColor: '#FEF3C7' }]}>
-                  <Icon name="ticket-percent" size={36} color="#D4A017" />
+                  <Icon name="ticket-percent" size={36} color="#D4A842" />
                 </View>
                 <Text style={styles.resultTitle}>Confirmar resgate?</Text>
                 <View style={styles.patrocRow}>
@@ -316,7 +316,7 @@ export default function ScannerScreen() {
 const FRAME_SIZE = 260;
 const CORNER_SIZE = 28;
 const CORNER_THICKNESS = 4;
-const CORNER_COLOR = '#C65D2E';
+const CORNER_COLOR = '#C84B1A';
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#000' },
@@ -421,35 +421,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 12,
   },
-  validatingText: { marginTop: 12, color: '#2B2B2B', fontSize: 14 },
-  resultTitle: { fontSize: 18, fontWeight: '700', color: '#2B2B2B', marginBottom: 8 },
+  validatingText: { marginTop: 12, color: '#2B1A10', fontSize: 14 },
+  resultTitle: { fontSize: 18, fontWeight: '700', color: '#2B1A10', marginBottom: 8 },
   resultMsg: {
     fontSize: 14,
-    color: '#6B6B6B',
+    color: '#6B5B4A',
     textAlign: 'center',
     marginBottom: 16,
   },
   patrocRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 6 },
   patrocLogo: { width: 28, height: 28, borderRadius: 4 },
-  patrocNameResult: { fontSize: 14, fontWeight: '700', color: '#8B4513' },
+  patrocNameResult: { fontSize: 14, fontWeight: '700', color: '#6B1E1E' },
   resultCode: {
     fontFamily: 'Courier',
     fontSize: 20,
     fontWeight: '700',
-    color: '#8B4513',
+    color: '#6B1E1E',
     letterSpacing: 2,
     marginBottom: 10,
   },
   resultDesc: {
     fontSize: 15,
-    color: '#2B2B2B',
+    color: '#2B1A10',
     textAlign: 'center',
     marginBottom: 12,
     lineHeight: 21,
   },
   resultHint: {
     fontSize: 12,
-    color: '#6B6B6B',
+    color: '#6B5B4A',
     textAlign: 'center',
     marginBottom: 18,
     fontStyle: 'italic',
@@ -467,43 +467,43 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  secondaryBtnText: { color: '#2B2B2B', fontWeight: '600' },
+  secondaryBtnText: { color: '#2B1A10', fontWeight: '600' },
   primaryBtn: {
     flex: 1,
     paddingVertical: 12,
     borderRadius: 10,
-    backgroundColor: '#C65D2E',
+    backgroundColor: '#C84B1A',
     alignItems: 'center',
   },
   primaryBtnText: { color: '#FFF', fontWeight: '700' },
 
   permWrap: {
     flex: 1,
-    backgroundColor: '#FAF7F2',
+    backgroundColor: '#FAF2E0',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 32,
   },
-  permTitle: { marginTop: 16, fontSize: 18, fontWeight: '700', color: '#2B2B2B' },
+  permTitle: { marginTop: 16, fontSize: 18, fontWeight: '700', color: '#2B1A10' },
   permMsg: {
     marginTop: 8,
     fontSize: 14,
-    color: '#6B6B6B',
+    color: '#6B5B4A',
     textAlign: 'center',
     lineHeight: 20,
   },
   permBtn: {
     marginTop: 22,
-    backgroundColor: '#8B4513',
+    backgroundColor: '#6B1E1E',
     paddingHorizontal: 22,
     paddingVertical: 12,
     borderRadius: 10,
   },
   permBtnText: { color: '#FFF', fontWeight: '700' },
   manualLink: { marginTop: 16 },
-  manualLinkText: { color: '#8B4513', fontWeight: '600', textDecorationLine: 'underline' },
+  manualLinkText: { color: '#6B1E1E', fontWeight: '600', textDecorationLine: 'underline' },
 
   modalBackdrop: {
     flex: 1,
@@ -519,11 +519,11 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 380,
   },
-  modalTitle: { fontSize: 17, fontWeight: '700', color: '#2B2B2B', marginBottom: 4 },
-  modalHint: { fontSize: 13, color: '#6B6B6B', marginBottom: 12 },
+  modalTitle: { fontSize: 17, fontWeight: '700', color: '#2B1A10', marginBottom: 4 },
+  modalHint: { fontSize: 13, color: '#6B5B4A', marginBottom: 12 },
   input: {
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -531,7 +531,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Courier',
     fontWeight: '700',
     letterSpacing: 2,
-    color: '#8B4513',
+    color: '#6B1E1E',
     marginBottom: 16,
     textAlign: 'center',
   },

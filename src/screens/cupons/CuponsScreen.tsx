@@ -137,7 +137,7 @@ export default function CuponsScreen() {
           ListEmptyComponent={
             dataLen === 0 ? (
               <View style={styles.emptyWrap}>
-                <Icon name="ticket-percent-outline" size={56} color="#C65D2E" />
+                <Icon name="ticket-percent-outline" size={56} color="#C84B1A" />
                 <Text style={styles.emptyTitle}>Nenhum cupom disponível</Text>
                 <Text style={styles.emptyMsg}>
                   Visite os estandes dos patrocinadores e escaneie o QR Code.
@@ -152,7 +152,7 @@ export default function CuponsScreen() {
                   <Image source={{ uri: item.patrocinador_logo_url }} style={styles.logo} resizeMode="contain" />
                 ) : (
                   <View style={[styles.logo, styles.logoPlaceholder]}>
-                    <Icon name="domain" size={20} color="#C65D2E" />
+                    <Icon name="domain" size={20} color="#C84B1A" />
                   </View>
                 )}
                 <View style={{ flex: 1 }}>
@@ -166,13 +166,13 @@ export default function CuponsScreen() {
               <View style={styles.metaRow}>
                 {item.valid_until ? (
                   <View style={styles.metaItem}>
-                    <Icon name="clock-outline" size={12} color="#6B6B6B" />
+                    <Icon name="clock-outline" size={12} color="#6B5B4A" />
                     <Text style={styles.metaText}>Válido até {formatDate(item.valid_until)}</Text>
                   </View>
                 ) : null}
                 {item.max_redemptions !== null ? (
                   <View style={styles.metaItem}>
-                    <Icon name="account-multiple-outline" size={12} color="#6B6B6B" />
+                    <Icon name="account-multiple-outline" size={12} color="#6B5B4A" />
                     <Text style={styles.metaText}>
                       {item.current_redemptions}/{item.max_redemptions} resgatados
                     </Text>
@@ -199,7 +199,7 @@ export default function CuponsScreen() {
           ListEmptyComponent={
             dataLen === 0 ? (
               <View style={styles.emptyWrap}>
-                <Icon name="check-decagram-outline" size={56} color="#C65D2E" />
+                <Icon name="check-decagram-outline" size={56} color="#C84B1A" />
                 <Text style={styles.emptyTitle}>Nenhum cupom resgatado ainda</Text>
                 <Text style={styles.emptyMsg}>
                   Seus resgates aparecerão aqui.
@@ -226,7 +226,7 @@ export default function CuponsScreen() {
                   <Image source={{ uri: item.patrocinador_logo_url }} style={styles.logo} resizeMode="contain" />
                 ) : (
                   <View style={[styles.logo, styles.logoPlaceholder]}>
-                    <Icon name="domain" size={20} color="#C65D2E" />
+                    <Icon name="domain" size={20} color="#C84B1A" />
                   </View>
                 )}
                 <View style={{ flex: 1 }}>
@@ -242,8 +242,8 @@ export default function CuponsScreen() {
               <Text style={styles.desc}>{item.description}</Text>
               <View style={styles.metaRow}>
                 <View style={styles.metaItem}>
-                  <Icon name="check-circle" size={12} color="#5C8D3A" />
-                  <Text style={[styles.metaText, { color: '#5C8D3A', fontWeight: '600' }]}>
+                  <Icon name="check-circle" size={12} color="#5E7F3E" />
+                  <Text style={[styles.metaText, { color: '#5E7F3E', fontWeight: '600' }]}>
                     Resgatado em {formatDateTime(item.redeemed_at)}
                   </Text>
                 </View>
@@ -266,12 +266,12 @@ export default function CuponsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   tabs: {
     flexDirection: 'row',
     backgroundColor: '#FFF',
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E0D5',
+    borderBottomColor: '#E5DCC8',
   },
   tab: {
     flex: 1,
@@ -280,20 +280,20 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: 'transparent',
   },
-  tabActive: { borderBottomColor: '#8B4513' },
-  tabText: { fontSize: 13, color: '#6B6B6B', fontWeight: '500' },
-  tabTextActive: { color: '#8B4513', fontWeight: '700' },
+  tabActive: { borderBottomColor: '#6B1E1E' },
+  tabText: { fontSize: 13, color: '#6B5B4A', fontWeight: '500' },
+  tabTextActive: { color: '#6B1E1E', fontWeight: '700' },
   list: { padding: 12, paddingBottom: 96 },
   emptyWrap: { alignItems: 'center', paddingVertical: 64 },
-  emptyTitle: { marginTop: 12, fontSize: 16, fontWeight: '600', color: '#2B2B2B' },
-  emptyMsg: { marginTop: 6, fontSize: 13, color: '#6B6B6B', textAlign: 'center', paddingHorizontal: 32 },
+  emptyTitle: { marginTop: 12, fontSize: 16, fontWeight: '600', color: '#2B1A10' },
+  emptyMsg: { marginTop: 6, fontSize: 13, color: '#6B5B4A', textAlign: 'center', paddingHorizontal: 32 },
   card: {
     backgroundColor: '#FFF',
     borderRadius: 12,
     padding: 14,
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
   cardHeader: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8 },
   logo: { width: 42, height: 42, backgroundColor: '#FFF', borderRadius: 6 },
@@ -301,27 +301,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  patrocName: { fontSize: 14, fontWeight: '700', color: '#2B2B2B' },
+  patrocName: { fontSize: 14, fontWeight: '700', color: '#2B1A10' },
   code: {
     fontSize: 12,
     fontFamily: 'Courier',
     fontWeight: '700',
-    color: '#8B4513',
+    color: '#6B1E1E',
     letterSpacing: 1,
     marginTop: 2,
   },
-  desc: { fontSize: 14, color: '#2B2B2B', lineHeight: 20, marginBottom: 10 },
+  desc: { fontSize: 14, color: '#2B1A10', lineHeight: 20, marginBottom: 10 },
   metaRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginBottom: 10 },
   metaItem: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  metaText: { fontSize: 11, color: '#6B6B6B' },
+  metaText: { fontSize: 11, color: '#6B5B4A' },
   redeemBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    backgroundColor: '#C65D2E',
+    backgroundColor: '#C84B1A',
     paddingVertical: 11,
     borderRadius: 8,
   },
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#5C8D3A',
+    backgroundColor: '#5E7F3E',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 16,
     bottom: 16,
-    backgroundColor: '#8B4513',
+    backgroundColor: '#6B1E1E',
     paddingHorizontal: 18,
     paddingVertical: 14,
     borderRadius: 30,

@@ -108,15 +108,15 @@ export default function ProgramacaoScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   list: { padding: 12, paddingTop: 0 },
-  card: { flexDirection: 'row', backgroundColor: '#FFF', borderRadius: 10, padding: 14, marginBottom: 10, borderWidth: 1, borderColor: '#E5E0D5' },
-  cardTime: { width: 70, borderRightWidth: 1, borderRightColor: '#E5E0D5', paddingRight: 10, alignItems: 'center', justifyContent: 'center' },
-  time: { fontSize: 18, fontWeight: '900', color: '#8B4513' },
-  duration: { fontSize: 11, color: '#6B6B6B', marginTop: 2 },
+  card: { flexDirection: 'row', backgroundColor: '#FFF', borderRadius: 10, padding: 14, marginBottom: 10, borderWidth: 1, borderColor: '#E5DCC8' },
+  cardTime: { width: 70, borderRightWidth: 1, borderRightColor: '#E5DCC8', paddingRight: 10, alignItems: 'center', justifyContent: 'center' },
+  time: { fontSize: 18, fontWeight: '900', color: '#6B1E1E' },
+  duration: { fontSize: 11, color: '#6B5B4A', marginTop: 2 },
   cardBody: { flex: 1, paddingLeft: 14 },
-  type: { fontSize: 10, color: '#C65D2E', fontWeight: '700', textTransform: 'uppercase' },
-  title: { fontSize: 15, fontWeight: '600', color: '#2B2B2B', marginTop: 2 },
-  location: { fontSize: 12, color: '#6B6B6B', marginTop: 2 },
-  description: { fontSize: 13, color: '#6B6B6B', marginTop: 6 },
+  type: { fontSize: 10, color: '#C84B1A', fontWeight: '700', textTransform: 'uppercase' },
+  title: { fontSize: 15, fontWeight: '600', color: '#2B1A10', marginTop: 2 },
+  location: { fontSize: 12, color: '#6B5B4A', marginTop: 2 },
+  description: { fontSize: 13, color: '#6B5B4A', marginTop: 6 },
 });

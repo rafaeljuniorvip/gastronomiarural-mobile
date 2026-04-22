@@ -119,7 +119,7 @@ export default function FaqScreen() {
     >
       {/* Busca */}
       <View style={styles.searchBox}>
-        <Icon name="magnify" size={18} color="#6B6B6B" />
+        <Icon name="magnify" size={18} color="#6B5B4A" />
         <TextInput
           style={styles.searchInput}
           value={search}
@@ -130,7 +130,7 @@ export default function FaqScreen() {
         />
         {search.length > 0 ? (
           <TouchableOpacity onPress={() => setSearch('')}>
-            <Icon name="close-circle" size={18} color="#6B6B6B" />
+            <Icon name="close-circle" size={18} color="#6B5B4A" />
           </TouchableOpacity>
         ) : null}
       </View>
@@ -154,7 +154,7 @@ export default function FaqScreen() {
 
       {filtered.length === 0 ? (
         <View style={styles.emptySearch}>
-          <Icon name="help-circle-outline" size={36} color="#C65D2E" />
+          <Icon name="help-circle-outline" size={36} color="#C84B1A" />
           <Text style={styles.emptySearchText}>Nenhuma pergunta encontrada.</Text>
         </View>
       ) : (
@@ -177,7 +177,7 @@ export default function FaqScreen() {
                     <Icon
                       name={open ? 'chevron-up' : 'chevron-down'}
                       size={20}
-                      color="#8B4513"
+                      color="#6B1E1E"
                     />
                   </View>
                   {open ? <Text style={styles.answer}>{it.answer}</Text> : null}
@@ -190,7 +190,7 @@ export default function FaqScreen() {
 
       {/* Contato */}
       <View style={styles.contactBox}>
-        <Icon name="headset" size={26} color="#8B4513" />
+        <Icon name="headset" size={26} color="#6B1E1E" />
         <Text style={styles.contactTitle}>Não encontrou o que procurava?</Text>
         <Text style={styles.contactText}>
           Fale com a organização do festival pelo WhatsApp ou telefone.
@@ -207,8 +207,8 @@ export default function FaqScreen() {
             style={[styles.contactButton, styles.contactSecondary]}
             onPress={() => openContact(`tel:${CONTACT_PHONE}`)}
           >
-            <Icon name="phone" size={16} color="#8B4513" />
-            <Text style={[styles.contactButtonText, { color: '#8B4513' }]}>
+            <Icon name="phone" size={16} color="#6B1E1E" />
+            <Text style={[styles.contactButtonText, { color: '#6B1E1E' }]}>
               {CONTACT_LABEL}
             </Text>
           </TouchableOpacity>
@@ -239,7 +239,7 @@ function Chip({
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   content: { padding: 16, paddingBottom: 32 },
   searchBox: {
     flexDirection: 'row',
@@ -250,10 +250,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     marginBottom: 12,
   },
-  searchInput: { flex: 1, fontSize: 14, color: '#2B2B2B', padding: 0 },
+  searchInput: { flex: 1, fontSize: 14, color: '#2B1A10', padding: 0 },
   chipsRow: { flexDirection: 'row', gap: 8, paddingBottom: 14, paddingRight: 8 },
   chip: {
     paddingHorizontal: 14,
@@ -261,16 +261,16 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: '#FFF',
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  chipActive: { backgroundColor: '#8B4513', borderColor: '#8B4513' },
-  chipText: { fontSize: 12, color: '#6B6B6B', fontWeight: '600' },
+  chipActive: { backgroundColor: '#6B1E1E', borderColor: '#6B1E1E' },
+  chipText: { fontSize: 12, color: '#6B5B4A', fontWeight: '600' },
   chipTextActive: { color: '#FFF' },
   section: { marginBottom: 18 },
   sectionTitle: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#8B4513',
+    color: '#6B1E1E',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: 8,
@@ -280,14 +280,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 14,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     marginBottom: 8,
   },
   itemHeader: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  question: { flex: 1, fontSize: 14, fontWeight: '700', color: '#2B2B2B' },
+  question: { flex: 1, fontSize: 14, fontWeight: '700', color: '#2B1A10' },
   answer: {
     fontSize: 13,
-    color: '#2B2B2B',
+    color: '#2B1A10',
     lineHeight: 20,
     marginTop: 10,
     paddingTop: 10,
@@ -300,10 +300,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     gap: 8,
   },
-  emptySearchText: { fontSize: 13, color: '#6B6B6B' },
+  emptySearchText: { fontSize: 13, color: '#6B5B4A' },
   contactBox: {
     alignItems: 'center',
     padding: 18,
@@ -316,13 +316,13 @@ const styles = StyleSheet.create({
   contactTitle: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#8B4513',
+    color: '#6B1E1E',
     marginTop: 8,
     textAlign: 'center',
   },
   contactText: {
     fontSize: 12,
-    color: '#6B6B6B',
+    color: '#6B5B4A',
     textAlign: 'center',
     marginTop: 4,
     lineHeight: 18,
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
   contactSecondary: {
     backgroundColor: '#FFF',
     borderWidth: 1,
-    borderColor: '#8B4513',
+    borderColor: '#6B1E1E',
   },
   contactButtonText: { fontSize: 13, fontWeight: '700', color: '#FFF' },
 });

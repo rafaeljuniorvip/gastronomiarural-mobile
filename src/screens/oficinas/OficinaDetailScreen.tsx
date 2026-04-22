@@ -121,7 +121,7 @@ export default function OficinaDetailScreen() {
           <Image source={{ uri: oficina.cover_url }} style={styles.cover} />
         ) : (
           <View style={[styles.cover, styles.coverPlaceholder]}>
-            <Icon name="school" size={56} color="#C65D2E" />
+            <Icon name="school" size={56} color="#C84B1A" />
           </View>
         )}
 
@@ -171,7 +171,7 @@ export default function OficinaDetailScreen() {
               <Divider style={styles.divider} />
               <Text style={styles.sectionTitle}>Sua inscrição</Text>
               <View style={styles.qrCard}>
-                <Icon name="ticket-confirmation" size={32} color="#8B4513" />
+                <Icon name="ticket-confirmation" size={32} color="#6B1E1E" />
                 <Text style={styles.qrLabel}>
                   Apresente este código na entrada da oficina:
                 </Text>
@@ -201,7 +201,7 @@ export default function OficinaDetailScreen() {
             ) : (
               <Button
                 mode="contained"
-                buttonColor="#8B4513"
+                buttonColor="#6B1E1E"
                 style={styles.button}
                 contentStyle={styles.buttonContent}
                 onPress={handleInscrever}
@@ -223,15 +223,15 @@ export default function OficinaDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   content: { paddingBottom: 40 },
-  cover: { width: '100%', height: 220, backgroundColor: '#E5E0D5' },
+  cover: { width: '100%', height: 220, backgroundColor: '#E5DCC8' },
   coverPlaceholder: { justifyContent: 'center', alignItems: 'center' },
   body: { padding: 16 },
-  title: { fontSize: 26, fontWeight: '900', color: '#8B4513' },
+  title: { fontSize: 26, fontWeight: '900', color: '#6B1E1E', fontFamily: 'PlayfairDisplay_700Bold' },
   chipsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 12 },
   chip: { backgroundColor: '#FFF' },
-  chipText: { color: '#2B2B2B', fontSize: 12 },
+  chipText: { color: '#2B1A10', fontSize: 12 },
   vagasBox: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -240,30 +240,30 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     marginTop: 14,
   },
   vagasText: { color: '#2E7D32', fontWeight: '700', fontSize: 13 },
   vagasTextRed: { color: '#C62828' },
   divider: { marginVertical: 18 },
-  sectionTitle: { fontSize: 18, fontWeight: '700', color: '#8B4513', marginBottom: 10 },
-  paragraph: { fontSize: 14, color: '#2B2B2B', lineHeight: 22 },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: '#6B1E1E', marginBottom: 10, fontFamily: 'PlayfairDisplay_700Bold' },
+  paragraph: { fontSize: 14, color: '#2B1A10', lineHeight: 22 },
   qrCard: {
     alignItems: 'center',
     padding: 20,
     backgroundColor: '#FFF',
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  qrLabel: { fontSize: 13, color: '#6B6B6B', textAlign: 'center', marginTop: 10 },
+  qrLabel: { fontSize: 13, color: '#6B5B4A', textAlign: 'center', marginTop: 10 },
   qrCodeBox: {
     marginTop: 14,
     paddingVertical: 14,
     paddingHorizontal: 18,
-    backgroundColor: '#FAF7F2',
+    backgroundColor: '#FAF2E0',
     borderWidth: 2,
-    borderColor: '#8B4513',
+    borderColor: '#6B1E1E',
     borderRadius: 10,
     borderStyle: 'dashed',
   },
@@ -271,10 +271,10 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '900',
     letterSpacing: 2,
-    color: '#8B4513',
+    color: '#6B1E1E',
     fontFamily: 'Courier',
   },
-  qrHelp: { fontSize: 11, color: '#6B6B6B', marginTop: 12, fontStyle: 'italic' },
+  qrHelp: { fontSize: 11, color: '#6B5B4A', marginTop: 12, fontStyle: 'italic' },
   actions: { marginTop: 24 },
   button: { borderRadius: 8 },
   buttonContent: { paddingVertical: 6 },

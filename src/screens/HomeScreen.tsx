@@ -4,6 +4,8 @@ import { Card } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import SearchBar from '../components/ui/SearchBar';
+import { colors } from '../theme/colors';
+import { fonts } from '../theme/fonts';
 
 interface CardAction {
   key: string;
@@ -124,12 +126,12 @@ export default function HomeScreen() {
       {CARDS.map((c) => (
         <Card key={c.key} style={styles.card} onPress={() => nav.navigate(c.route)}>
           <Card.Content style={styles.cardContent}>
-            <Icon name={c.icon as any} size={36} color="#8B4513" />
+            <Icon name={c.icon as any} size={36} color="#6B1E1E" />
             <View style={styles.cardText}>
               <Text style={styles.cardTitle}>{c.title}</Text>
               <Text style={styles.cardDesc}>{c.desc}</Text>
             </View>
-            <Icon name="chevron-right" size={22} color="#6B6B6B" />
+            <Icon name="chevron-right" size={22} color="#6B5B4A" />
           </Card.Content>
         </Card>
       ))}
@@ -138,10 +140,10 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: colors.bg },
   content: { padding: 16 },
   hero: {
-    backgroundColor: '#8B4513',
+    backgroundColor: colors.primary,
     borderRadius: 12,
     padding: 24,
     marginBottom: 16,
@@ -152,13 +154,36 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     textTransform: 'uppercase',
     marginBottom: 8,
+    fontFamily: fonts.bodyMedium,
   },
-  heroTitle: { color: '#FFF', fontSize: 28, fontWeight: '900', lineHeight: 32 },
-  heroSubtitle: { color: 'rgba(255,255,255,0.9)', fontSize: 16, marginTop: 8 },
+  heroTitle: {
+    color: '#FFF',
+    fontSize: 32,
+    fontWeight: '700',
+    lineHeight: 38,
+    fontFamily: fonts.heading,
+  },
+  heroSubtitle: {
+    color: 'rgba(255,255,255,0.9)',
+    fontSize: 16,
+    marginTop: 8,
+    fontFamily: fonts.headingRegular,
+    fontStyle: 'italic',
+  },
   searchBar: { marginHorizontal: 0, marginBottom: 12, marginTop: 0 },
-  card: { marginBottom: 12, backgroundColor: '#FFF' },
+  card: { marginBottom: 12, backgroundColor: colors.surface },
   cardContent: { flexDirection: 'row', alignItems: 'center', gap: 16 },
   cardText: { flex: 1 },
-  cardTitle: { fontSize: 18, fontWeight: '600', color: '#2B2B2B' },
-  cardDesc: { fontSize: 13, color: '#6B6B6B', marginTop: 2 },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: colors.primary,
+    fontFamily: fonts.heading,
+  },
+  cardDesc: {
+    fontSize: 13,
+    color: colors.textMuted,
+    marginTop: 2,
+    fontFamily: fonts.body,
+  },
 });

@@ -9,6 +9,8 @@ import ErrorState from '../../components/ui/ErrorState';
 import EmptyState from '../../components/ui/EmptyState';
 import GroupModeSelector, { type GroupMode } from '../../components/ui/GroupModeSelector';
 import SearchBar from '../../components/ui/SearchBar';
+import { colors } from '../../theme/colors';
+import { fonts } from '../../theme/fonts';
 
 type StatusBadgeConfig = {
   label: string;
@@ -19,12 +21,12 @@ type StatusBadgeConfig = {
 const STATUS_BADGE: Record<string, StatusBadgeConfig> = {
   aberta: {
     label: 'ABERTA',
-    container: { backgroundColor: '#1E8E3E' },
+    container: { backgroundColor: '#5E7F3E' },
     text: { color: '#FFF' },
   },
   fechada: {
     label: 'FECHADA',
-    container: { backgroundColor: '#6B6B6B' },
+    container: { backgroundColor: '#6B5B4A' },
     text: { color: '#FFF' },
   },
   esgotada: {
@@ -150,11 +152,11 @@ export default function BarracasListScreen() {
       <GroupModeSelector value={groupMode} onChange={setGroupMode} />
       <View style={styles.toolbar}>
         <TouchableOpacity style={styles.toolbarBtn} onPress={expandAll}>
-          <Icon name="unfold-more-horizontal" size={14} color="#8B4513" />
+          <Icon name="unfold-more-horizontal" size={14} color="#6B1E1E" />
           <Text style={styles.toolbarBtnText}>Expandir todas</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.toolbarBtn} onPress={collapseAll}>
-          <Icon name="unfold-less-horizontal" size={14} color="#8B4513" />
+          <Icon name="unfold-less-horizontal" size={14} color="#6B1E1E" />
           <Text style={styles.toolbarBtnText}>Colapsar todas</Text>
         </TouchableOpacity>
       </View>
@@ -184,7 +186,7 @@ export default function BarracasListScreen() {
               <Text style={styles.sectionTitle}>{title.toUpperCase()}</Text>
               <Text style={styles.sectionCount}>· {count} {count === 1 ? 'barraca' : 'barracas'}</Text>
               <View style={styles.sectionChevron}>
-                <Icon name={isCollapsed ? 'chevron-down' : 'chevron-up'} size={20} color="#8B4513" />
+                <Icon name={isCollapsed ? 'chevron-down' : 'chevron-up'} size={20} color="#6B1E1E" />
               </View>
             </TouchableOpacity>
           );
@@ -200,7 +202,7 @@ export default function BarracasListScreen() {
                   <Image source={{ uri: item.cover_url }} style={styles.cover} />
                 ) : (
                   <View style={[styles.cover, styles.coverPlaceholder]}>
-                    <Icon name="storefront" size={32} color="#C65D2E" />
+                    <Icon name="storefront" size={32} color="#C84B1A" />
                   </View>
                 )}
                 {badge ? (
@@ -216,7 +218,7 @@ export default function BarracasListScreen() {
                   <View style={styles.meta}>
                     {item.location ? (
                       <View style={styles.metaItem}>
-                        <Icon name="map-marker" size={13} color="#6B6B6B" />
+                        <Icon name="map-marker" size={13} color="#6B5B4A" />
                         <Text style={styles.metaText}>{item.location}</Text>
                       </View>
                     ) : null}
@@ -233,7 +235,7 @@ export default function BarracasListScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: colors.bg },
   content: { padding: 12, paddingTop: 0 },
   toolbar: {
     flexDirection: 'row',
@@ -249,10 +251,10 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     backgroundColor: '#FFF',
   },
-  toolbarBtnText: { fontSize: 11, color: '#8B4513', fontWeight: '700', letterSpacing: 0.3 },
+  toolbarBtnText: { fontSize: 11, color: colors.primary, fontWeight: '700', letterSpacing: 0.3, fontFamily: fonts.bodyBold },
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -263,18 +265,18 @@ const styles = StyleSheet.create({
     marginTop: 12,
     marginBottom: 8,
   },
-  sectionTitle: { fontSize: 12, fontWeight: '800', color: '#8B4513', letterSpacing: 0.8 },
-  sectionCount: { fontSize: 12, color: '#8B4513', marginLeft: 6, fontWeight: '600' },
+  sectionTitle: { fontSize: 12, fontWeight: '800', color: colors.primary, letterSpacing: 0.8, fontFamily: fonts.bodyBold },
+  sectionCount: { fontSize: 12, color: colors.primary, marginLeft: 6, fontWeight: '600', fontFamily: fonts.bodyMedium },
   sectionChevron: { marginLeft: 'auto' },
-  card: { backgroundColor: '#FFF', borderRadius: 12, marginBottom: 10, overflow: 'hidden', borderWidth: 1, borderColor: '#E5E0D5' },
-  cover: { width: '100%', height: 140, backgroundColor: '#FAF7F2' },
+  card: { backgroundColor: colors.surface, borderRadius: 12, marginBottom: 10, overflow: 'hidden', borderWidth: 1, borderColor: colors.border },
+  cover: { width: '100%', height: 140, backgroundColor: colors.bg },
   coverPlaceholder: { justifyContent: 'center', alignItems: 'center' },
   cardBody: { padding: 14 },
-  name: { fontSize: 17, fontWeight: '700', color: '#2B2B2B', marginBottom: 4 },
-  description: { fontSize: 13, color: '#6B6B6B', marginBottom: 8, lineHeight: 18 },
+  name: { fontSize: 18, fontWeight: '700', color: colors.primary, marginBottom: 4, fontFamily: fonts.heading },
+  description: { fontSize: 13, color: colors.textMuted, marginBottom: 8, lineHeight: 18, fontFamily: fonts.body },
   meta: { flexDirection: 'row', gap: 12 },
   metaItem: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  metaText: { fontSize: 12, color: '#6B6B6B' },
+  metaText: { fontSize: 12, color: colors.textMuted, fontFamily: fonts.body },
   statusBadge: {
     position: 'absolute',
     top: 10,
@@ -288,5 +290,5 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     elevation: 2,
   },
-  statusText: { fontSize: 10, fontWeight: '800', letterSpacing: 0.5 },
+  statusText: { fontSize: 10, fontWeight: '800', letterSpacing: 0.5, fontFamily: fonts.bodyBold },
 });

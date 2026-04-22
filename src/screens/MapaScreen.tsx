@@ -46,9 +46,9 @@ function buildHtml(points: MapaAllItem[]): string {
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     html, body, #map { margin: 0; padding: 0; height: 100%; width: 100%; }
-    body { background: #FAF7F2; -webkit-tap-highlight-color: transparent; }
+    body { background: #FAF2E0; -webkit-tap-highlight-color: transparent; }
     .gr-pin {
-      background: #8B4513;
+      background: #6B1E1E;
       color: #fff;
       padding: 4px 8px;
       border-radius: 16px;
@@ -60,11 +60,11 @@ function buildHtml(points: MapaAllItem[]): string {
       text-align: center;
     }
     .gr-pin.turismo { background: #2E7D32; }
-    .gr-pin.barraca { background: #C65D2E; }
+    .gr-pin.barraca { background: #C84B1A; }
     .leaflet-popup-content-wrapper { border-radius: 8px; }
     .leaflet-popup-content { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; margin: 10px 12px; }
-    .leaflet-popup-content b { color: #2B2B2B; }
-    .gr-popup-subtype { color: #6B6B6B; font-size: 11px; text-transform: uppercase; margin-top: 4px; display: block; }
+    .leaflet-popup-content b { color: #2B1A10; }
+    .gr-popup-subtype { color: #6B5B4A; font-size: 11px; text-transform: uppercase; margin-top: 4px; display: block; }
   </style>
 </head>
 <body>
@@ -218,17 +218,17 @@ export default function MapaScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   filterWrap: {
     backgroundColor: '#FFF',
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E0D5',
+    borderBottomColor: '#E5DCC8',
   },
   mapWrap: { flex: 1, position: 'relative' },
-  webview: { flex: 1, backgroundColor: '#FAF7F2' },
+  webview: { flex: 1, backgroundColor: '#FAF2E0' },
   loadingOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#FAF7F2',
+    backgroundColor: '#FAF2E0',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    backgroundColor: '#C65D2E',
+    backgroundColor: '#C84B1A',
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 24,

@@ -64,7 +64,7 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.hero}>
-        <Icon name="chef-hat" size={72} color="#8B4513" />
+        <Icon name="chef-hat" size={72} color="#6B1E1E" />
         <Text style={styles.title}>Festival de{'\n'}Gastronomia Rural</Text>
         <Text style={styles.subtitle}>
           Entre para avaliar pratos, inscrever-se em oficinas e favoritar barracas.
@@ -74,7 +74,7 @@ export default function LoginScreen() {
       <View style={styles.actions}>
         <Button
           mode="contained"
-          buttonColor="#8B4513"
+          buttonColor="#6B1E1E"
           textColor="#FFF"
           icon="google"
           style={styles.primaryButton}
@@ -88,7 +88,7 @@ export default function LoginScreen() {
 
         <Button
           mode="outlined"
-          textColor="#8B4513"
+          textColor="#6B1E1E"
           style={styles.secondaryButton}
           contentStyle={styles.buttonContent}
           onPress={continueAsGuest}
@@ -99,7 +99,7 @@ export default function LoginScreen() {
 
         {submitting ? (
           <View style={styles.loadingRow}>
-            <ActivityIndicator color="#8B4513" size="small" />
+            <ActivityIndicator color="#6B1E1E" size="small" />
             <Text style={styles.loadingText}>Validando acesso…</Text>
           </View>
         ) : null}
@@ -113,22 +113,22 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2', padding: 28, justifyContent: 'center' },
+  container: { flex: 1, backgroundColor: '#FAF2E0', padding: 28, justifyContent: 'center' },
   hero: { alignItems: 'center', marginBottom: 32 },
   title: {
     fontSize: 26,
     fontWeight: '900',
-    color: '#8B4513',
+    color: '#6B1E1E',
     textAlign: 'center',
     marginTop: 16,
     lineHeight: 30,
   },
-  subtitle: { fontSize: 14, color: '#6B6B6B', textAlign: 'center', marginTop: 12 },
+  subtitle: { fontSize: 14, color: '#6B5B4A', textAlign: 'center', marginTop: 12 },
   actions: { gap: 12 },
   primaryButton: { borderRadius: 8 },
-  secondaryButton: { borderRadius: 8, borderColor: '#8B4513' },
+  secondaryButton: { borderRadius: 8, borderColor: '#6B1E1E' },
   buttonContent: { paddingVertical: 6 },
   loadingRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 12 },
-  loadingText: { color: '#6B6B6B', fontSize: 12 },
-  note: { fontSize: 11, color: '#6B6B6B', marginTop: 32, textAlign: 'center', lineHeight: 16 },
+  loadingText: { color: '#6B5B4A', fontSize: 12 },
+  note: { fontSize: 11, color: '#6B5B4A', marginTop: 32, textAlign: 'center', lineHeight: 16 },
 });

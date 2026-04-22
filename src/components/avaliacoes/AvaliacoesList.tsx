@@ -39,7 +39,7 @@ export default function AvaliacoesList({ prato_id, barraca_id, evento_id, refres
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator color="#8B4513" />
+        <ActivityIndicator color="#6B1E1E" />
       </View>
     );
   }
@@ -55,7 +55,7 @@ export default function AvaliacoesList({ prato_id, barraca_id, evento_id, refres
   if (avaliacoes.length === 0) {
     return (
       <View style={styles.emptyBox}>
-        <Icon name="star-outline" size={32} color="#C65D2E" />
+        <Icon name="star-outline" size={32} color="#C84B1A" />
         <Text style={styles.emptyTitle}>Sem avaliações ainda</Text>
         <Text style={styles.emptyMessage}>Seja o primeiro a avaliar.</Text>
       </View>
@@ -84,7 +84,7 @@ export default function AvaliacoesList({ prato_id, barraca_id, evento_id, refres
               <Image source={{ uri: a.user_avatar_url }} style={styles.avatar} />
             ) : (
               <View style={[styles.avatar, styles.avatarPlaceholder]}>
-                <Icon name="account" size={18} color="#6B6B6B" />
+                <Icon name="account" size={18} color="#6B5B4A" />
               </View>
             )}
             <View style={styles.headerText}>
@@ -113,7 +113,7 @@ export default function AvaliacoesList({ prato_id, barraca_id, evento_id, refres
           {a.owner_reply ? (
             <View style={styles.reply}>
               <View style={styles.replyHeader}>
-                <Icon name="store" size={14} color="#8B4513" />
+                <Icon name="store" size={14} color="#6B1E1E" />
                 <Text style={styles.replyLabel}>Resposta da barraca</Text>
               </View>
               <Text style={styles.replyText}>{a.owner_reply}</Text>
@@ -134,10 +134,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  emptyTitle: { marginTop: 8, fontSize: 14, fontWeight: '600', color: '#2B2B2B' },
-  emptyMessage: { marginTop: 2, fontSize: 12, color: '#6B6B6B' },
+  emptyTitle: { marginTop: 8, fontSize: 14, fontWeight: '600', color: '#2B1A10' },
+  emptyMessage: { marginTop: 2, fontSize: 12, color: '#6B5B4A' },
   summary: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -145,45 +145,45 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     marginBottom: 12,
     gap: 14,
   },
-  avgNumber: { fontSize: 36, fontWeight: '900', color: '#8B4513' },
+  avgNumber: { fontSize: 36, fontWeight: '900', color: '#6B1E1E' },
   summaryRight: { flex: 1 },
-  summaryCount: { marginTop: 4, fontSize: 12, color: '#6B6B6B' },
+  summaryCount: { marginTop: 4, fontSize: 12, color: '#6B5B4A' },
   card: {
     backgroundColor: '#FFF',
     padding: 14,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     marginBottom: 10,
   },
   header: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8 },
-  avatar: { width: 36, height: 36, borderRadius: 18, backgroundColor: '#FAF7F2' },
+  avatar: { width: 36, height: 36, borderRadius: 18, backgroundColor: '#FAF2E0' },
   avatarPlaceholder: { alignItems: 'center', justifyContent: 'center' },
   headerText: { flex: 1 },
-  userName: { fontSize: 13, fontWeight: '600', color: '#2B2B2B' },
-  date: { fontSize: 11, color: '#6B6B6B', marginTop: 1 },
-  comment: { fontSize: 13, color: '#2B2B2B', lineHeight: 19 },
+  userName: { fontSize: 13, fontWeight: '600', color: '#2B1A10' },
+  date: { fontSize: 11, color: '#6B5B4A', marginTop: 1 },
+  comment: { fontSize: 13, color: '#2B1A10', lineHeight: 19 },
   photosRow: { marginTop: 10 },
   photo: {
     width: 80,
     height: 80,
     borderRadius: 8,
     marginRight: 8,
-    backgroundColor: '#FAF7F2',
+    backgroundColor: '#FAF2E0',
   },
   reply: {
     marginTop: 10,
     padding: 10,
-    backgroundColor: '#FAF7F2',
+    backgroundColor: '#FAF2E0',
     borderRadius: 8,
     borderLeftWidth: 3,
-    borderLeftColor: '#8B4513',
+    borderLeftColor: '#6B1E1E',
   },
   replyHeader: { flexDirection: 'row', alignItems: 'center', gap: 4, marginBottom: 4 },
-  replyLabel: { fontSize: 11, fontWeight: '700', color: '#8B4513', textTransform: 'uppercase', letterSpacing: 0.5 },
-  replyText: { fontSize: 13, color: '#2B2B2B', lineHeight: 18 },
+  replyLabel: { fontSize: 11, fontWeight: '700', color: '#6B1E1E', textTransform: 'uppercase', letterSpacing: 0.5 },
+  replyText: { fontSize: 13, color: '#2B1A10', lineHeight: 18 },
 });

@@ -8,22 +8,32 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#8B4513"
+      "image": "./assets/splash-festival.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#6B1E1E"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.gastronomiarural.app"
+      "bundleIdentifier": "com.gastronomiarural.app",
+      "splash": {
+        "image": "./assets/splash-festival.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#6B1E1E"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#8B4513"
+        "backgroundColor": "#6B1E1E"
       },
       "package": "com.gastronomiarural.app",
-      "permissions": ["android.permission.CAMERA"]
+      "permissions": ["android.permission.CAMERA"],
+      "splash": {
+        "image": "./assets/splash-festival.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#6B1E1E"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -47,7 +57,7 @@
     ],
     "notification": {
       "icon": "./assets/icon.png",
-      "color": "#8B4513",
+      "color": "#6B1E1E",
       "iosDisplayInForeground": true,
       "androidMode": "default"
     },

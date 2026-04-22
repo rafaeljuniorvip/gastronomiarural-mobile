@@ -52,12 +52,12 @@ export default function FavoriteButton({ refType, refId, size = 26, style }: Pro
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
     >
       {busy ? (
-        <ActivityIndicator size="small" color="#C65D2E" />
+        <ActivityIndicator size="small" color="#C84B1A" />
       ) : (
         <Icon
           name={active ? 'heart' : 'heart-outline'}
           size={size}
-          color={active ? '#C65D2E' : '#FFF'}
+          color={active ? '#C84B1A' : '#FFF'}
         />
       )}
     </TouchableOpacity>

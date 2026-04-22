@@ -10,7 +10,7 @@ interface Props {
 export default function EmptyState({ icon = 'information-outline', title, message }: Props) {
   return (
     <View style={styles.container}>
-      <Icon name={icon as any} size={56} color="#C65D2E" />
+      <Icon name={icon as any} size={56} color="#C84B1A" />
       <Text style={styles.title}>{title}</Text>
       {message && <Text style={styles.message}>{message}</Text>}
     </View>
@@ -19,6 +19,6 @@ export default function EmptyState({ icon = 'information-outline', title, messag
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 32 },
-  title: { marginTop: 12, fontSize: 16, fontWeight: '600', color: '#2B2B2B', textAlign: 'center' },
-  message: { marginTop: 6, fontSize: 14, color: '#6B6B6B', textAlign: 'center' },
+  title: { marginTop: 12, fontSize: 16, fontWeight: '600', color: '#2B1A10', textAlign: 'center', fontFamily: 'PlayfairDisplay_700Bold' },
+  message: { marginTop: 6, fontSize: 14, color: '#6B5B4A', textAlign: 'center' },
 });

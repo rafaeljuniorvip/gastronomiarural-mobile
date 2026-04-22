@@ -25,14 +25,14 @@ export default function AppShell({ children }: AppShellProps) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#8B4513',
+    backgroundColor: '#6B1E1E',
   },
   topSafeArea: {
-    backgroundColor: '#8B4513',
+    backgroundColor: '#6B1E1E',
   },
   content: {
     flex: 1,
-    backgroundColor: '#FAF7F2',
+    backgroundColor: '#FAF2E0',
   },
   bottomSafeArea: {
     backgroundColor: '#F2EBE0',

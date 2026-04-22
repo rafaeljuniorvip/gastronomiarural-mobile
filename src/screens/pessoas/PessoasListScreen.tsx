@@ -108,7 +108,7 @@ export default function PessoasListScreen() {
                   <Image source={{ uri: item.photo_url }} style={styles.avatar} />
                 ) : (
                   <View style={[styles.avatar, styles.avatarPlaceholder]}>
-                    <Icon name="account" size={38} color="#C65D2E" />
+                    <Icon name="account" size={38} color="#C84B1A" />
                   </View>
                 )}
                 <View style={styles.cardBody}>
@@ -119,7 +119,7 @@ export default function PessoasListScreen() {
                     </Text>
                   ) : null}
                 </View>
-                <Icon name="chevron-right" size={22} color="#6B6B6B" />
+                <Icon name="chevron-right" size={22} color="#6B5B4A" />
               </TouchableOpacity>
             </Animated.View>
           )}
@@ -130,7 +130,7 @@ export default function PessoasListScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   chipsWrap: { maxHeight: 56, flexGrow: 0 },
   chipsContent: { paddingHorizontal: 12, paddingVertical: 12, gap: 8 },
   chip: {
@@ -139,11 +139,11 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     backgroundColor: '#FFF',
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     marginRight: 8,
   },
-  chipActive: { backgroundColor: '#8B4513', borderColor: '#8B4513' },
-  chipText: { fontSize: 12, color: '#2B2B2B', fontWeight: '600' },
+  chipActive: { backgroundColor: '#6B1E1E', borderColor: '#6B1E1E' },
+  chipText: { fontSize: 12, color: '#2B1A10', fontWeight: '600' },
   chipTextActive: { color: '#FFF' },
   content: { padding: 12 },
   card: {
@@ -154,12 +154,12 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     gap: 12,
   },
-  avatar: { width: 72, height: 72, borderRadius: 36, backgroundColor: '#FAF7F2' },
+  avatar: { width: 72, height: 72, borderRadius: 36, backgroundColor: '#FAF2E0' },
   avatarPlaceholder: { justifyContent: 'center', alignItems: 'center' },
   cardBody: { flex: 1 },
-  name: { fontSize: 16, fontWeight: '700', color: '#2B2B2B' },
-  bio: { fontSize: 13, color: '#6B6B6B', marginTop: 4, lineHeight: 18 },
+  name: { fontSize: 16, fontWeight: '700', color: '#2B1A10', fontFamily: 'PlayfairDisplay_700Bold' },
+  bio: { fontSize: 13, color: '#6B5B4A', marginTop: 4, lineHeight: 18 },
 });

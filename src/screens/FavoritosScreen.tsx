@@ -108,23 +108,23 @@ export default function FavoritosScreen() {
                 <Image source={{ uri: b.cover_url }} style={styles.image} />
               ) : (
                 <View style={[styles.image, styles.imagePlaceholder]}>
-                  <Icon name="storefront" size={24} color="#C65D2E" />
+                  <Icon name="storefront" size={24} color="#C84B1A" />
                 </View>
               )}
               <View style={styles.body}>
                 <View style={styles.tagRow}>
-                  <Icon name="storefront" size={12} color="#C65D2E" />
+                  <Icon name="storefront" size={12} color="#C84B1A" />
                   <Text style={styles.tag}>Barraca</Text>
                 </View>
                 <Text style={styles.name} numberOfLines={1}>{b.name}</Text>
                 {b.location ? (
                   <View style={styles.metaRow}>
-                    <Icon name="map-marker" size={12} color="#6B6B6B" />
+                    <Icon name="map-marker" size={12} color="#6B5B4A" />
                     <Text style={styles.metaText} numberOfLines={1}>{b.location}</Text>
                   </View>
                 ) : null}
               </View>
-              <Icon name="chevron-right" size={22} color="#6B6B6B" />
+              <Icon name="chevron-right" size={22} color="#6B5B4A" />
             </TouchableOpacity>
           );
         }
@@ -138,12 +138,12 @@ export default function FavoritosScreen() {
               <Image source={{ uri: p.photo_url }} style={styles.image} />
             ) : (
               <View style={[styles.image, styles.imagePlaceholder]}>
-                <Icon name="silverware-fork-knife" size={24} color="#C65D2E" />
+                <Icon name="silverware-fork-knife" size={24} color="#C84B1A" />
               </View>
             )}
             <View style={styles.body}>
               <View style={styles.tagRow}>
-                <Icon name="silverware-fork-knife" size={12} color="#C65D2E" />
+                <Icon name="silverware-fork-knife" size={12} color="#C84B1A" />
                 <Text style={styles.tag}>{p.category}</Text>
               </View>
               <Text style={styles.name} numberOfLines={1}>{p.name}</Text>
@@ -151,7 +151,7 @@ export default function FavoritosScreen() {
                 R$ {Number(p.price).toFixed(2).replace('.', ',')}
               </Text>
             </View>
-            <Icon name="chevron-right" size={22} color="#6B6B6B" />
+            <Icon name="chevron-right" size={22} color="#6B5B4A" />
           </TouchableOpacity>
         );
       }}
@@ -160,9 +160,9 @@ export default function FavoritosScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   content: { padding: 12 },
-  header: { fontSize: 13, color: '#6B6B6B', marginBottom: 10, paddingHorizontal: 4 },
+  header: { fontSize: 13, color: '#6B5B4A', marginBottom: 10, paddingHorizontal: 4 },
   card: {
     flexDirection: 'row',
     backgroundColor: '#FFF',
@@ -170,22 +170,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     alignItems: 'center',
   },
   image: { width: 72, height: 72 },
-  imagePlaceholder: { backgroundColor: '#FAF7F2', justifyContent: 'center', alignItems: 'center' },
+  imagePlaceholder: { backgroundColor: '#FAF2E0', justifyContent: 'center', alignItems: 'center' },
   body: { flex: 1, padding: 12 },
   tagRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   tag: {
     fontSize: 10,
     textTransform: 'uppercase',
-    color: '#C65D2E',
+    color: '#C84B1A',
     fontWeight: '700',
     letterSpacing: 0.5,
   },
-  name: { fontSize: 15, fontWeight: '600', color: '#2B2B2B', marginTop: 3 },
+  name: { fontSize: 15, fontWeight: '600', color: '#2B1A10', marginTop: 3 },
   metaRow: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 3 },
-  metaText: { fontSize: 11, color: '#6B6B6B' },
-  price: { fontSize: 14, fontWeight: '700', color: '#C65D2E', marginTop: 3 },
+  metaText: { fontSize: 11, color: '#6B5B4A' },
+  price: { fontSize: 14, fontWeight: '700', color: '#C84B1A', marginTop: 3 },
 });

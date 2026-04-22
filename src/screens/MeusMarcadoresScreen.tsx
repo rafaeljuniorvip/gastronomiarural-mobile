@@ -83,7 +83,7 @@ export default function MeusMarcadoresScreen() {
               style={[styles.tab, active && styles.tabActive]}
               onPress={() => setTab(t.key)}
             >
-              <Icon name={t.icon} size={16} color={active ? '#8B4513' : '#6B6B6B'} />
+              <Icon name={t.icon} size={16} color={active ? '#6B1E1E' : '#6B5B4A'} />
               <Text style={[styles.tabLabel, active && styles.tabLabelActive]}>
                 {t.label}
               </Text>
@@ -133,7 +133,7 @@ export default function MeusMarcadoresScreen() {
                 <Image source={{ uri: item.prato_photo_url }} style={styles.image} />
               ) : (
                 <View style={[styles.image, styles.imagePlaceholder]}>
-                  <Icon name="silverware-fork-knife" size={24} color="#C65D2E" />
+                  <Icon name="silverware-fork-knife" size={24} color="#C84B1A" />
                 </View>
               )}
               <View style={styles.body}>
@@ -142,7 +142,7 @@ export default function MeusMarcadoresScreen() {
                   {item.prato_name}
                 </Text>
                 <View style={styles.metaRow}>
-                  <Icon name="storefront" size={12} color="#6B6B6B" />
+                  <Icon name="storefront" size={12} color="#6B5B4A" />
                   <Text style={styles.meta} numberOfLines={1}>
                     {item.barraca_name}
                   </Text>
@@ -151,7 +151,7 @@ export default function MeusMarcadoresScreen() {
                   R$ {Number(item.prato_price).toFixed(2).replace('.', ',')}
                 </Text>
               </View>
-              <Icon name="chevron-right" size={22} color="#6B6B6B" />
+              <Icon name="chevron-right" size={22} color="#6B5B4A" />
             </TouchableOpacity>
           )}
         />
@@ -161,12 +161,12 @@ export default function MeusMarcadoresScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   tabs: {
     flexDirection: 'row',
     backgroundColor: '#FFF',
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E0D5',
+    borderBottomColor: '#E5DCC8',
   },
   tab: {
     flex: 1,
@@ -179,9 +179,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: 'transparent',
   },
-  tabActive: { borderBottomColor: '#8B4513' },
-  tabLabel: { fontSize: 13, fontWeight: '600', color: '#6B6B6B' },
-  tabLabelActive: { color: '#8B4513' },
+  tabActive: { borderBottomColor: '#6B1E1E' },
+  tabLabel: { fontSize: 13, fontWeight: '600', color: '#6B5B4A' },
+  tabLabelActive: { color: '#6B1E1E' },
   badge: {
     backgroundColor: '#F0EDE5',
     borderRadius: 10,
@@ -190,8 +190,8 @@ const styles = StyleSheet.create({
     paddingVertical: 1,
     alignItems: 'center',
   },
-  badgeActive: { backgroundColor: '#8B4513' },
-  badgeText: { fontSize: 11, fontWeight: '700', color: '#6B6B6B' },
+  badgeActive: { backgroundColor: '#6B1E1E' },
+  badgeText: { fontSize: 11, fontWeight: '700', color: '#6B5B4A' },
   badgeTextActive: { color: '#FFF' },
   list: { padding: 12 },
   card: {
@@ -201,21 +201,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
     alignItems: 'center',
   },
   image: { width: 76, height: 76 },
-  imagePlaceholder: { backgroundColor: '#FAF7F2', justifyContent: 'center', alignItems: 'center' },
+  imagePlaceholder: { backgroundColor: '#FAF2E0', justifyContent: 'center', alignItems: 'center' },
   body: { flex: 1, padding: 12 },
   category: {
     fontSize: 10,
-    color: '#C65D2E',
+    color: '#C84B1A',
     fontWeight: '700',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
-  name: { fontSize: 15, fontWeight: '700', color: '#2B2B2B', marginTop: 2 },
+  name: { fontSize: 15, fontWeight: '700', color: '#2B1A10', marginTop: 2 },
   metaRow: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 3 },
-  meta: { fontSize: 12, color: '#6B6B6B' },
-  price: { fontSize: 13, fontWeight: '700', color: '#C65D2E', marginTop: 4 },
+  meta: { fontSize: 12, color: '#6B5B4A' },
+  price: { fontSize: 13, fontWeight: '700', color: '#C84B1A', marginTop: 4 },
 });

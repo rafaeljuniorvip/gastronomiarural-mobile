@@ -24,7 +24,7 @@ const DIFICULDADE_LABEL: Record<Dificuldade, string> = {
 
 const DIFICULDADE_COLOR: Record<Dificuldade, string> = {
   facil: '#2E7D32',
-  medio: '#C65D2E',
+  medio: '#C84B1A',
   dificil: '#C62828',
 };
 
@@ -99,7 +99,7 @@ export default function ReceitaDetailScreen() {
         <Image source={{ uri: receita.cover_url }} style={styles.cover} />
       ) : (
         <View style={[styles.cover, styles.coverPlaceholder]}>
-          <Icon name="chef-hat" size={56} color="#C65D2E" />
+          <Icon name="chef-hat" size={56} color="#C84B1A" />
         </View>
       )}
 
@@ -153,7 +153,7 @@ export default function ReceitaDetailScreen() {
                     <Icon
                       name={marcado ? 'checkbox-marked-circle' : 'checkbox-blank-circle-outline'}
                       size={22}
-                      color={marcado ? '#2E7D32' : '#8B4513'}
+                      color={marcado ? '#2E7D32' : '#6B1E1E'}
                     />
                     <View style={styles.ingredienteText}>
                       <Text
@@ -195,7 +195,7 @@ export default function ReceitaDetailScreen() {
             <Divider style={styles.divider} />
             <Text style={styles.sectionTitle}>Dicas da cozinheira</Text>
             <View style={styles.dicaBox}>
-              <Icon name="lightbulb-on-outline" size={20} color="#C65D2E" />
+              <Icon name="lightbulb-on-outline" size={20} color="#C84B1A" />
               <Text style={styles.dicaText}>{receita.dicas}</Text>
             </View>
           </>
@@ -212,7 +212,7 @@ export default function ReceitaDetailScreen() {
         <Button
           mode="contained"
           icon="share-variant"
-          buttonColor="#8B4513"
+          buttonColor="#6B1E1E"
           style={styles.shareButton}
           contentStyle={styles.shareButtonContent}
           onPress={handleShare}
@@ -225,23 +225,23 @@ export default function ReceitaDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   content: { paddingBottom: 40 },
-  cover: { width: '100%', height: 260, backgroundColor: '#E5E0D5' },
+  cover: { width: '100%', height: 260, backgroundColor: '#E5DCC8' },
   coverPlaceholder: { justifyContent: 'center', alignItems: 'center' },
   body: { padding: 16 },
   title: {
     fontSize: 28,
     fontWeight: '900',
-    color: '#8B4513',
+    color: '#6B1E1E',
     fontFamily: 'Merriweather',
   },
-  description: { fontSize: 15, color: '#2B2B2B', lineHeight: 22, marginTop: 10 },
+  description: { fontSize: 15, color: '#2B1A10', lineHeight: 22, marginTop: 10 },
   chipsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 16 },
   chip: { backgroundColor: '#FFF' },
-  chipText: { color: '#2B2B2B', fontSize: 12 },
+  chipText: { color: '#2B1A10', fontSize: 12 },
   divider: { marginVertical: 20 },
-  sectionTitle: { fontSize: 20, fontWeight: '700', color: '#8B4513', marginBottom: 12 },
+  sectionTitle: { fontSize: 20, fontWeight: '700', color: '#6B1E1E', marginBottom: 12, fontFamily: 'PlayfairDisplay_700Bold' },
   list: { gap: 4 },
   ingrediente: {
     flexDirection: 'row',
@@ -249,12 +249,12 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingVertical: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E0D5',
+    borderBottomColor: '#E5DCC8',
   },
   ingredienteText: { flex: 1 },
-  ingredienteItem: { fontSize: 14, color: '#2B2B2B' },
-  ingredienteQtd: { fontWeight: '700', color: '#8B4513' },
-  ingredienteMarcado: { textDecorationLine: 'line-through', color: '#6B6B6B' },
+  ingredienteItem: { fontSize: 14, color: '#2B1A10' },
+  ingredienteQtd: { fontWeight: '700', color: '#6B1E1E' },
+  ingredienteMarcado: { textDecorationLine: 'line-through', color: '#6B5B4A' },
   passosList: { gap: 12 },
   passoCard: {
     flexDirection: 'row',
@@ -263,18 +263,18 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
   passoNumero: {
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: '#8B4513',
+    backgroundColor: '#6B1E1E',
     justifyContent: 'center',
     alignItems: 'center',
   },
   passoNumeroText: { color: '#FFF', fontWeight: '900', fontSize: 14 },
-  passoText: { flex: 1, fontSize: 14, lineHeight: 22, color: '#2B2B2B' },
+  passoText: { flex: 1, fontSize: 14, lineHeight: 22, color: '#2B1A10' },
   dicaBox: {
     flexDirection: 'row',
     gap: 12,
@@ -282,10 +282,10 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 10,
     borderLeftWidth: 4,
-    borderLeftColor: '#C65D2E',
+    borderLeftColor: '#C84B1A',
   },
-  dicaText: { flex: 1, fontSize: 14, lineHeight: 22, color: '#2B2B2B', fontStyle: 'italic' },
-  paragraph: { fontSize: 14, color: '#2B2B2B', lineHeight: 22 },
+  dicaText: { flex: 1, fontSize: 14, lineHeight: 22, color: '#2B1A10', fontStyle: 'italic' },
+  paragraph: { fontSize: 14, color: '#2B1A10', lineHeight: 22 },
   shareButton: { marginTop: 28, borderRadius: 8 },
   shareButtonContent: { paddingVertical: 6 },
 });

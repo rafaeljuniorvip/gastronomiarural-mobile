@@ -15,7 +15,7 @@ interface Props {
   pratoId: number;
 }
 
-const EXPERIMENTEI_COLOR = '#C65D2E';
+const EXPERIMENTEI_COLOR = '#C84B1A';
 const QUERO_COLOR = '#D9A441';
 
 export default function PratoMarkerButtons({ pratoId }: Props) {

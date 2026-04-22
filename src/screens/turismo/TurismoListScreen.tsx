@@ -41,14 +41,14 @@ const FILTERS: FilterOption[] = [
 
 const TYPE_META: Record<LocalTurismoType, { label: string; color: string; icon: string }> = {
   hotel: { label: 'Hotel', color: '#1976D2', icon: 'bed' },
-  pousada: { label: 'Pousada', color: '#8B4513', icon: 'home-variant' },
-  restaurante: { label: 'Restaurante', color: '#C65D2E', icon: 'silverware-fork-knife' },
+  pousada: { label: 'Pousada', color: '#6B1E1E', icon: 'home-variant' },
+  restaurante: { label: 'Restaurante', color: '#C84B1A', icon: 'silverware-fork-knife' },
   atracao: { label: 'Atração', color: '#6A1B9A', icon: 'star' },
   cachoeira: { label: 'Cachoeira', color: '#00838F', icon: 'waves' },
   igreja: { label: 'Igreja', color: '#455A64', icon: 'church' },
   trilha: { label: 'Trilha', color: '#2E7D32', icon: 'hiking' },
   mercado: { label: 'Mercado', color: '#EF6C00', icon: 'storefront-outline' },
-  servico: { label: 'Serviço', color: '#6B6B6B', icon: 'cog-outline' },
+  servico: { label: 'Serviço', color: '#6B5B4A', icon: 'cog-outline' },
 };
 
 export default function TurismoListScreen() {
@@ -134,7 +134,7 @@ export default function TurismoListScreen() {
                         <Image source={{ uri: d.cover_url }} style={styles.destaqueCover} />
                       ) : (
                         <View style={[styles.destaqueCover, styles.coverPlaceholder]}>
-                          <Icon name={meta.icon as any} size={32} color="#C65D2E" />
+                          <Icon name={meta.icon as any} size={32} color="#C84B1A" />
                         </View>
                       )}
                       <View style={styles.destaqueBody}>
@@ -173,7 +173,7 @@ export default function TurismoListScreen() {
                   <Icon
                     name={f.icon as any}
                     size={14}
-                    color={active ? '#FFF' : '#8B4513'}
+                    color={active ? '#FFF' : '#6B1E1E'}
                   />
                   <Text
                     style={[
@@ -205,7 +205,7 @@ export default function TurismoListScreen() {
                 <Image source={{ uri: item.cover_url }} style={styles.cover} />
               ) : (
                 <View style={[styles.cover, styles.coverPlaceholder]}>
-                  <Icon name={meta.icon as any} size={40} color="#C65D2E" />
+                  <Icon name={meta.icon as any} size={40} color="#C84B1A" />
                 </View>
               )}
               <View style={styles.body}>
@@ -217,7 +217,7 @@ export default function TurismoListScreen() {
                 </Text>
                 {item.address ? (
                   <View style={styles.metaRow}>
-                    <Icon name="map-marker-outline" size={14} color="#6B6B6B" />
+                    <Icon name="map-marker-outline" size={14} color="#6B5B4A" />
                     <Text style={styles.metaText} numberOfLines={1}>
                       {item.address}
                     </Text>
@@ -226,7 +226,7 @@ export default function TurismoListScreen() {
                 <View style={styles.metaFooter}>
                   {dist ? (
                     <View style={styles.metaRow}>
-                      <Icon name="walk" size={14} color="#6B6B6B" />
+                      <Icon name="walk" size={14} color="#6B5B4A" />
                       <Text style={styles.metaText}>{dist}</Text>
                     </View>
                   ) : (
@@ -252,7 +252,7 @@ export default function TurismoListScreen() {
       }}
       ListEmptyComponent={
         <View style={styles.emptyFilter}>
-          <Icon name="magnify" size={32} color="#C65D2E" />
+          <Icon name="magnify" size={32} color="#C84B1A" />
           <Text style={styles.emptyFilterTitle}>
             Nenhum local nessa categoria ainda
           </Text>
@@ -263,14 +263,14 @@ export default function TurismoListScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FAF7F2' },
+  container: { flex: 1, backgroundColor: '#FAF2E0' },
   content: { padding: 12, paddingBottom: 32 },
   destaquesWrap: { marginBottom: 16 },
   destaquesTitle: {
     fontSize: 13,
     fontWeight: '700',
     textTransform: 'uppercase',
-    color: '#8B4513',
+    color: '#6B1E1E',
     letterSpacing: 0.8,
     marginBottom: 8,
     marginLeft: 2,
@@ -282,12 +282,12 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  destaqueCover: { width: '100%', height: 110, backgroundColor: '#FAF7F2' },
+  destaqueCover: { width: '100%', height: 110, backgroundColor: '#FAF2E0' },
   destaqueBody: { padding: 10, gap: 6 },
-  destaqueTitle: { fontSize: 14, fontWeight: '700', color: '#2B2B2B' },
-  destaquePrice: { fontSize: 12, color: '#6B6B6B' },
+  destaqueTitle: { fontSize: 14, fontWeight: '700', color: '#2B1A10' },
+  destaquePrice: { fontSize: 12, color: '#6B5B4A' },
   chipsRow: { gap: 8, paddingVertical: 4, paddingRight: 8 },
   filterChip: {
     flexDirection: 'row',
@@ -298,10 +298,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: '#FFF',
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  filterChipActive: { backgroundColor: '#8B4513', borderColor: '#8B4513' },
-  filterChipText: { fontSize: 12, fontWeight: '600', color: '#8B4513' },
+  filterChipActive: { backgroundColor: '#6B1E1E', borderColor: '#6B1E1E' },
+  filterChipText: { fontSize: 12, fontWeight: '600', color: '#6B1E1E' },
   filterChipTextActive: { color: '#FFF' },
   card: {
     backgroundColor: '#FFF',
@@ -309,9 +309,9 @@ const styles = StyleSheet.create({
     marginTop: 12,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#E5E0D5',
+    borderColor: '#E5DCC8',
   },
-  cover: { width: '100%', height: 160, backgroundColor: '#FAF7F2' },
+  cover: { width: '100%', height: 160, backgroundColor: '#FAF2E0' },
   coverPlaceholder: { justifyContent: 'center', alignItems: 'center' },
   body: { padding: 14, gap: 6 },
   typeChip: {
@@ -321,28 +321,28 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   typeChipText: { color: '#FFF', fontSize: 10, fontWeight: '700', textTransform: 'uppercase' },
-  title: { fontSize: 17, fontWeight: '700', color: '#2B2B2B' },
+  title: { fontSize: 17, fontWeight: '700', color: '#2B1A10', fontFamily: 'PlayfairDisplay_700Bold' },
   metaRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  metaText: { fontSize: 12, color: '#6B6B6B', flexShrink: 1 },
+  metaText: { fontSize: 12, color: '#6B5B4A', flexShrink: 1 },
   metaFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 4,
   },
-  price: { fontSize: 13, fontWeight: '700', color: '#8B4513' },
+  price: { fontSize: 13, fontWeight: '700', color: '#6B1E1E' },
   openBtn: {
     marginTop: 8,
     alignSelf: 'flex-start',
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    backgroundColor: '#8B4513',
+    backgroundColor: '#6B1E1E',
     paddingHorizontal: 14,
     paddingVertical: 7,
     borderRadius: 8,
   },
   openBtnText: { color: '#FFF', fontWeight: '700', fontSize: 13 },
   emptyFilter: { alignItems: 'center', padding: 24, gap: 10 },
-  emptyFilterTitle: { color: '#6B6B6B', fontSize: 14 },
+  emptyFilterTitle: { color: '#6B5B4A', fontSize: 14 },
 });

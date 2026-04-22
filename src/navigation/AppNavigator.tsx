@@ -2,6 +2,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import { colors } from '../theme/colors';
+import { fonts } from '../theme/fonts';
 
 import HomeScreen from '../screens/HomeScreen';
 import BarracasListScreen from '../screens/barracas/BarracasListScreen';
@@ -36,9 +38,12 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const screenOptions = {
-  headerStyle: { backgroundColor: '#8B4513' },
+  headerStyle: { backgroundColor: colors.primary },
   headerTintColor: '#FFF',
-  headerTitleStyle: { fontWeight: '700' as const },
+  headerTitleStyle: {
+    fontWeight: '700' as const,
+    fontFamily: fonts.heading,
+  },
 };
 
 function BarracasStack() {
@@ -142,9 +147,10 @@ export default function AppNavigator() {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
-          tabBarActiveTintColor: '#8B4513',
-          tabBarInactiveTintColor: '#6B6B6B',
-          tabBarStyle: { backgroundColor: '#FFF', borderTopColor: '#E5E0D5' },
+          tabBarActiveTintColor: colors.primary,
+          tabBarInactiveTintColor: colors.textMuted,
+          tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border },
+          tabBarLabelStyle: { fontFamily: fonts.bodyMedium },
           tabBarIcon: ({ color, size }) => (
             <Icon name={(ICON_MAP[route.name] || 'circle') as any} size={size} color={color} />
           ),

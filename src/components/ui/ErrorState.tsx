@@ -22,7 +22,7 @@ export default function ErrorState({ message, onRetry }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24, backgroundColor: '#FAF7F2' },
-  text: { marginTop: 12, color: '#2B2B2B', fontSize: 14, textAlign: 'center' },
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24, backgroundColor: '#FAF2E0' },
+  text: { marginTop: 12, color: '#2B1A10', fontSize: 14, textAlign: 'center' },
   button: { marginTop: 16 },
 });
