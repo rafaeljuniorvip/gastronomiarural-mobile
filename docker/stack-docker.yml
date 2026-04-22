@@ -8,7 +8,7 @@ services:
   proxy:
     image: nginx:alpine
     configs:
-      - source: gastronomiarural_expo_nginx_conf
+      - source: gastronomiarural_expo_nginx_conf_v2
         target: /etc/nginx/nginx.conf
     networks:
       - minha_rede
@@ -27,7 +27,7 @@ services:
         - "traefik.http.services.gastronomiarural-expo.loadbalancer.server.port=80"
 
 configs:
-  gastronomiarural_expo_nginx_conf:
+  gastronomiarural_expo_nginx_conf_v2:
     external: true
 
 networks:
