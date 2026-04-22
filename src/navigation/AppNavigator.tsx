@@ -1,9 +1,9 @@
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import PatronFooterTicker from '../components/layout/PatronFooterTicker';
+import CustomTabBar from '../components/layout/CustomTabBar';
 import { colors } from '../theme/colors';
 import { fonts } from '../theme/fonts';
 
@@ -143,75 +143,22 @@ function CuponsStack() {
   );
 }
 
-// Cada tab tem sua "cor assinatura" — casa com a paleta dos tiles da Home
-// e traz mais vida à navegação, saindo do monocromático bordô.
-interface TabStyle { icon: string; label: string; color: string }
-const TAB_STYLES: Record<string, TabStyle> = {
-  HomeTab: { icon: 'home-variant', label: 'Início', color: '#6B1E1E' },
-  BarracasTab: { icon: 'storefront', label: 'Barracas', color: '#E5A56C' },
-  PratosTab: { icon: 'silverware-fork-knife', label: 'Cardápio', color: '#E55934' },
-  ReceitasTab: { icon: 'chef-hat', label: 'Receitas', color: '#D4A842' },
-  MapaTab: { icon: 'map-marker-radius', label: 'Mapa', color: '#3E8691' },
-  CuponsTab: { icon: 'ticket-percent', label: 'Cupons', color: '#D99A1F' },
-  AccountTab: { icon: 'account-circle', label: 'Conta', color: '#8E5BA8' },
-};
+// A paleta-assinatura de cada tab ficou centralizada em CustomTabBar.tsx.
 
 export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        // Ticker dos patrocinadores renderizado imediatamente acima da tab bar.
-        // Antes ficava num SafeAreaView separado depois do Tab.Navigator e criava
-        // um gap vertical porque a tab bar já aplica o safe-area-inset-bottom.
+        // Tab bar customizada: ilha flutuante com ScrollView horizontal
+        // e pill deslizante (morph de cor + translateX com spring).
+        // O ticker de patrocinadores renderiza imediatamente acima da ilha.
         tabBar={(props) => (
           <View>
             <PatronFooterTicker />
-            <BottomTabBar {...props} />
+            <CustomTabBar {...props} />
           </View>
         )}
-        screenOptions={({ route }) => {
-          const tab = TAB_STYLES[route.name];
-          return {
-            headerShown: false,
-            tabBarActiveTintColor: tab?.color || colors.primary,
-            tabBarInactiveTintColor: '#9B8A7A',
-            tabBarStyle: {
-              backgroundColor: '#FFF',
-              borderTopWidth: 0,
-              // padding lateral evita que o 1º e o último ícone encostem
-              // nas bordas curvas da tela (iPhone/Android com cantos arredondados)
-              paddingTop: 6,
-              paddingHorizontal: 10,
-              height: 64,
-              elevation: 0,
-              shadowOpacity: 0,
-            },
-            tabBarItemStyle: {
-              // respiração extra entre os ícones
-              paddingHorizontal: 2,
-            },
-            tabBarLabelStyle: {
-              fontFamily: fonts.bodyBold,
-              fontSize: 10,
-              fontWeight: '700',
-              letterSpacing: 0.3,
-              marginTop: 2,
-            },
-            tabBarIcon: ({ focused }) => {
-              const t = TAB_STYLES[route.name];
-              if (!t) return <Icon name="circle" size={22} color="#9B8A7A" />;
-              // Ativo: ícone branco dentro de uma pill colorida
-              if (focused) {
-                return (
-                  <View style={[styles.pill, { backgroundColor: t.color }]}>
-                    <Icon name={t.icon as any} size={18} color="#FFF" />
-                  </View>
-                );
-              }
-              return <Icon name={t.icon as any} size={22} color="#9B8A7A" />;
-            },
-          };
-        }}
+        screenOptions={{ headerShown: false }}
       >
         <Tab.Screen name="HomeTab" component={HomeStack} options={{ title: 'Início' }} />
         <Tab.Screen name="BarracasTab" component={BarracasStack} options={{ title: 'Barracas' }} />
@@ -224,14 +171,3 @@ export default function AppNavigator() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  // Pill colorida envolvendo o ícone da tab ativa — dá "vida" à navbar
-  pill: {
-    width: 44,
-    height: 28,
-    borderRadius: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
