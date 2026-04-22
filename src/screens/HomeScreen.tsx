@@ -8,7 +8,6 @@ import {
   Easing,
   TouchableOpacity,
 } from 'react-native';
-import { Card } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import SearchBar from '../components/ui/SearchBar';
@@ -21,20 +20,92 @@ interface CardAction {
   title: string;
   desc: string;
   route: string;
+  // Paleta própria de cada card — saindo do monocromático bordô
+  bg: string;
+  iconBg: string;
+  iconColor: string;
+  accent: string;
 }
 
 const CARDS: CardAction[] = [
-  { key: 'barracas', icon: 'storefront-outline', title: 'Barracas', desc: 'Explore as barracas e cozinheiras tradicionais', route: 'Barracas' },
-  { key: 'pratos', icon: 'silverware-fork-knife', title: 'Cardápio', desc: '70+ pratos típicos em fogão a lenha', route: 'Pratos' },
-  { key: 'receitas', icon: 'chef-hat', title: 'Receitas', desc: 'Receitas tradicionais da cozinha rural mineira', route: 'Receitas' },
-  { key: 'programacao', icon: 'calendar-music', title: 'Programação', desc: 'Shows, apresentações e atrações dos 4 dias', route: 'Programacao' },
-  { key: 'oficinas', icon: 'school-outline', title: 'Oficinas', desc: 'Inscreva-se em oficinas culinárias com vagas limitadas', route: 'Oficinas' },
-  { key: 'pessoas', icon: 'account-group-outline', title: 'Pessoas', desc: 'Cozinheiras, artistas, artesãos e produtores', route: 'Pessoas' },
-  { key: 'turismo', icon: 'bed-outline', title: 'Hospedagem e turismo', desc: 'Hotéis, pousadas e atrações de Itapecerica', route: 'Turismo' },
-  { key: 'timeline', icon: 'history', title: 'História do festival', desc: '18 edições de sabores e tradição', route: 'Timeline' },
-  { key: 'faq', icon: 'help-circle-outline', title: 'Dúvidas frequentes', desc: 'Horários, regras, acessibilidade e mais', route: 'Faq' },
-  { key: 'notificacoes', icon: 'bell-outline', title: 'Notificações', desc: 'Alertas da organização e preferências', route: 'Notificacoes' },
-  { key: 'patrocinadores', icon: 'handshake-outline', title: 'Patrocinadores', desc: 'Quem apoia o Festival de Gastronomia Rural', route: 'Patrocinadores' },
+  {
+    key: 'barracas', icon: 'storefront', title: 'Barracas',
+    desc: 'Cozinheiras tradicionais e fogão a lenha',
+    route: 'Barracas',
+    bg: '#F4E4D4', iconBg: '#E5A56C', iconColor: '#FFF', accent: '#A05B20',
+  },
+  {
+    key: 'pratos', icon: 'silverware-fork-knife', title: 'Cardápio',
+    desc: '70+ pratos típicos',
+    route: 'Pratos',
+    bg: '#FDE2DC', iconBg: '#E55934', iconColor: '#FFF', accent: '#B2381A',
+  },
+  {
+    key: 'receitas', icon: 'chef-hat', title: 'Receitas',
+    desc: 'Saberes da cozinha rural',
+    route: 'Receitas',
+    bg: '#FAEDBB', iconBg: '#D4A842', iconColor: '#FFF', accent: '#8F6F1D',
+  },
+  {
+    key: 'programacao', icon: 'calendar-music', title: 'Programação',
+    desc: 'Shows e atrações dos 4 dias',
+    route: 'Programacao',
+    bg: '#E8DCF0', iconBg: '#8E5BA8', iconColor: '#FFF', accent: '#5E3877',
+  },
+  {
+    key: 'oficinas', icon: 'school', title: 'Oficinas',
+    desc: 'Aulas culinárias · 30 vagas',
+    route: 'Oficinas',
+    bg: '#D7E8D9', iconBg: '#5D8B5F', iconColor: '#FFF', accent: '#315B34',
+  },
+  {
+    key: 'pessoas', icon: 'account-group', title: 'Pessoas',
+    desc: 'Cozinheiras, artistas e artesãos',
+    route: 'Pessoas',
+    bg: '#F8D7C6', iconBg: '#C25C2C', iconColor: '#FFF', accent: '#8A3C1A',
+  },
+  {
+    key: 'mapa_home', icon: 'map-marker-radius', title: 'Mapa',
+    desc: 'Localização das atrações',
+    route: 'MapaTab',
+    bg: '#D1E6EA', iconBg: '#3E8691', iconColor: '#FFF', accent: '#245863',
+  },
+  {
+    key: 'turismo', icon: 'bed', title: 'Hospedagem',
+    desc: 'Hotéis, pousadas e pontos turísticos',
+    route: 'Turismo',
+    bg: '#E1EED9', iconBg: '#6E9145', iconColor: '#FFF', accent: '#436124',
+  },
+  {
+    key: 'cupons_home', icon: 'ticket-percent', title: 'Cupons',
+    desc: 'Descontos dos patrocinadores',
+    route: 'CuponsTab',
+    bg: '#FBE6B8', iconBg: '#D99A1F', iconColor: '#FFF', accent: '#8F651B',
+  },
+  {
+    key: 'timeline', icon: 'history', title: 'História',
+    desc: '18 edições de tradição',
+    route: 'Timeline',
+    bg: '#EDE0C8', iconBg: '#7A5A2E', iconColor: '#FFF', accent: '#4A3619',
+  },
+  {
+    key: 'faq', icon: 'help-circle', title: 'Dúvidas',
+    desc: 'Horários, regras e acessibilidade',
+    route: 'Faq',
+    bg: '#DCE3F0', iconBg: '#4E6FA6', iconColor: '#FFF', accent: '#2B4273',
+  },
+  {
+    key: 'notificacoes', icon: 'bell-ring', title: 'Notificações',
+    desc: 'Alertas e preferências',
+    route: 'Notificacoes',
+    bg: '#FAD9D9', iconBg: '#C84B4B', iconColor: '#FFF', accent: '#8A2727',
+  },
+  {
+    key: 'patrocinadores', icon: 'handshake', title: 'Patrocinadores',
+    desc: 'Quem torna o festival possível',
+    route: 'Patrocinadores',
+    bg: '#F3E5C0', iconBg: '#B39030', iconColor: '#FFF', accent: '#6B5410',
+  },
 ];
 
 // Festival começa: 04/06/2026 00:00 -03:00 (horário oficial)
@@ -245,18 +316,26 @@ export default function HomeScreen() {
           containerStyle={styles.searchBar}
         />
 
-        {CARDS.map((c) => (
-          <Card key={c.key} style={styles.card} onPress={() => nav.navigate(c.route)}>
-            <Card.Content style={styles.cardContent}>
-              <Icon name={c.icon as any} size={36} color="#6B1E1E" />
-              <View style={styles.cardText}>
-                <Text style={styles.cardTitle}>{c.title}</Text>
-                <Text style={styles.cardDesc}>{c.desc}</Text>
+        <View style={styles.grid}>
+          {CARDS.map((c) => (
+            <TouchableOpacity
+              key={c.key}
+              activeOpacity={0.85}
+              onPress={() => nav.navigate(c.route as never)}
+              style={[styles.tile, { backgroundColor: c.bg }]}
+            >
+              <View style={[styles.tileIconWrap, { backgroundColor: c.iconBg }]}>
+                <Icon name={c.icon as any} size={22} color={c.iconColor} />
               </View>
-              <Icon name="chevron-right" size={22} color="#6B5B4A" />
-            </Card.Content>
-          </Card>
-        ))}
+              <Text style={[styles.tileTitle, { color: c.accent }]} numberOfLines={1}>
+                {c.title}
+              </Text>
+              <Text style={styles.tileDesc} numberOfLines={2}>
+                {c.desc}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
     </ScrollView>
   );
@@ -457,21 +536,41 @@ const styles = StyleSheet.create({
   dot: { height: 4, borderRadius: 2 },
   dotActive: { width: 18, backgroundColor: '#D4A842' },
   dotIdle: { width: 6, backgroundColor: 'rgba(245, 230, 200, 0.4)' },
-  // Cards
+  // Grid de tiles coloridos
   searchBar: { marginHorizontal: 0, marginBottom: 12, marginTop: 0 },
-  card: { marginBottom: 12, backgroundColor: colors.surface },
-  cardContent: { flexDirection: 'row', alignItems: 'center', gap: 16 },
-  cardText: { flex: 1 },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: colors.primary,
-    fontFamily: fonts.heading,
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginTop: 4,
   },
-  cardDesc: {
-    fontSize: 13,
-    color: colors.textMuted,
+  tile: {
+    width: '48%',
+    borderRadius: 18,
+    padding: 14,
+    marginBottom: 12,
+    minHeight: 116,
+    justifyContent: 'flex-start',
+  },
+  tileIconWrap: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  tileTitle: {
+    fontSize: 15,
+    fontWeight: '800',
+    fontFamily: fonts.heading,
+    letterSpacing: 0.2,
+  },
+  tileDesc: {
+    fontSize: 11,
     marginTop: 2,
+    color: 'rgba(60, 40, 25, 0.7)',
+    lineHeight: 14,
     fontFamily: fonts.body,
   },
 });

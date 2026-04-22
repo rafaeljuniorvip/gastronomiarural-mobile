@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -143,14 +143,17 @@ function CuponsStack() {
   );
 }
 
-const ICON_MAP: Record<string, string> = {
-  HomeTab: 'home',
-  BarracasTab: 'storefront',
-  PratosTab: 'silverware-fork-knife',
-  ReceitasTab: 'chef-hat',
-  MapaTab: 'map-marker-multiple',
-  CuponsTab: 'ticket-percent',
-  AccountTab: 'account',
+// Cada tab tem sua "cor assinatura" — casa com a paleta dos tiles da Home
+// e traz mais vida à navegação, saindo do monocromático bordô.
+interface TabStyle { icon: string; label: string; color: string }
+const TAB_STYLES: Record<string, TabStyle> = {
+  HomeTab: { icon: 'home-variant', label: 'Início', color: '#6B1E1E' },
+  BarracasTab: { icon: 'storefront', label: 'Barracas', color: '#E5A56C' },
+  PratosTab: { icon: 'silverware-fork-knife', label: 'Cardápio', color: '#E55934' },
+  ReceitasTab: { icon: 'chef-hat', label: 'Receitas', color: '#D4A842' },
+  MapaTab: { icon: 'map-marker-radius', label: 'Mapa', color: '#3E8691' },
+  CuponsTab: { icon: 'ticket-percent', label: 'Cupons', color: '#D99A1F' },
+  AccountTab: { icon: 'account-circle', label: 'Conta', color: '#8E5BA8' },
 };
 
 export default function AppNavigator() {
@@ -166,16 +169,42 @@ export default function AppNavigator() {
             <BottomTabBar {...props} />
           </View>
         )}
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarActiveTintColor: colors.primary,
-          tabBarInactiveTintColor: colors.textMuted,
-          tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border },
-          tabBarLabelStyle: { fontFamily: fonts.bodyMedium },
-          tabBarIcon: ({ color, size }) => (
-            <Icon name={(ICON_MAP[route.name] || 'circle') as any} size={size} color={color} />
-          ),
-        })}
+        screenOptions={({ route }) => {
+          const tab = TAB_STYLES[route.name];
+          return {
+            headerShown: false,
+            tabBarActiveTintColor: tab?.color || colors.primary,
+            tabBarInactiveTintColor: '#9B8A7A',
+            tabBarStyle: {
+              backgroundColor: '#FFF',
+              borderTopWidth: 0,
+              paddingTop: 6,
+              height: 64,
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+            tabBarLabelStyle: {
+              fontFamily: fonts.bodyBold,
+              fontSize: 10,
+              fontWeight: '700',
+              letterSpacing: 0.3,
+              marginTop: 2,
+            },
+            tabBarIcon: ({ focused }) => {
+              const t = TAB_STYLES[route.name];
+              if (!t) return <Icon name="circle" size={22} color="#9B8A7A" />;
+              // Ativo: ícone branco dentro de uma pill colorida
+              if (focused) {
+                return (
+                  <View style={[styles.pill, { backgroundColor: t.color }]}>
+                    <Icon name={t.icon as any} size={18} color="#FFF" />
+                  </View>
+                );
+              }
+              return <Icon name={t.icon as any} size={22} color="#9B8A7A" />;
+            },
+          };
+        }}
       >
         <Tab.Screen name="HomeTab" component={HomeStack} options={{ title: 'Início' }} />
         <Tab.Screen name="BarracasTab" component={BarracasStack} options={{ title: 'Barracas' }} />
@@ -188,3 +217,14 @@ export default function AppNavigator() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  // Pill colorida envolvendo o ícone da tab ativa — dá "vida" à navbar
+  pill: {
+    width: 44,
+    height: 28,
+    borderRadius: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
