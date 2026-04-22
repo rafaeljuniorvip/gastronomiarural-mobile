@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   TouchableOpacity,
   Animated,
@@ -18,6 +19,7 @@ const TIERS = ['diamante', 'ouro'];
 const BANNER_HEIGHT = 110;
 const MARQUEE_PIXELS_PER_SECOND = 45;
 const MARQUEE_GAP = 60;
+const LOGO_HEIGHT = 60;
 
 export default function PatronMasterBanner() {
   const [patrocinadores, setPatrocinadores] = useState<Patrocinador[]>([]);
@@ -101,7 +103,8 @@ export default function PatronMasterBanner() {
 
   const hasLink = !!current.website_url;
   const nameUpper = current.name.toUpperCase();
-  const needsMarquee = textWidth > containerWidth && textWidth > 0;
+  const hasLogo = !!current.logo_url;
+  const needsMarquee = !hasLogo && textWidth > containerWidth && textWidth > 0;
 
   return (
     <TouchableOpacity
@@ -115,10 +118,21 @@ export default function PatronMasterBanner() {
           <Text style={styles.labelText}>PATROCINADOR OFICIAL</Text>
         </View>
         <View
-          style={styles.marqueeWrap}
+          style={styles.contentWrap}
           onLayout={(e: LayoutChangeEvent) => setContainerWidth(e.nativeEvent.layout.width)}
         >
-          {needsMarquee ? (
+          {hasLogo ? (
+            <>
+              <Image
+                source={{ uri: current.logo_url! }}
+                style={styles.logo}
+                resizeMode="contain"
+              />
+              <Text style={styles.caption} numberOfLines={1}>
+                {nameUpper}
+              </Text>
+            </>
+          ) : needsMarquee ? (
             <Animated.View
               style={[styles.marqueeRow, { transform: [{ translateX }] }]}
               pointerEvents="none"
@@ -178,11 +192,13 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     fontFamily: fonts.bodyMedium,
   },
-  marqueeWrap: {
+  contentWrap: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     overflow: 'hidden',
     paddingHorizontal: 16,
+    paddingTop: 18,
   },
   marqueeRow: {
     flexDirection: 'row',
@@ -196,5 +212,19 @@ const styles = StyleSheet.create({
   },
   nameCentered: {
     textAlign: 'center',
+  },
+  logo: {
+    height: LOGO_HEIGHT,
+    width: '80%',
+    maxWidth: 320,
+  },
+  caption: {
+    marginTop: 4,
+    color: '#6B1E1E',
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 1,
+    fontFamily: fonts.bodyMedium,
+    opacity: 0.75,
   },
 });

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, Animated, Easing } from 'react-native';
+import { View, Text, Image, StyleSheet, Animated, Easing } from 'react-native';
 import { listPatrocinadores, type Patrocinador } from '../../services/patrocinador.service';
 import { fonts } from '../../theme/fonts';
 
@@ -63,13 +63,23 @@ export default function PatronFooterTicker() {
           onLayout={(e) => setContentWidth(e.nativeEvent.layout.width)}
         >
           {patrocinadores.map((p, idx) => (
-            <TickerItem key={`a-${p.id}-${idx}`} name={p.name} isLast={idx === patrocinadores.length - 1} />
+            <TickerItem
+              key={`a-${p.id}-${idx}`}
+              name={p.name}
+              logoUrl={p.logo_url}
+              isLast={idx === patrocinadores.length - 1}
+            />
           ))}
         </View>
         {/* Segunda cópia para loop */}
         <View style={styles.segment}>
           {patrocinadores.map((p, idx) => (
-            <TickerItem key={`b-${p.id}-${idx}`} name={p.name} isLast={idx === patrocinadores.length - 1} />
+            <TickerItem
+              key={`b-${p.id}-${idx}`}
+              name={p.name}
+              logoUrl={p.logo_url}
+              isLast={idx === patrocinadores.length - 1}
+            />
           ))}
         </View>
       </Animated.View>
@@ -77,9 +87,12 @@ export default function PatronFooterTicker() {
   );
 }
 
-function TickerItem({ name, isLast }: { name: string; isLast: boolean }) {
+function TickerItem({ name, logoUrl, isLast }: { name: string; logoUrl: string | null; isLast: boolean }) {
   return (
     <View style={styles.item}>
+      {logoUrl ? (
+        <Image source={{ uri: logoUrl }} style={styles.logo} resizeMode="contain" />
+      ) : null}
       <Text style={styles.itemText} numberOfLines={1}>
         {name}
       </Text>
@@ -111,11 +124,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  logo: {
+    width: 48,
+    height: 22,
+    marginLeft: 8,
+  },
   itemText: {
     color: '#6B1E1E',
     fontSize: 12,
     fontWeight: '600',
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
     fontFamily: fonts.bodyMedium,
   },
   separator: {
