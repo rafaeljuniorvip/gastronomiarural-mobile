@@ -232,47 +232,52 @@ export default function HomeScreen() {
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.contentNoHero}>
+      {/* Hero é full-bleed: sem padding lateral/topo do scroll */}
       <HeroCarousel onPressOficinas={() => nav.navigate('Oficinas')} />
 
-      <SearchBar
-        value={query}
-        onChange={handleSearch}
-        placeholder="Buscar barracas, pratos, receitas…"
-        debounceMs={400}
-        containerStyle={styles.searchBar}
-      />
+      <View style={styles.listPadding}>
+        <SearchBar
+          value={query}
+          onChange={handleSearch}
+          placeholder="Buscar barracas, pratos, receitas…"
+          debounceMs={400}
+          containerStyle={styles.searchBar}
+        />
 
-      {CARDS.map((c) => (
-        <Card key={c.key} style={styles.card} onPress={() => nav.navigate(c.route)}>
-          <Card.Content style={styles.cardContent}>
-            <Icon name={c.icon as any} size={36} color="#6B1E1E" />
-            <View style={styles.cardText}>
-              <Text style={styles.cardTitle}>{c.title}</Text>
-              <Text style={styles.cardDesc}>{c.desc}</Text>
-            </View>
-            <Icon name="chevron-right" size={22} color="#6B5B4A" />
-          </Card.Content>
-        </Card>
-      ))}
+        {CARDS.map((c) => (
+          <Card key={c.key} style={styles.card} onPress={() => nav.navigate(c.route)}>
+            <Card.Content style={styles.cardContent}>
+              <Icon name={c.icon as any} size={36} color="#6B1E1E" />
+              <View style={styles.cardText}>
+                <Text style={styles.cardTitle}>{c.title}</Text>
+                <Text style={styles.cardDesc}>{c.desc}</Text>
+              </View>
+              <Icon name="chevron-right" size={22} color="#6B5B4A" />
+            </Card.Content>
+          </Card>
+        ))}
+      </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
-  content: { padding: 16 },
+  contentNoHero: { paddingBottom: 16 },
+  listPadding: { paddingHorizontal: 16, paddingTop: 16 },
   hero: {
     backgroundColor: colors.primary,
-    borderRadius: 16,
-    paddingVertical: 22,
-    paddingHorizontal: 20,
-    marginBottom: 16,
+    // full-bleed: sem borderRadius, sem margem — encosta no topo e nas laterais
+    paddingTop: 28,
+    paddingBottom: 34,
+    paddingHorizontal: 24,
     overflow: 'hidden',
     position: 'relative',
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(212, 168, 66, 0.55)',
-    minHeight: 240,
+    // linha dourada só na base, pra separar do conteúdo abaixo
+    borderBottomWidth: 2,
+    borderBottomColor: '#D4A842',
+    minHeight: 260,
   },
   slide: {
     flex: 1,
