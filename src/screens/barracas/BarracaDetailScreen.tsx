@@ -7,6 +7,8 @@ import {
   StyleSheet,
   RefreshControl,
   TouchableOpacity,
+  Linking,
+  Platform,
 } from 'react-native';
 import { Chip, Divider, Button } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
@@ -42,6 +44,26 @@ export default function BarracaDetailScreen() {
   }, [barracaId]);
 
   useEffect(() => { load(); }, [load]);
+
+  async function openRoute() {
+    if (!barraca?.lat || !barraca?.lng) return;
+    const lat = barraca.lat;
+    const lng = barraca.lng;
+    const label = encodeURIComponent(barraca.name);
+    // Tenta abrir o app nativo (Apple Maps iOS, Google Maps Android), senão browser
+    const nativeUrl = Platform.select({
+      ios: `maps://?daddr=${lat},${lng}&q=${label}`,
+      android: `geo:${lat},${lng}?q=${lat},${lng}(${label})`,
+      default: `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
+    });
+    const fallbackUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+    try {
+      const can = nativeUrl ? await Linking.canOpenURL(nativeUrl) : false;
+      await Linking.openURL(can && nativeUrl ? nativeUrl : fallbackUrl);
+    } catch {
+      await Linking.openURL(fallbackUrl);
+    }
+  }
 
   // Recarrega avaliações quando voltar de NovaAvaliacao
   useFocusEffect(
@@ -93,6 +115,13 @@ export default function BarracaDetailScreen() {
             <Chip icon="clock-outline" style={styles.chip} textStyle={styles.chipText}>{barraca.opening_hours}</Chip>
           ) : null}
         </View>
+
+        {barraca.lat && barraca.lng ? (
+          <TouchableOpacity style={styles.routeBtn} onPress={openRoute} activeOpacity={0.85}>
+            <Icon name="directions" size={20} color="#FFF" />
+            <Text style={styles.routeBtnText}>Traçar rota até a barraca</Text>
+          </TouchableOpacity>
+        ) : null}
 
         {barraca.description ? <Text style={styles.description}>{barraca.description}</Text> : null}
 
@@ -205,5 +234,29 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 12,
+  },
+  routeBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#5E7F3E',
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginHorizontal: 14,
+    marginVertical: 12,
+    gap: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  routeBtnText: {
+    color: '#FFF',
+    fontSize: 15,
+    fontWeight: '700',
+    fontFamily: 'Inter_700Bold',
+    letterSpacing: 0.3,
   },
 });

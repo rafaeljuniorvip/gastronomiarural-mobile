@@ -7,6 +7,8 @@ export interface Barraca {
   description: string | null;
   cover_url: string | null;
   location: string | null;
+  lat: number | null;
+  lng: number | null;
   opening_hours: string | null;
   status: string;
   primary_color: string;
