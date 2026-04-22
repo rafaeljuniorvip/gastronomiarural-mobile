@@ -1,59 +1,64 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { View, Text, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../contexts/AuthContext';
-import { GOOGLE_CLIENT_ID } from '../config/api';
+import { API_BASE_URL } from '../config/api';
 
-WebBrowser.maybeCompleteAuthSession();
+const MOBILE_LOGIN_URL =
+  deriveWebOriginFromApi(API_BASE_URL) + '/mobile-login';
+const APP_RETURN_SCHEME = 'gastronomiarural://auth';
+
+function deriveWebOriginFromApi(apiBase: string): string {
+  try {
+    const parsed = new URL(apiBase);
+    const host = parsed.host.replace(/^api\./, '');
+    return `${parsed.protocol}//${host}`;
+  } catch {
+    return 'https://gastronomiarural.viptecnologia.com.br';
+  }
+}
 
 export default function LoginScreen() {
   const nav = useNavigation<any>();
-  const { loginWithGoogle } = useAuth();
+  const { loginWithToken } = useAuth();
   const [submitting, setSubmitting] = useState(false);
-
-  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    clientId: GOOGLE_CLIENT_ID,
-    iosClientId: GOOGLE_CLIENT_ID,
-    androidClientId: GOOGLE_CLIENT_ID,
-    webClientId: GOOGLE_CLIENT_ID,
-  });
-
-  useEffect(() => {
-    async function handleResponse() {
-      if (!response) return;
-      if (response.type === 'success') {
-        const idToken = (response.params as Record<string, string>)?.id_token;
-        if (!idToken) {
-          Alert.alert('Erro', 'Não foi possível obter o token do Google.');
-          return;
-        }
-        setSubmitting(true);
-        try {
-          await loginWithGoogle(idToken);
-        } catch (err: any) {
-          Alert.alert(
-            'Falha ao entrar',
-            err?.response?.data?.error || 'Não foi possível fazer login com o Google.'
-          );
-        } finally {
-          setSubmitting(false);
-        }
-      } else if (response.type === 'error') {
-        Alert.alert('Erro', 'O login com Google foi cancelado ou falhou.');
-      }
-    }
-    handleResponse();
-  }, [response, loginWithGoogle]);
 
   async function handleGooglePress() {
     try {
-      await promptAsync();
-    } catch (err) {
-      Alert.alert('Erro', 'Não foi possível abrir o login do Google.');
+      setSubmitting(true);
+      const result = await WebBrowser.openAuthSessionAsync(
+        MOBILE_LOGIN_URL,
+        APP_RETURN_SCHEME
+      );
+
+      if (result.type !== 'success' || !result.url) {
+        setSubmitting(false);
+        return;
+      }
+
+      let token: string | null = null;
+      try {
+        const parsed = new URL(result.url);
+        token = parsed.searchParams.get('token');
+      } catch {
+        const match = result.url.match(/[?&]token=([^&]+)/);
+        token = match ? decodeURIComponent(match[1]) : null;
+      }
+
+      if (!token) {
+        Alert.alert('Erro', 'Login não retornou token.');
+        setSubmitting(false);
+        return;
+      }
+
+      await loginWithToken(token);
+    } catch (err: any) {
+      Alert.alert('Falha ao entrar', err?.message || 'Erro desconhecido');
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -80,7 +85,7 @@ export default function LoginScreen() {
           style={styles.primaryButton}
           contentStyle={styles.buttonContent}
           onPress={handleGooglePress}
-          disabled={!request || submitting}
+          disabled={submitting}
           loading={submitting}
         >
           Continuar com Google

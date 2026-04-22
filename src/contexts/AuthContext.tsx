@@ -14,6 +14,7 @@ interface AuthContextValue {
   user: User | null;
   loading: boolean;
   loginWithGoogle: (credential: string) => Promise<void>;
+  loginWithToken: (jwt: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -38,14 +39,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  async function loginWithGoogle(credential: string) {
-    const res = await api.post<{ data: { token: string; user: User } }>('/auth/google', { credential });
-    await setToken(res.data.data.token);
-    setUser(res.data.data.user);
+  async function tryRegisterPush() {
     try {
       await registerForPushNotifications();
     } catch (e) {
       console.warn('[push-register] erro após login:', e);
+    }
+  }
+
+  async function loginWithGoogle(credential: string) {
+    const res = await api.post<{ data: { token: string; user: User } }>('/auth/google', { credential });
+    await setToken(res.data.data.token);
+    setUser(res.data.data.user);
+    await tryRegisterPush();
+  }
+
+  async function loginWithToken(jwt: string) {
+    await setToken(jwt);
+    try {
+      const res = await api.get<{ data: { kind: string; user?: User } }>('/auth/me');
+      const fetched = res.data?.data?.user;
+      if (!fetched) {
+        await setToken(null);
+        throw new Error('Não foi possível carregar o usuário autenticado.');
+      }
+      setUser(fetched);
+      await tryRegisterPush();
+    } catch (err) {
+      await setToken(null);
+      setUser(null);
+      throw err;
     }
   }
 
@@ -55,7 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, loginWithGoogle, logout }}>
+    <AuthContext.Provider value={{ user, loading, loginWithGoogle, loginWithToken, logout }}>
       {children}
     </AuthContext.Provider>
   );
