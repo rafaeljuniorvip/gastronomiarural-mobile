@@ -1,7 +1,9 @@
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import PatronFooterTicker from '../components/layout/PatronFooterTicker';
 import { colors } from '../theme/colors';
 import { fonts } from '../theme/fonts';
 
@@ -155,6 +157,15 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        // Ticker dos patrocinadores renderizado imediatamente acima da tab bar.
+        // Antes ficava num SafeAreaView separado depois do Tab.Navigator e criava
+        // um gap vertical porque a tab bar já aplica o safe-area-inset-bottom.
+        tabBar={(props) => (
+          <View>
+            <PatronFooterTicker />
+            <BottomTabBar {...props} />
+          </View>
+        )}
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarActiveTintColor: colors.primary,

@@ -129,8 +129,10 @@ export default function PratosListScreen() {
               <Text style={styles.sectionCount}>· {data.length} {data.length === 1 ? 'prato' : 'pratos'}</Text>
             </View>
           )}
-          renderItem={({ item, index }) => (
-            <Animated.View entering={FadeInDown.duration(400).delay(index * 40)}>
+          renderItem={({ item, index }) => {
+            // Só animar os 8 primeiros — acima disso, o FadeInDown competia
+            // pela UI thread e causava o texto dos chips sumir.
+            const card = (
               <TouchableOpacity style={styles.card} onPress={() => nav.navigate('PratoDetail', { pratoId: item.id })}>
                 {item.photo_url ? (
                   <Image source={{ uri: item.photo_url }} style={styles.image} />
@@ -148,8 +150,16 @@ export default function PratosListScreen() {
                   <Text style={styles.price}>R$ {Number(item.price).toFixed(2).replace('.', ',')}</Text>
                 </View>
               </TouchableOpacity>
-            </Animated.View>
-          )}
+            );
+            if (index < 8) {
+              return (
+                <Animated.View entering={FadeInDown.duration(350).delay(index * 35)}>
+                  {card}
+                </Animated.View>
+              );
+            }
+            return card;
+          }}
         />
       )}
     </View>
