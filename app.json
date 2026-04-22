@@ -9,7 +9,7 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash-festival.png",
-      "resizeMode": "cover",
+      "resizeMode": "contain",
       "backgroundColor": "#6B1E1E"
     },
     "assetBundlePatterns": ["**/*"],
@@ -18,7 +18,7 @@
       "bundleIdentifier": "com.gastronomiarural.app",
       "splash": {
         "image": "./assets/splash-festival.png",
-        "resizeMode": "cover",
+        "resizeMode": "contain",
         "backgroundColor": "#6B1E1E"
       }
     },
@@ -31,7 +31,7 @@
       "permissions": ["android.permission.CAMERA"],
       "splash": {
         "image": "./assets/splash-festival.png",
-        "resizeMode": "cover",
+        "resizeMode": "contain",
         "backgroundColor": "#6B1E1E"
       }
     },
