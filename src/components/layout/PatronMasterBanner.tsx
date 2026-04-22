@@ -2,30 +2,30 @@ import { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TouchableOpacity,
   Animated,
   Linking,
   Alert,
+  type LayoutChangeEvent,
 } from 'react-native';
 import { listPatrocinadores, type Patrocinador } from '../../services/patrocinador.service';
 import { fonts } from '../../theme/fonts';
 
-const ROTATE_INTERVAL_MS = 6000;
+const ROTATE_INTERVAL_MS = 8000;
 const FADE_DURATION_MS = 400;
 const TIERS = ['diamante', 'ouro'];
 const BANNER_HEIGHT = 110;
-
-function buildPlaceholderUrl(name: string): string {
-  const text = encodeURIComponent((name || 'Patrocinador Oficial').toUpperCase());
-  return `https://dummyimage.com/1200x220/6B1E1E/D4A842.png&text=${text}`;
-}
+const MARQUEE_PIXELS_PER_SECOND = 45;
+const MARQUEE_GAP = 60;
 
 export default function PatronMasterBanner() {
   const [patrocinadores, setPatrocinadores] = useState<Patrocinador[]>([]);
   const [index, setIndex] = useState(0);
+  const [textWidth, setTextWidth] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
   const opacity = useRef(new Animated.Value(1)).current;
+  const translateX = useRef(new Animated.Value(0)).current;
   const mounted = useRef(true);
 
   useEffect(() => {
@@ -62,8 +62,25 @@ export default function PatronMasterBanner() {
     return () => clearInterval(id);
   }, [patrocinadores.length, opacity]);
 
-  if (patrocinadores.length === 0) return null;
+  // marquee: anima translateX de 0 até -(textWidth+GAP) em loop,
+  // só quando o texto for maior que o container
+  useEffect(() => {
+    translateX.stopAnimation();
+    translateX.setValue(0);
+    if (!textWidth || !containerWidth) return;
+    if (textWidth <= containerWidth) return;
+    const distance = textWidth + MARQUEE_GAP;
+    const duration = (distance / MARQUEE_PIXELS_PER_SECOND) * 1000;
+    Animated.loop(
+      Animated.timing(translateX, {
+        toValue: -distance,
+        duration,
+        useNativeDriver: true,
+      }),
+    ).start();
+  }, [textWidth, containerWidth, index, translateX]);
 
+  if (patrocinadores.length === 0) return null;
   const current = patrocinadores[index];
   if (!current) return null;
 
@@ -83,7 +100,8 @@ export default function PatronMasterBanner() {
   }
 
   const hasLink = !!current.website_url;
-  const imageUri = buildPlaceholderUrl(current.name);
+  const nameUpper = current.name.toUpperCase();
+  const needsMarquee = textWidth > containerWidth && textWidth > 0;
 
   return (
     <TouchableOpacity
@@ -93,9 +111,37 @@ export default function PatronMasterBanner() {
       style={styles.container}
     >
       <Animated.View style={[styles.inner, { opacity }]}>
-        <Image source={{ uri: imageUri }} style={styles.image} resizeMode="cover" />
-        <View style={styles.badge}>
-          <Text style={styles.badgeText}>PATROCINADOR OFICIAL</Text>
+        <View style={styles.label}>
+          <Text style={styles.labelText}>PATROCINADOR OFICIAL</Text>
+        </View>
+        <View
+          style={styles.marqueeWrap}
+          onLayout={(e: LayoutChangeEvent) => setContainerWidth(e.nativeEvent.layout.width)}
+        >
+          {needsMarquee ? (
+            <Animated.View
+              style={[styles.marqueeRow, { transform: [{ translateX }] }]}
+              pointerEvents="none"
+            >
+              <Text
+                style={styles.name}
+                onLayout={(e: LayoutChangeEvent) => setTextWidth(e.nativeEvent.layout.width)}
+              >
+                {nameUpper}
+              </Text>
+              <View style={{ width: MARQUEE_GAP }} />
+              <Text style={styles.name}>{nameUpper}</Text>
+            </Animated.View>
+          ) : (
+            <Text
+              style={[styles.name, styles.nameCentered]}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              onLayout={(e: LayoutChangeEvent) => setTextWidth(e.nativeEvent.layout.width)}
+            >
+              {nameUpper}
+            </Text>
+          )}
         </View>
       </Animated.View>
     </TouchableOpacity>
@@ -105,31 +151,50 @@ export default function PatronMasterBanner() {
 const styles = StyleSheet.create({
   container: {
     height: BANNER_HEIGHT,
-    backgroundColor: '#6B1E1E',
+    backgroundColor: '#D4A842',
     width: '100%',
+    overflow: 'hidden',
+    borderBottomWidth: 3,
+    borderBottomColor: '#6B1E1E',
   },
   inner: {
     flex: 1,
-    width: '100%',
+    justifyContent: 'center',
   },
-  image: {
-    width: '100%',
-    height: '100%',
-  },
-  badge: {
+  label: {
     position: 'absolute',
     top: 8,
-    left: 10,
-    backgroundColor: 'rgba(43, 26, 16, 0.75)',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
+    left: 12,
+    backgroundColor: '#6B1E1E',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
     borderRadius: 4,
+    zIndex: 2,
   },
-  badgeText: {
+  labelText: {
     color: '#F5E6C8',
     fontSize: 9,
     fontWeight: '700',
-    letterSpacing: 0.8,
+    letterSpacing: 1,
     fontFamily: fonts.bodyMedium,
+  },
+  marqueeWrap: {
+    flex: 1,
+    justifyContent: 'center',
+    overflow: 'hidden',
+    paddingHorizontal: 16,
+  },
+  marqueeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  name: {
+    color: '#6B1E1E',
+    fontSize: 32,
+    fontFamily: fonts.heading,
+    letterSpacing: 1.2,
+  },
+  nameCentered: {
+    textAlign: 'center',
   },
 });
