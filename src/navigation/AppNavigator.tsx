@@ -178,10 +178,17 @@ export default function AppNavigator() {
             tabBarStyle: {
               backgroundColor: '#FFF',
               borderTopWidth: 0,
+              // padding lateral evita que o 1º e o último ícone encostem
+              // nas bordas curvas da tela (iPhone/Android com cantos arredondados)
               paddingTop: 6,
+              paddingHorizontal: 10,
               height: 64,
               elevation: 0,
               shadowOpacity: 0,
+            },
+            tabBarItemStyle: {
+              // respiração extra entre os ícones
+              paddingHorizontal: 2,
             },
             tabBarLabelStyle: {
               fontFamily: fonts.bodyBold,
