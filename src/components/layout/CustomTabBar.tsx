@@ -121,12 +121,13 @@ export default function CustomTabBar({ state, navigation }: BottomTabBarProps) {
                 onPress={onPress}
                 onLongPress={onLongPress}
                 onLayout={(e: LayoutChangeEvent) => {
+                  // Em alguns re-renders o RN dispara onLayout sem layout (null).
+                  // Guard defensivo contra "Cannot read property 'layout' of null".
+                  const layout = e?.nativeEvent?.layout;
+                  if (!layout) return;
                   setMeasurements((prev) => {
                     const current = prev[index];
-                    const next = {
-                      x: e.nativeEvent.layout.x,
-                      width: e.nativeEvent.layout.width,
-                    };
+                    const next = { x: layout.x, width: layout.width };
                     if (current && current.x === next.x && current.width === next.width) {
                       return prev;
                     }
