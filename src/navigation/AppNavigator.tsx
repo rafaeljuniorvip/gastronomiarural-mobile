@@ -107,6 +107,16 @@ function ReceitasStack() {
   );
 }
 
+function MapaStack() {
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen name="MapaHome" component={MapaScreen} options={{ title: 'Mapa do festival' }} />
+      <Stack.Screen name="BarracaDetail" component={BarracaDetailScreen} options={{ title: '' }} />
+      <Stack.Screen name="PratoDetail" component={PratoDetailScreen} options={{ title: '' }} />
+    </Stack.Navigator>
+  );
+}
+
 function AccountStack() {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
@@ -160,7 +170,7 @@ export default function AppNavigator() {
         <Tab.Screen name="BarracasTab" component={BarracasStack} options={{ title: 'Barracas' }} />
         <Tab.Screen name="PratosTab" component={PratosStack} options={{ title: 'Cardápio' }} />
         <Tab.Screen name="ReceitasTab" component={ReceitasStack} options={{ title: 'Receitas' }} />
-        <Tab.Screen name="MapaTab" component={MapaScreen} options={{ title: 'Mapa' }} />
+        <Tab.Screen name="MapaTab" component={MapaStack} options={{ title: 'Mapa' }} />
         <Tab.Screen name="CuponsTab" component={CuponsStack} options={{ title: 'Cupons' }} />
         <Tab.Screen name="AccountTab" component={AccountStack} options={{ title: 'Conta' }} />
       </Tab.Navigator>
